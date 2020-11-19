@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>CedCabs</title>
 </head>
 <body>
@@ -41,8 +42,7 @@
             <div class="row text-center my-4">
                 <div class="col-sm-1 col-md-1 col-lg-1"></div>
                 <div class="col-sm-4 col-md-4 col-lg-4 " id="form">
-                    <h5 class="mt-3">City Taxi</h5>
-                    <hr>
+                    <h5 class="my-3">CedCabs City Fare</h5>
                     <h6>Your everyday travel partner</h6>
                     <p class="mb-3">AC Cabs for point to point travel</p>
                     <form>
@@ -59,7 +59,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <select name="pickup" class="form-control" id="pickup">
+                            <select name="drop" class="form-control" id="drop">
                                 <option value="">Select Your Drop Location</option>
                                 <option value="Charbagh">Charbagh</option>
                                 <option value="Indira Nagar">Indira Nagar</option>
@@ -71,10 +71,16 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="cabtype" placeholder="Enter Cab Type">
+                            <select name="cabtype" class="form-control" id="cabtype">
+                                <option value="">Select Cab Type</option>
+                                <option value="CedMicro">CedMicro</option>
+                                <option value="CedMini">CedMini</option>
+                                <option value="CedRoyal">CedRoyal</option>
+                                <option value="CedSUV">CedSUV</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="luggage" placeholder="Luggage">
+                            <input type="number" class="form-control" id="luggage" placeholder="Luggage in KG">
                         </div>
                         <p>
                             <button type="submit" class="btn btn-primary">Calculate Fare</button>
@@ -87,13 +93,13 @@
     </section>
     <footer>
         <div id="footer" class="container">
-            <div class="row my-5 text-center">
-                <div id="footer1" class="col-lg-4 mb-3">
-                    <i class="fa fa-facebook" aria-hidden="true" style="font-size: 20px;"></i>
-                    <i class="fa fa-twitter" aria-hidden="true" style="font-size: 22px;"></i>
-                    <i class="fa fa-instagram" aria-hidden="true" style="font-size: 22px;"></i>
+            <div class="row my-4 text-center">
+                <div id="footer1" class="col-lg-4 py-4">
+                    <i class="fa fa-facebook" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
+                    <i class="fa fa-twitter" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
+                    <i class="fa fa-instagram" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
                 </div>
-                <div id="footer3" class="col-lg-4 mt-3">
+                <div id="footer3" class="col-lg-4 py-4">
                     <ul>
                         <li><a href="#features">FEATURES</a></li>
                         <li><a href="#reviews">REVIEWS</a></li>
@@ -101,11 +107,25 @@
                     </ul>
                 </div>
                 <div id="footer2" class="col-lg-4">
-                    <h2>CedCabs</h2>
+                    <img src="cedcabs.png" alt="CedCabs" id="logo">
                     <p><i class="fa fa-heart" aria-hidden="true" style="color: red;"></i> Designed by <strong>Pradeep Singh Bisht</strong></p>
                 </div>
             </div>
         </div>
     </footer>
+    <script>
+        $('#pickup').change(function(){
+            var pickup = $('#pickup').val();
+            $.ajax({
+                url: "ajax.php",
+                data: {pickup},
+                type: 'POST',
+                dataType: 'html',
+                success: function(result){
+                    alert(result);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

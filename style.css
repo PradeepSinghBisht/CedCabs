@@ -2,7 +2,7 @@
     margin: 0;
 }
 #logo{
-    
+    margin: -60px 0px; 
 }
 #navbtn a{
     color: black;
@@ -40,6 +40,7 @@
     font-weight: bolder;
 }
 #form h5{
+    font-weight: bolder;
     padding: 5px;
     background-color: greenyellow;
     border-radius: 5px;
@@ -49,6 +50,9 @@
 }
 #form input{
     background-color: rgb(240, 235, 235);
+}
+#form button:hover{
+    background-color: rgb(151, 228, 35);
 }
 #form button{
     color: black;
@@ -64,15 +68,13 @@
     background-color: black;
     margin: 0px 20px;
 }
-#footer2 h2{
-    font-weight: bolder;
-}
 #footer3 ul{
     list-style-type: none;
+    padding: 0px;
 }
 #footer3 li{
-    display: inline;
-    margin-right: 15px;
+    display: inline;;
+    margin: 0px 12px;
 }
 #footer3 a{
     text-decoration: none;
