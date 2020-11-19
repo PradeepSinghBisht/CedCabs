@@ -1,0 +1,82 @@
+.body{
+    margin: 0;
+}
+#logo{
+    
+}
+#navbtn a{
+    color: black;
+}
+#navbtn a:first-child:hover{
+    color: black;
+    background-color: rgb(151, 228, 35);
+}
+#book{
+    background-color: greenyellow;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.bg-overlay {
+    background: url("cabs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 800px;
+    padding-top: 50px;
+}
+#section1 h1{
+    color: white;
+    font-weight: bolder;
+}
+#section1 p{
+    color: white;
+    font-size: 19px;
+}
+#form{
+    border-radius: 8px;
+}
+#form h6{
+    color: white;
+    font-weight: bolder;
+}
+#form h5{
+    padding: 5px;
+    background-color: greenyellow;
+    border-radius: 5px;
+}
+#form p {
+    color: white;
+}
+#form input{
+    background-color: rgb(240, 235, 235);
+}
+#form button{
+    color: black;
+    background-color:  greenyellow;
+    border: 1px solid greenyellow;
+    width: 100%;
+}
+#footer1 i{
+    padding: 10px 10px;
+    color: white;
+    border: 1px solid black;
+    border-radius: 150%;
+    background-color: black;
+    margin: 0px 20px;
+}
+#footer2 h2{
+    font-weight: bolder;
+}
+#footer3 ul{
+    list-style-type: none;
+}
+#footer3 li{
+    display: inline;
+    margin-right: 15px;
+}
+#footer3 a{
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(73, 71, 71);
+    font-weight: bold;
+}
