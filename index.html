@@ -10,27 +10,28 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="action.js"></script>
     <title>CedCabs</title>
 </head>
 <body>
     <header class="container">
-        <nav class="navbar navbar-expand-lg navbar-light py-2">
+        <nav class="navbar navbar-expand-md navbar-light py-2">
             <img src="cedcabs.png" alt="CedCabs" id="logo">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav ml-auto" id="navbtn">
-                <a class="nav-item btn mx-4 py-2" href="#" id="book">Book Now<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link mx-4" href="#">Features</a>
-                <a class="nav-item nav-link mx-4" href="#">About</a>
-                <a class="nav-item nav-link mx-4" href="#">Contact Us</a>
+                <a class="nav-item btn mt-1 mx-3 py-2" href="#taxifare" id="book">Book Now<span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link mt-1 mx-3" href="#">Features</a>
+                <a class="nav-item nav-link mt-1 mx-3" href="#">About</a>
+                <a class="nav-item nav-link mt-1 ml-3" href="#">Contact Us</a>
               </div>
             </div>
           </nav>
     </header>
     <section>
-        <div class="container-fluid bg-overlay">
+        <div class="container-fluid bg-overlay py-5" id="taxifare">
             <div class="row text-center py-1">
                 <div class="col-sm-2 col-md-2 col-lg-2"></div>
                 <div id= "section1"class="col-sm-8 col-md-8 col-lg-8">
@@ -39,15 +40,15 @@
                 </div>
                 <div class="col-sm-2 col-md-2 col-lg-2"></div>
             </div>
-            <div class="row text-center my-4">
-                <div class="col-sm-1 col-md-1 col-lg-1"></div>
-                <div class="col-sm-4 col-md-4 col-lg-4 " id="form">
+            <div class="row text-center my-5">
+                <div class="col-sm-2 col-md-1 col-lg-1"></div>
+                <div class="col-sm-8 col-md-5 col-lg-4 " id="form">
                     <h5 class="my-3">CedCabs City Fare</h5>
                     <h6>Your everyday travel partner</h6>
                     <p class="mb-3">AC Cabs for point to point travel</p>
-                    <form>
+                    <form action="#">
                         <div class="form-group">      
-                            <select name="pickup" class="form-control" id="pickup">
+                            <select name="pickup" class="form-control location" id="pickup">
                                 <option value="">Select Your Pickup Location</option>
                                 <option value="Charbagh">Charbagh</option>
                                 <option value="Indira Nagar">Indira Nagar</option>
@@ -80,52 +81,38 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control" id="luggage" placeholder="Luggage in KG">
+                            <input type="text" class="form-control" id="luggage" placeholder="Luggage in KG">
                         </div>
                         <p>
-                            <button type="submit" class="btn btn-primary">Calculate Fare</button>
+                            <button type="button" id="fare" class="btn btn-primary">Calculate Fare</button>
                         </p>
                     </form>           
                 </div>
-                <div class="col-sm-7 col-md-7 col-lg-7"></div>
+                <div class="col-sm-2 col-md-6 col-lg-7"></div>
             </div>
         </div>
     </section>
     <footer>
         <div id="footer" class="container">
             <div class="row my-4 text-center">
-                <div id="footer1" class="col-lg-4 py-4">
+                <div id="footer1" class="col-md-4 col-lg-4 py-4">
                     <i class="fa fa-facebook" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
                     <i class="fa fa-twitter" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
                     <i class="fa fa-instagram" aria-hidden="true" style="padding: 13px;font-size: 22px;"></i>
                 </div>
-                <div id="footer3" class="col-lg-4 py-4">
+                <div id="footer3" class="col-md-4 col-lg-4 py-4">
                     <ul>
                         <li><a href="#features">FEATURES</a></li>
                         <li><a href="#reviews">REVIEWS</a></li>
                         <li><a href="#signup">SIGNUP</a></li>
                     </ul>
                 </div>
-                <div id="footer2" class="col-lg-4">
+                <div id="footer2" class="col-md-4 col-lg-4">
                     <img src="cedcabs.png" alt="CedCabs" id="logo">
                     <p><i class="fa fa-heart" aria-hidden="true" style="color: red;"></i> Designed by <strong>Pradeep Singh Bisht</strong></p>
                 </div>
             </div>
         </div>
     </footer>
-    <script>
-        $('#pickup').change(function(){
-            var pickup = $('#pickup').val();
-            $.ajax({
-                url: "ajax.php",
-                data: {pickup},
-                type: 'POST',
-                dataType: 'html',
-                success: function(result){
-                    alert(result);
-                }
-            });
-        });
-    </script>
 </body>
 </html>
