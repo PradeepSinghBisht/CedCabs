@@ -26,7 +26,7 @@ $(document).ready(function() {
         $('#fare').html('Calculate Fare');
         var weight = $("#luggage").val();
         if(isNaN(weight) == true) {
-            alert("Interger Value Needed");
+            alert("Integer Value Needed");
             $('#luggage').val('');
         }
     });
