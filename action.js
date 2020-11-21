@@ -23,8 +23,9 @@ $(document).ready(function() {
     });
 
     $("#luggage").keyup(function(){
-        var w =$("#luggage").val();
-        if(isNaN(w) == true) {
+        $('#fare').html('Calculate Fare');
+        var weight = $("#luggage").val();
+        if(isNaN(weight) == true) {
             alert("Interger Value Needed");
             $('#luggage').val('');
         }
