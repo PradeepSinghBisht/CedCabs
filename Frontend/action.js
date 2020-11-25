@@ -36,17 +36,44 @@ $(document).ready(function() {
         var drop = $('#drop').val();
         var cabtype = $('#cabtype').val();
         var luggage = $('#luggage').val();
+        var fare = 'fare';
         if (pickup == '' || drop =='' || cabtype == ''){
             alert("Please Fill All Fields");
             return;
         }
         $.ajax({
             url: "ajax.php",
-            data: {pickup, drop, cabtype, luggage},
+            data: {fare, pickup, drop, cabtype, luggage},
             type: 'POST',
             dataType: 'html',
             success: function(result){
                 $('#fare').html('Calculated Fare : Rs. '+result);
+            }
+        });
+    });
+
+    $('#booknow').click(function() {
+        var pickup = $('#pickup').val();
+        var drop = $('#drop').val();
+        var cabtype = $('#cabtype').val();
+        var luggage = $('#luggage').val();
+        var booknow = "booknow";
+
+        if (pickup == '' || drop == '' || cabtype == ''){
+            alert("Please Fill All Fields");
+            return;
+        }
+        $.ajax({
+            url: "ajax.php",
+            data: {booknow, pickup, drop, cabtype, luggage},
+            type: 'POST',
+            dataType: 'html',
+            success: function(result){
+                alert(result);
+                $('#pickup').val('');
+                $('#drop').val('');
+                $('#cabtype').val('');
+                $('#luggage').val('');
             }
         });
     });

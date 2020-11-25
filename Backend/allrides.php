@@ -4,22 +4,10 @@
     session_start();
 
     if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'delete'){
-            $id = $_GET['id'];
-            $sql = "DELETE from user WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
-    }
-
-    if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        if ($_GET['action'] == 'Blocked'){
-            $sql = "UPDATE user SET `isblock`='1' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        } else if ($_GET['action'] == 'Unblocked'){
-            $sql = "UPDATE user SET `isblock`='0' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+        $sql = "DELETE from ride WHERE `ride_id`='$id'";
+        $result = $db->conn->query($sql);
+        
     }
 ?>
 <!DOCTYPE html>
@@ -35,7 +23,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>All Users Details</title>
+    <title>All Rides Details</title>
 </head>
 <body>
     <div id="wrapper">
@@ -69,53 +57,69 @@
                 </li>
             </ul>
         </div>
-    
+
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="container">
-                            <h2>All Users Details</h2>            
+                            <h2>All Rides Details</h2>            
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>User_ID</th>
-                                    <th>Username</th>
-                                    <th>Name</th>
-                                    <th>Date Of SignUp</th>
-                                    <th>Mobile</th>
-                                    <th>Is_Block</th>
-                                    <th>Password</th>
+                                    <th>Ride Date</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Distance</th>
+                                    <th>Luggage</th>
+                                    <th>Fare</th>
+                                    <th>Status</th>
+                                    <th>Customer_Id</th>
                                     <th>Action</th>
-                                    
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM user WHERE `is_admin`='0'";
+                                        $sql = "SELECT * FROM ride";
                                         $result = $db->conn->query($sql);
+                                        
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
-                                                if($row['isblock']=='0') { 
-                                                    $block = 'Blocked'; 
-                                                } else { 
-                                                    $block = 'Unblocked'; 
+                                                if ($row['status'] == '0') {
+                                                    $status = 'Cancelled';
+                                                } else if ($row['status'] == '1') {
+                                                    $status = 'Pending';
+                                                } else if ($row['status'] == '2') {
+                                                    $status = 'Confirmed';
                                                 }
                                                 echo '<tr>
-                                                        <td>'.$row['user_id'].'</td>
-                                                        <td>'.$row['user_name'].'</td>
-                                                        <td>'.$row['name'].'</td>
-                                                        <td>'.$row['dateofsignup'].'</td>
-                                                        <td>'.$row['mobile'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'">'.$block.'</a></td>
-                                                        <td>'.$row['password'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action=delete">Delete</a></td>
+                                                        <td>'.$row['ride_date'].'</td>
+                                                        <td>'.$row['from'].'</td>
+                                                        <td>'.$row['to'].'</td>
+                                                        <td>'.$row['total_distance'].' Km</td>
+                                                        <td>'.$row['luggage'].'</button></td>
+                                                        <td>Rs.'.$row['total_fare'].'</td>
+                                                        <td>'.$status.'</td>
+                                                        <td>'.$row['customer_user_id'].'</td>
+                                                        <td><a href="allrides.php?id='.$row['ride_id'].'">Delete</a></td>
                                                     </tr>';
+                                                
                                             }
                                         }
                                     ?>
                                 </tbody>
-                            </table>       
+                            </table>      
+                            <?php 
+                                $sql = "SELECT * FROM ride WHERE `status`='2' OR `status`='1'";
+                                $result = $db->conn->query($sql); 
+                                $totalearned = 0;
+                                if ($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        $totalearned += $row['total_fare'];
+                                    }
+                                }
+                                echo '<h2 class="text-center">You have Earned Total Rs.'.$totalearned.' From Cab</h2>';
+                            ?> 
                         </div>
                     </div>
                 </div>

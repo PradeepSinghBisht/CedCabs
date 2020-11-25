@@ -33,8 +33,8 @@
                         <?php 
                             if (isset($_SESSION['userdata'])) {
                                 echo '<a class="nav-item nav-link ml-3" href="logout.php">Logout</a>
-                                      <a class="nav-item nav-link mx-3" href="#">Previous Rides</a>
-                                      <a class="nav-item nav-link mx-3" href="updateinfo.php">Personal Info</a>';
+                                      <a class="nav-item nav-link mx-3" href="previousrides.php">Previous Rides</a>
+                                      <a class="nav-item nav-link mx-3" href="updateinfo.php">Update Info</a>';
                             } else {
                                 echo '<a class="nav-item nav-link ml-3" href="login.php">Login</a>
                                       <a class="nav-item nav-link mx-3" href="#">Our Services</a>
@@ -99,7 +99,7 @@
                     <?php
                         if (isset($_SESSION['userdata'])) {
                             echo '<p>
-                                    <button type="button" name="book" class="btn btn-primary">Book Now</button>
+                                    <button type="button" name="book" class="btn btn-primary" id="booknow">Book Now</button>
                                   </p>';
                         } else {
                             echo '<p>

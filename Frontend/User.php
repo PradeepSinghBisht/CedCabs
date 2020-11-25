@@ -68,6 +68,41 @@
             }
             return $errors;
         }
+
+        public function updateinfo($errors, $username, $name, $mobile, $password, $confirmpassword, $conn) {
+            
+            if ($password != $confirmpassword) {
+                $errors[] = array('input'=>'password', 'msg'=>'password doesnt match');
+            }
+        
+            $sql2 = "SELECT * FROM user WHERE `user_name`='".$username."'";
+            $result = $conn->query($sql2);
+        
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $user_id = $_SESSION['userdata']['user_id'];
+                    if ($user_id != $row['user_id'] && $username == $row['user_name']) {
+                         $errors[] = array('input'=>'username',
+                                     'msg'=>'username already exists.');
+                    }
+                }
+            }
+        
+            if (sizeof($errors) == 0) {
+               $sql = "UPDATE user SET `user_name` = '".$username."', `name` = '".$name."',
+                         `mobile` = '".$mobile."', `password` = '".$password."'
+                        WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
+             
+               if ($conn->query($sql) === true) {
+                    echo "<script> alert('Updated Successfully')</script>";
+               } else {
+                    $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+               }
+            }
+            return $errors;
+        }
+        
     }
 
 ?>

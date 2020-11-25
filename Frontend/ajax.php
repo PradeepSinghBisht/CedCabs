@@ -1,4 +1,8 @@
 <?php
+    require "Ride.php";
+    $ride = new Ride();
+    $db = new Dbconnection();
+
     $cities = array('Charbagh'=>'0','Indira Nagar'=>'10','BBD'=>'30','Barabanki'=>'60',
                         'Faizabad'=>'100','Basti'=>'150','Gorakhpur'=>'210');
     
@@ -68,5 +72,12 @@
             $fare += 250 + (10 * 16.50) + (50 * 15) + (100 * 13.20) + ($distance-160) * 11.50;
         }
     }
-    echo $fare;
+    if (isset($_POST['fare'])) {
+        echo $fare;
+    }
+
+    if (isset($_POST['booknow'])) {
+        $sql = $ride->index($pickup, $drop, $distance, $luggage, $fare, $db->conn);
+        echo $sql;
+    }
 ?>

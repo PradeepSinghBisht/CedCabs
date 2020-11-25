@@ -4,25 +4,12 @@
     session_start();
 
     if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'delete'){
-            $id = $_GET['id'];
-            $sql = "DELETE from user WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
-    }
-
-    if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        if ($_GET['action'] == 'Blocked'){
-            $sql = "UPDATE user SET `isblock`='1' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        } else if ($_GET['action'] == 'Unblocked'){
-            $sql = "UPDATE user SET `isblock`='0' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+        $sql = "UPDATE user SET `isblock`='1'  WHERE `user_id`='$id'";
+        $result = $db->conn->query($sql);
+        
     }
 ?>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +22,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>All Users Details</title>
+    <title>User Request</title>
 </head>
 <body>
     <div id="wrapper">
@@ -69,47 +56,38 @@
                 </li>
             </ul>
         </div>
-    
+
         <div id="page-content-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="container">
-                            <h2>All Users Details</h2>            
+                            <h2>User Request</h2>            
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>User_ID</th>
                                     <th>Username</th>
                                     <th>Name</th>
-                                    <th>Date Of SignUp</th>
+                                    <th>DateOfSignup</th>
                                     <th>Mobile</th>
-                                    <th>Is_Block</th>
                                     <th>Password</th>
                                     <th>Action</th>
-                                    
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM user WHERE `is_admin`='0'";
+                                        $sql = "SELECT * FROM user where `isblock`='0'";
                                         $result = $db->conn->query($sql);
+                                        
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
-                                                if($row['isblock']=='0') { 
-                                                    $block = 'Blocked'; 
-                                                } else { 
-                                                    $block = 'Unblocked'; 
-                                                }
                                                 echo '<tr>
-                                                        <td>'.$row['user_id'].'</td>
                                                         <td>'.$row['user_name'].'</td>
                                                         <td>'.$row['name'].'</td>
                                                         <td>'.$row['dateofsignup'].'</td>
                                                         <td>'.$row['mobile'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'">'.$block.'</a></td>
                                                         <td>'.$row['password'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action=delete">Delete</a></td>
+                                                        <td><a href="userrequest.php?id='.$row['user_id'].'">Unblock</a></td>
                                                     </tr>';
                                             }
                                         }
@@ -121,6 +99,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>

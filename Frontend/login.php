@@ -7,7 +7,7 @@
 
 if (isset($_POST['login'])) {
     $username = isset($_POST['username'])?$_POST['username']:'';
-    $password = isset($_POST['password'])?$_POST['password']:'';
+    $password = isset($_POST['password'])?md5($_POST['password']):'';
 
     $errors = $user->login($errors, $username, $password, $db1->conn);
 }

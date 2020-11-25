@@ -8,8 +8,8 @@ if (isset($_POST['register'])) {
     $username = isset($_POST['username'])?$_POST['username']:'';
     $name = isset($_POST['name'])?$_POST['name']:'';
     $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
-    $password = isset($_POST['password'])?$_POST['password']:'';
-    $confirmpassword = isset($_POST['confirmpassword'])?$_POST['confirmpassword']:'';
+    $password = isset($_POST['password'])?md5($_POST['password']):'';
+    $confirmpassword = isset($_POST['confirmpassword'])?md5($_POST['confirmpassword']):'';
     $isadmin = isset($_POST['isadmin'])?$_POST['isadmin']:'';
 
     $errors = $user->signup($errors, $username, $name, $mobile, $password, $confirmpassword, $isadmin, $db->conn);
