@@ -3,8 +3,6 @@
 	 $user = new User();
 	 $db = new Dbconnection();
      $errors = array();
-     //$_SESSION['userdata'] = array();
-     session_start();
  
  if (isset($_POST['update'])) {
 	 $username = isset($_POST['username'])?$_POST['username']:'';

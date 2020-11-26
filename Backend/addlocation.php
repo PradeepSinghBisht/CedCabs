@@ -2,7 +2,6 @@
     require "../Frontend/Location.php";
     $db = new Dbconnection();
     $loc = new Location();
-    session_start();
 
     if (isset($_POST['submit'])) {
         $name = $_POST['locationname'];

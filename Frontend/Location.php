@@ -1,5 +1,7 @@
 <?php
     require "config.php";
+    session_start();
+    
     class Location{
         public function fare($conn) {
             $sql = "SELECT * FROM location WHERE `is_available`='1'";

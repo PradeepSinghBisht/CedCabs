@@ -3,7 +3,6 @@
     $db = new Dbconnection();
     $user = new User();
     $errors = array();
-    session_start();
 
     if (isset($_POST['update'])) {
         $password = isset($_POST['password'])?MD5($_POST['password']):'';

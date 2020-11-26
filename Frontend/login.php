@@ -3,7 +3,6 @@
     $user = new User();
     $db1 = new Dbconnection();
     $errors = array();
-    session_start();
 
 if (isset($_POST['login'])) {
     $username = isset($_POST['username'])?$_POST['username']:'';

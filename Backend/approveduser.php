@@ -98,7 +98,7 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM user where `isblock`='1'";
+                                        $sql = "SELECT * FROM user where `isblock`='1' AND `is_admin`='0'";
                                         $result = $db->conn->query($sql);
                                         
                                         if ($result->num_rows > 0) {

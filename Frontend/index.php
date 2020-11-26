@@ -2,7 +2,6 @@
     require "Location.php";
     $db = new Dbconnection();
     $location = new Location();
-    session_start();
 ?>
 
 <!DOCTYPE html>
