@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 25, 2020 at 03:41 PM
+-- Generation Time: Nov 26, 2020 at 03:52 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -70,8 +70,12 @@ CREATE TABLE `ride` (
 --
 
 INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES
-(38, '2020-11-25', 'BBD', 'Basti', '120', '12', '1717', 0, '14'),
-(39, '2020-11-25', 'Indira Nagar', 'BBD', '20', '1', '545', 2, '12');
+(38, '2020-11-25', 'BBD', 'Basti', '120', '12', '1717', 1, '14'),
+(39, '2020-11-25', 'Indira Nagar', 'BBD', '20', '1', '545', 1, '12'),
+(43, '2020-11-26', 'Charbagh', 'Indira Nagar', '10', '23', '495', 2, '14'),
+(44, '2020-11-26', 'Indira Nagar', 'Gorakhpur', '200', '', '2145', 2, '12'),
+(45, '2020-11-26', 'Barabanki', 'Indira Nagar', '50', '33', '1015', 0, '14'),
+(46, '2020-11-26', 'Charbagh', 'Indira Nagar', '10', '1', '345', 1, '14');
 
 -- --------------------------------------------------------
 
@@ -95,8 +99,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `name`, `dateofsignup`, `mobile`, `isblock`, `password`, `is_admin`) VALUES
-(12, 'sam', 'Sameer Khan', '2020-11-25 15:56:24', '898989889', 1, '332532dcfaa1cbf61e2a266bd723612c', 0),
-(13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '1b80c66fa2d7186a462020c33d639557', 1),
+(12, 'sam', 'Sameer Khan', '2020-11-25 15:56:24', '89898988912', 1, '332532dcfaa1cbf61e2a266bd723612c', 0),
+(13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 1),
 (14, 'thepsb', 'Pradeep Singh Bisht', '2020-11-25 15:59:52', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 0);
 
 --
@@ -129,13 +133,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
-  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `user`
