@@ -2,7 +2,7 @@
     require "config.php";
     class Location{
         public function fare($conn) {
-            $sql = "SELECT * FROM location";
+            $sql = "SELECT * FROM location WHERE `is_available`='1'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {

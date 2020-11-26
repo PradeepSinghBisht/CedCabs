@@ -70,7 +70,7 @@ if (isset($_POST['register'])) {
 		</div>
 		<div class="col-md-6 col-lg-6 col-sm-10" id='abc'>
 			<center>
-				<a href="index.html"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
+				<a href="#"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
 			</center>
 			<h2 style="text-align: center;">Register Here</h2>
 			<form action="signup.php" method="POST">

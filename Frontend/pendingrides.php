@@ -16,7 +16,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="action.js"></script>
-    <title>All Rides Details</title>
+    <title>Pending Rides Details</title>
 </head>
 <body>
 <header>
@@ -63,7 +63,7 @@
     </header>
     <section>
         <div class="container">
-            <h2>All Rides Details</h2>            
+            <h2>Pending Rides Details</h2>            
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -79,39 +79,32 @@
                 </thead>
                 <tbody id= "hello">
                     <?php
-                        $rows = $ride->allrides($db->conn);
+                        $rows = $ride->pendingrides($db->conn);
                         
-                        foreach ($rows as $row) {
-                            if ($row['status'] == '0') {
-                                $status = 'Cancelled';
-                            } else if ($row['status'] == '1') {
-                                $status = 'Pending';
-                            } else if ($row['status'] == '2') {
-                                $status = 'Confirmed';
+                            foreach ($rows as $row) {
+                                if ($row['status'] == '0') {
+                                    $status = 'Cancelled';
+                                } else if ($row['status'] == '1') {
+                                    $status = 'Pending';
+                                } else if ($row['status'] == '2') {
+                                    $status = 'Confirmed';
+                                }
+                                echo '<tr>
+                                        <td>'.$row['ride_date'].'</td>
+                                        <td>'.$row['from'].'</td>
+                                        <td>'.$row['to'].'</td>
+                                        <td>'.$row['total_distance'].' Km</td>
+                                        <td>'.$row['luggage'].'</td>
+                                        <td>Rs.'.$row['total_fare'].'</td>
+                                        <td>'.$status.'</td>
+                                        <td>'.$row['customer_user_id'].'</td>
+                                      </tr>';
+                                
                             }
-                            echo '<tr>
-                                    <td>'.$row['ride_date'].'</td>
-                                    <td>'.$row['from'].'</td>
-                                    <td>'.$row['to'].'</td>
-                                    <td>'.$row['total_distance'].' Km</td>
-                                    <td>'.$row['luggage'].'</td>
-                                    <td>Rs.'.$row['total_fare'].'</td>
-                                    <td>'.$status.'</td>
-                                    <td>'.$row['customer_user_id'].'</td>
-                                </tr>';
-                        }
+                        
                     ?>
                 </tbody>
-            </table>      
-            <?php 
-                $rows = $ride->spent($db->conn);
-
-                $totalfare = 0;
-                foreach ($rows as $row) {
-                    $totalfare += $row['total_fare'];
-                }
-                echo '<h2 class="text-center">You have Spent Total Rs.'.$totalfare.' On Cab</h2>';
-            ?> 
+            </table> 
         </div>
     </section>
     <footer>
