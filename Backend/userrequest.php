@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>User Request</title>
+    <title>Pending User Request</title>
 </head>
 <body>
     <div id="wrapper">
@@ -36,20 +36,42 @@
                 <li>
                     <a href="admindashboard.php">Dashboard</a>
                 </li>
-                <li>
-                    <a href="userrequest.php">User Request</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Rides
+                    </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="riderequest.php">Pending Rides</a>
+                    <a class="dropdown-item" id="d" href="completedrides.php">Completed Rides</a>
+                    <a class="dropdown-item" id="d" href="cancelledrides.php">Cancelled Rides</a>
+                    <a class="dropdown-item" id="d" href="allrides.php">All Rides</a>
+                </li> 
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Users
+                    </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="userrequest.php">Pending User Request</a>
+                    <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
+                    <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
                 </li>
-                <li>
-                    <a href="riderequest.php">Ride Request</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Location
+                    </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="location.php">All Location</a>
+                    <a class="dropdown-item" id="d" href="addlocation.php">Add New Location</a>
                 </li>
-                <li>
-                    <a href="allrides.php">All Rides</a>
-                </li>
-                <li>
-                    <a href="allusers.php">All Users</a>
-                </li>
-                <li>
-                    <a href="location.php">Location</a>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Account
+                    </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
                     <a href="../Frontend/logout.php">Logout</a>
@@ -62,7 +84,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="container">
-                            <h2>User Request</h2>            
+                            <h2>Pending User Request</h2>            
                             <table class="table table-striped">
                                 <thead>
                                 <tr>

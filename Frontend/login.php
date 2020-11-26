@@ -65,7 +65,7 @@ if (isset($_POST['login'])) {
 		</div>
 		<div class="col-md-6 col-lg-6 col-sm-10" id='abc'>
 			<center>
-				<a href="index.html"><img src="cedcabs.png" style="margin:-65px 0px -60px;" alt="" /></a>
+				<a href="#"><img src="cedcabs.png" style="margin:-65px 0px -60px;" alt="" /></a>
 			</center>
 			<h2 style="text-align: center;">Login Here</h2>
 			<form action="login.php" method="POST">

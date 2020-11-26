@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Pending Rides</title>
+    <title>Cancelled Rides</title>
 </head>
 <body>
     <div id="wrapper">
@@ -93,7 +93,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="container">
-                            <h2>Pending Rides</h2>            
+                            <h2>Cancelled Rides</h2>            
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -105,12 +105,11 @@
                                     <th>Fare</th>
                                     <th>Status</th>
                                     <th>Customer_Id</th>
-                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM ride WHERE `status`='1'";
+                                        $sql = "SELECT * FROM ride WHERE `status`='0'";
                                         $result = $db->conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             while($row = $result->fetch_assoc()) {
@@ -130,8 +129,6 @@
                                                         <td>Rs.'.$row['total_fare'].'</td>
                                                         <td>'.$status.'</td>
                                                         <td>'.$row['customer_user_id'].'</td>
-                                                        <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm">Confirm</a>
-                                                        <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel">Cancel</a></td>
                                                     </tr>';
                                             }
                                         }

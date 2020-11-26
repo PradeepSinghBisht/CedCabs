@@ -3,22 +3,27 @@
     $db = new Dbconnection();
     session_start();
 
-    if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'confirm'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='2' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
-    }
+    if (isset($_POST['submit'])) {
+        $id = $_GET['id'];
+        $name = $_POST['locationname'];
+        $distance = $_POST['distance'];
+        $available = $_POST['available'];
 
-    if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'cancel'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='0' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
+        if ($available == '') {
+            echo '<script>alert("Please Fill All Fields")</script>';
+        } else {
+            $sql = "UPDATE location SET `name`='".$name."', `distance`='".$distance."', `is_available`='".$available."' WHERE `id`='".$id."'";
+           
+            if ($db->conn->query($sql) === true) {
+                echo '<script> alert("Location Updated Successfully")</script>';
+
+            } else {
+                echo "Error: " . $sql . "<br>" . $db->conn->error;
+            }
         }
     }
 ?>
+<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +36,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Pending Rides</title>
+    <title>Edit Location</title>
 </head>
 <body>
     <div id="wrapper">
@@ -93,55 +98,43 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="container">
-                            <h2>Pending Rides</h2>            
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Ride Date</th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Distance</th>
-                                    <th>Luggage</th>
-                                    <th>Fare</th>
-                                    <th>Status</th>
-                                    <th>Customer_Id</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody id= "hello">
-                                    <?php
-                                        $sql = "SELECT * FROM ride WHERE `status`='1'";
-                                        $result = $db->conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if ($row['status'] == '0') {
-                                                    $status = 'Cancelled';
-                                                } else if ($row['status'] == '1') {
-                                                    $status = 'Pending';
-                                                } else if ($row['status'] == '2') {
-                                                    $status = 'Confirmed';
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['ride_date'].'</td>
-                                                        <td>'.$row['from'].'</td>
-                                                        <td>'.$row['to'].'</td>
-                                                        <td>'.$row['total_distance'].' Km</td>
-                                                        <td>'.$row['luggage'].'Kg</td>
-                                                        <td>Rs.'.$row['total_fare'].'</td>
-                                                        <td>'.$status.'</td>
-                                                        <td>'.$row['customer_user_id'].'</td>
-                                                        <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm">Confirm</a>
-                                                        <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel">Cancel</a></td>
-                                                    </tr>';
-                                            }
+                            <h2>Edit Location</h2>
+                            <?php
+                                if (isset($_GET['id'])) {
+                                    $id = $_GET['id'];
+                            
+                                    $sql = "SELECT * FROM location WHERE `id`='".$id."'";
+                                    $result = $db->conn->query($sql);
+                                    
+                                    if ($result->num_rows > 0){
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo '<form action="#" method="POST">
+                                                    <div class="form-group">
+                                                        <label for="name">Location Name</label>
+                                                        <input type="text" class="form-control" id="name" name="locationname" placeholder="Enter New Location" value="'.$row['name'].'" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="distance">Distance</label>
+                                                        <input type="number" class="form-control" id="distance" name="distance" placeholder="Distance" value="'.$row['distance'].'" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="available">Is Available</label>
+                                                        <select class="form-control" id="available" name="available">
+                                                            <option value="">Select Availablity of Location</option>
+                                                            <option value="1">Available</option>
+                                                            <option value="0">Unavailable</option>
+                                                        </select>
+                                                    </div>
+                                                    <button type="submit" name="submit" class="btn btn-primary">Update Location</button>
+                                                </form> ';     
                                         }
-                                    ?>
-                                </tbody>
-                            </table>      
+                                    }
+                                }
+                            ?>
+                                  
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</body>
-</html>
+    </div>

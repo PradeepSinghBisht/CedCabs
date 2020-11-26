@@ -4,6 +4,7 @@
     $location = new Location();
     session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,8 +34,23 @@
                         <?php 
                             if (isset($_SESSION['userdata'])) {
                                 echo '<a class="nav-item nav-link ml-3" href="logout.php">Logout</a>
-                                      <a class="nav-item nav-link mx-3" href="previousrides.php">Previous Rides</a>
-                                      <a class="nav-item nav-link mx-3" href="updateinfo.php">Update Info</a>';
+                                      <li class="nav-item dropdown ml-3">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Rides
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="pendingrides.php">Pending Rides</a>
+                                        <a class="dropdown-item" href="completedrides.php">Completed Rides</a>
+                                        <a class="dropdown-item" href="previousrides.php">All Rides</a>
+                                      </li>  
+                                      <li class="nav-item dropdown ml-3">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Account Info
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="updateinfo.php">Update Account</a>
+                                        <a class="dropdown-item" href="changepassword.php">Change Password</a>
+                                    </li>';
                             } else {
                                 echo '<a class="nav-item nav-link ml-3" href="login.php">Login</a>
                                       <a class="nav-item nav-link mx-3" href="#">Our Services</a>
@@ -47,6 +63,7 @@
             </div>
         </nav>
     </header>
+    
     <section>
         <div class="container-fluid bg-overlay py-5" id="taxifare">
             <div class="row text-center py-1">
@@ -99,11 +116,11 @@
                     <?php
                         if (isset($_SESSION['userdata'])) {
                             echo '<p>
-                                    <button type="button" name="book" class="btn btn-primary" id="booknow">Book Now</button>
+                                    <button type="button" name="book" class="book btn btn-primary" id="booknow">Book Now</button>
                                   </p>';
                         } else {
                             echo '<p>
-                                    <a class="nav-item nav-link" style="background-color: greenyellow; color:black; 
+                                    <a class="nav-item nav-link" id="booknow" style="background-color: greenyellow; color:black; 
                                     width:420px; border-radius:5px;" href="login.php">Wanna Book Ride? Login First</a>
                                   </p>';
                         }

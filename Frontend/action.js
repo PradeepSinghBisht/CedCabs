@@ -41,6 +41,7 @@ $(document).ready(function() {
             alert("Please Fill All Fields");
             return;
         }
+        $('#booknow').css('display','block');
         $.ajax({
             url: "ajax.php",
             data: {fare, pickup, drop, cabtype, luggage},
@@ -48,21 +49,19 @@ $(document).ready(function() {
             dataType: 'html',
             success: function(result){
                 $('#fare').html('Calculated Fare : Rs. '+result);
+                total = result;
+                console.log(total);
             }
         });
     });
 
-    $('#booknow').click(function() {
+    $('.book').click(function() {
         var pickup = $('#pickup').val();
         var drop = $('#drop').val();
         var cabtype = $('#cabtype').val();
         var luggage = $('#luggage').val();
         var booknow = "booknow";
 
-        if (pickup == '' || drop == '' || cabtype == ''){
-            alert("Please Fill All Fields");
-            return;
-        }
         $.ajax({
             url: "ajax.php",
             data: {booknow, pickup, drop, cabtype, luggage},

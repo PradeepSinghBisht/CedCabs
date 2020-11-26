@@ -16,5 +16,34 @@
                 echo "Error: " . $result . "<br>" . $conn->error;
             }     
         }
+
+        public function completedrides($conn) {
+
+            $sql = "SELECT * FROM ride where `customer_user_id`='".$_SESSION['userdata']['user_id']."'AND `status`='2'";
+            $result = $conn->query($sql);
+    
+            return $result;
+        }
+
+        public function pendingrides($conn) {
+            $sql = "SELECT * FROM ride where `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='1'";
+            $result = $conn->query($sql);
+            
+            return $result;
+        }
+
+        public function allrides($conn) {
+            $sql = "SELECT * FROM ride where `customer_user_id`='".$_SESSION['userdata']['user_id']."'";
+            $result = $conn->query($sql);
+            
+            return $result;
+        }
+
+        public function spent($conn) {
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND (`status`='2' OR `status`='1')";
+            $result = $conn->query($sql);
+            
+            return $result;
+        }
     }
 ?>

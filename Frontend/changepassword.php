@@ -3,23 +3,21 @@
 	 $user = new User();
 	 $db = new Dbconnection();
      $errors = array();
-     //$_SESSION['userdata'] = array();
      session_start();
  
- if (isset($_POST['update'])) {
-	 $username = isset($_POST['username'])?$_POST['username']:'';
-	 $name = isset($_POST['name'])?$_POST['name']:'';
-	 $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
- 
-	 $errors = $user->updateinfo($errors, $username, $name, $mobile, $db->conn);
- }
+    if (isset($_POST['update'])) {
+        $password = isset($_POST['password'])?MD5($_POST['password']):'';
+        $confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
+    
+        $errors = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+    }
 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Update Account</title>
+	<title>Update Password</title>
 	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 	<meta charset="utf-8">
@@ -71,22 +69,15 @@
 				<a href="#"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
 			</center>
 			<h2 style="text-align: center;">Update Information</h2>
-			<form action="updateinfo.php" method="POST">
-                <div class="form-group " style="padding: 5px 0px;">
-					<label for='username'>Username:</label>
-					<input type="text" class='form-control' name="username" value="<?php 
-                    echo $_SESSION['userdata']['user_name'];?>" readonly>
-				</div>
-                <div class="form-group" style="padding: 5px 0px;">
-					<label for='name'>Name:</label>
-					<input type="text" class='form-control' name="name" value="<?php 
-                    echo $_SESSION['userdata']['name'];?>" required>
+			<form action="changepassword.php" method="POST">
+				<div class="form-group " style="padding: 5px 0px;">
+					<label for='password'>Password:</label>
+					<input type="password" class='form-control' name="password">
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">
-					<label for='mobile'>Mobile:</label>
-					<input type="number" class='form-control' name="mobile" value="<?php 
-                    echo $_SESSION['userdata']['mobile'];?>" >
-				</div>
+					<label for='confirmpassword'>Confirm Password:</label>
+					<input type="password" class='form-control' name="confirmpassword">
+                </div>
 				<div class="form-group " style="padding: 10px 0px;">
 					<input type="submit" class="btn btn-success form-control"  name="update" value="Update" style="padding: 5px 30px;">
 				</div>
