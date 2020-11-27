@@ -26,13 +26,12 @@
                 VALUES("'.$username.'","'.$name.'",NOW(),"'.$mobile.'","'.$isadmin.'","'.$password.'","'.$isadmin.'")';
         
                 if ($conn->query($sql) === true) {
-                    echo '<script> alert("Registered Successfully")</script>';
+                    echo '<script>alert("Registered Successfully")</script>';
         
                 } else {
                     $errors[] = array('input'=>'form', 'msg'=>$conn->error);
-                    echo "Error: " . $sql . "<br>" . $conn->error;
                 }
-            }
+            } 
             return $errors;
         }
 
@@ -42,32 +41,7 @@
                     AND `password`='".$password."'";
             $result = $conn->query($sql);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    if ($row['isblock'] == 1 and $row['is_admin'] == 0) {
-                        $_SESSION['userdata'] = array('user_id'=>$row['user_id'],
-                        'user_name'=>$row['user_name'], 'name'=>$row['name'],
-                        'dateofsignup'=>$row['dateofsignup'], 'mobile'=>$row['mobile'], 
-                        'isblock'=>$row['isblock'], 'is_admin'=>$row['is_admin']);
-                        
-                        header('Location: index.php');
-
-                    } else if ($row['isblock'] == 1 and $row['is_admin'] == 1){
-                        $_SESSION['userdata'] = array('user_id'=>$row['user_id'],
-                        'user_name'=>$row['user_name'], 'name'=>$row['name'],
-                        'dateofsignup'=>$row['dateofsignup'], 'mobile'=>$row['mobile'], 
-                        'isblock'=>$row['isblock'], 'is_admin'=>$row['is_admin']);
-
-                        header('Location: ../Backend/admindashboard.php');
-                        
-                    } else if ($row['isblock'] == 0){
-                        echo '<script> alert("Please Wait for Admin Approval")</script>';
-                    }
-                }
-            } else {
-                $errors[] = array('input'=>'login', 'msg'=>'Invalid Login Details');
-            }
-            return $errors;
+            return $result;
         }
 
         public function updateinfo($errors, $username, $name, $mobile, $conn) {
@@ -76,36 +50,54 @@
                         `mobile` = '".$mobile."' 
                     WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
             
-            if ($conn->query($sql) === true) {
-                echo "<script> alert('Updated Successfully')</script>";
-            } else {
-                $errors[] = array('input'=>'form', 'msg'=>$conn->error);
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-            
-            return $errors;
+            return $sql;
         }
 
         public function changepassword($errors, $password, $confirmpassword, $conn) {
-
-            if ($password != $confirmpassword) {
-                $errors[] = array('msg'=>'Password Doesn\'t Match');
-            }
             
-            if (sizeof($errors) == 0) {
-                $sql = "UPDATE user SET `password` = '".$password."'
+            $sql = "UPDATE user SET `password` = '".$password."'
                         WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
                 
-                if ($conn->query($sql) === true) {
-                    echo "<script> alert('Updated Successfully')</script>";
-                } else {
-                    $errors[] = array('input'=>'form', 'msg'=>$conn->error);
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-            }
-            return $errors;
+            return $sql;
         }
-        
+
+        public function allusers($conn) {
+            $sql = "SELECT * FROM user WHERE `is_admin`='0'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function deleteuser($conn, $id) {
+            $sql = "DELETE from user WHERE `user_id`='$id'";
+            $result = $db->conn->query($sql);
+        }
+
+        public function updateuserrequest($conn, $id, $action) {
+
+            if ($action == 'Blocked'){
+                $sql = "UPDATE user SET `isblock`='1' WHERE `user_id`='$id'";
+                $result = $conn->query($sql);
+            } else if ($action == 'Unblocked'){
+                $sql = "UPDATE user SET `isblock`='0' WHERE `user_id`='$id'";
+                $result = $conn->query($sql);
+            }
+            
+        }
+
+        public function approveduser($conn) {
+            $sql = "SELECT * FROM user where `isblock`='1' AND `is_admin`='0'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function pendinguser($conn) {
+            $sql = "SELECT * FROM user where `isblock`='0' AND `is_admin`='0'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
     }
 
 ?>

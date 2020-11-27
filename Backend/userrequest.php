@@ -1,13 +1,21 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/User.php";
     $db = new Dbconnection();
+    $user = new User();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $sql = "UPDATE user SET `isblock`='1'  WHERE `user_id`='$id'";
-        $result = $db->conn->query($sql);
-        
+        $action = $_GET['action'];
+        $user->updateuserrequest($db->conn, $id, $action);
     }
 ?>
 <!DOCTYPE html>
@@ -98,20 +106,17 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM user where `isblock`='0'";
-                                        $result = $db->conn->query($sql);
+                                        $rows = $user->pendinguser($db->conn);
                                         
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                echo '<tr>
-                                                        <td>'.$row['user_name'].'</td>
-                                                        <td>'.$row['name'].'</td>
-                                                        <td>'.$row['dateofsignup'].'</td>
-                                                        <td>'.$row['mobile'].'</td>
-                                                        <td>'.$row['password'].'</td>
-                                                        <td><a href="userrequest.php?id='.$row['user_id'].'">Unblock</a></td>
-                                                    </tr>';
-                                            }
+                                        foreach ($rows as $row) {
+                                            echo '<tr>
+                                                    <td>'.$row['user_name'].'</td>
+                                                    <td>'.$row['name'].'</td>
+                                                    <td>'.$row['dateofsignup'].'</td>
+                                                    <td>'.$row['mobile'].'</td>
+                                                    <td>'.$row['password'].'</td>
+                                                    <td><a href="userrequest.php?id='.$row['user_id'].'&action=Blocked">Unblock</a></td>
+                                                </tr>';
                                         }
                                     ?>
                                 </tbody>

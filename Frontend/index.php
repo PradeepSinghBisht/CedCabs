@@ -3,6 +3,12 @@
     $db = new Dbconnection();
     $location = new Location();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '1') {
+            header('Location: ../Backend/admindashboard.php');
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +91,11 @@
                             <select name="pickup" class="form-control location" id="pickup">
                                 <option value="">Select Your Pickup Location</option>
                                 <?php
-                                    $location->fare($db->conn);                                   
+                                    $rows = $location->fare($db->conn);    
+                                    
+                                    foreach ($rows as $row) {
+                                        echo '<option value="'.$row['name'].'">'.$row['name'].'</option>';
+                                    }
                                 ?>   
                             </select>
                         </div>
@@ -93,7 +103,11 @@
                             <select name="drop" class="form-control" id="drop">
                                 <option value="">Select Your Drop Location</option>
                                 <?php
-                                    $location->fare($db->conn);                                   
+                                    $rows = $location->fare($db->conn);  
+                                    
+                                    foreach ($rows as $row) {
+                                        echo '<option value="'.$row['name'].'">'.$row['name'].'</option>';
+                                    }
                                 ?> 
                             </select>
                         </div>

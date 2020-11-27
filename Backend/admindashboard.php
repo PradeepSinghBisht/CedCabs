@@ -1,5 +1,13 @@
 <?php
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

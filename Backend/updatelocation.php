@@ -1,7 +1,16 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/Location.php";
     $db = new Dbconnection();
+    $loc = new Location();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 
     if (isset($_POST['submit'])) {
         $id = $_GET['id'];
@@ -12,7 +21,7 @@
         if ($available == '') {
             echo '<script>alert("Please Fill All Fields")</script>';
         } else {
-            $sql = "UPDATE location SET `name`='".$name."', `distance`='".$distance."', `is_available`='".$available."' WHERE `id`='".$id."'";
+            $sql = $loc->updatelocation($db->conn, $id, $name, $distance, $available);
            
             if ($db->conn->query($sql) === true) {
                 echo '<script> alert("Location Updated Successfully")</script>';
@@ -70,7 +79,7 @@
                     <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
                     <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
                 </li>
-
+                
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Location
@@ -84,9 +93,6 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                     </a>
-                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
-                </li>
                 <li>
                     <a href="../Frontend/logout.php">Logout</a>
                 </li>
@@ -100,34 +106,32 @@
                         <div class="container">
                             <h2>Edit Location</h2>
                             <?php
-                                if (isset($_GET['id'])) {
+                              
+                              if (isset($_GET['id'])) {
                                     $id = $_GET['id'];
                             
-                                    $sql = "SELECT * FROM location WHERE `id`='".$id."'";
-                                    $result = $db->conn->query($sql);
+                                    $rows = $loc->selectupdatelocation($db->conn, $id);
                                     
-                                    if ($result->num_rows > 0){
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '<form action="#" method="POST">
-                                                    <div class="form-group">
-                                                        <label for="name">Location Name</label>
-                                                        <input type="text" class="form-control" id="name" name="locationname" placeholder="Enter New Location" value="'.$row['name'].'" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="distance">Distance</label>
-                                                        <input type="number" class="form-control" id="distance" name="distance" placeholder="Distance" value="'.$row['distance'].'" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="available">Is Available</label>
-                                                        <select class="form-control" id="available" name="available">
-                                                            <option value="">Select Availablity of Location</option>
-                                                            <option value="1">Available</option>
-                                                            <option value="0">Unavailable</option>
-                                                        </select>
-                                                    </div>
-                                                    <button type="submit" name="submit" class="btn btn-primary">Update Location</button>
-                                                </form> ';     
-                                        }
+                                    foreach ($rows as $row) {
+                                        echo '<form action="#" method="POST">
+                                                <div class="form-group">
+                                                    <label for="name">Location Name</label>
+                                                    <input type="text" class="form-control" id="name" name="locationname" placeholder="Enter New Location" value="'.$row['name'].'" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="distance">Distance</label>
+                                                    <input type="number" class="form-control" id="distance" name="distance" placeholder="Distance" value="'.$row['distance'].'" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="available">Is Available</label>
+                                                    <select class="form-control" id="available" name="available">
+                                                        <option value="">Select Availablity of Location</option>
+                                                        <option value="1">Available</option>
+                                                        <option value="0">Unavailable</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" name="submit" class="btn btn-primary">Update Location</button>
+                                            </form> ';
                                     }
                                 }
                             ?>

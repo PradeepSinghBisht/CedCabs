@@ -1,14 +1,21 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/Location.php";
     $db = new Dbconnection();
+    $loc = new Location();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        if ($_GET['action'] == 'delete') {
-            $sql = "DELETE from location WHERE `id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+        $action = $_GET['action'];
+        $loc->deletelocation($db->conn, $id, $action);
     }
 ?>
 <!DOCTYPE html>
@@ -99,23 +106,21 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM location";
-                                        $result = $db->conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if ($row['is_available'] == '1') {
-                                                    $isavailable = 'Available';
-                                                } else if ($row['is_available'] == '0') {
-                                                    $isavailable = 'Unavailable';
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['name'].'</td>
-                                                        <td>'.$row['distance'].' Km</td>
-                                                        <td>'.$isavailable.'</td>
-                                                        <td><a href="updatelocation.php?id='.$row['id'].'">Edit</a>
-                                                        <a href="location.php?id='.$row['id'].'&action=delete">Delete</a></td>
-                                                    </tr>';
+                                        $rows = $loc->alllocation($db->conn);
+
+                                        foreach ($rows as $row) {
+                                            if ($row['is_available'] == '1') {
+                                                $isavailable = 'Available';
+                                            } else if ($row['is_available'] == '0') {
+                                                $isavailable = 'Unavailable';
                                             }
+                                            echo '<tr>
+                                                    <td>'.$row['name'].'</td>
+                                                    <td>'.$row['distance'].' Km</td>
+                                                    <td>'.$isavailable.'</td>
+                                                    <td><a href="updatelocation.php?id='.$row['id'].'">Edit</a>
+                                                    <a href="location.php?id='.$row['id'].'&action=delete">Delete</a></td>
+                                                </tr>';
                                         }
                                     ?>
                                 </tbody>

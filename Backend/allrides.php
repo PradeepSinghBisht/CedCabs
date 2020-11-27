@@ -1,14 +1,21 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/Ride.php";
     $db = new Dbconnection();
+    $ride = new Ride();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $sql = "DELETE from ride WHERE `ride_id`='$id'";
-        $result = $db->conn->query($sql);
-        
-    }
+        $ride->deleteride($db->conn, $id);
+    }   
 ?>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -102,43 +109,37 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM ride";
-                                        $result = $db->conn->query($sql);
+                                        $rows = $ride->allrides($db->conn);
                                         
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if ($row['status'] == '0') {
-                                                    $status = 'Cancelled';
-                                                } else if ($row['status'] == '1') {
-                                                    $status = 'Pending';
-                                                } else if ($row['status'] == '2') {
-                                                    $status = 'Confirmed';
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['ride_date'].'</td>
-                                                        <td>'.$row['from'].'</td>
-                                                        <td>'.$row['to'].'</td>
-                                                        <td>'.$row['total_distance'].' Km</td>
-                                                        <td>'.$row['luggage'].' Kg</td>
-                                                        <td>Rs.'.$row['total_fare'].'</td>
-                                                        <td>'.$status.'</td>
-                                                        <td>'.$row['customer_user_id'].'</td>
-                                                        <td><a href="allrides.php?id='.$row['ride_id'].'">Delete</a></td>
-                                                    </tr>';
-                                                
+                                        foreach ($rows as $row) {
+                                            if ($row['status'] == '0') {
+                                                $status = 'Cancelled';
+                                            } else if ($row['status'] == '1') {
+                                                $status = 'Pending';
+                                            } else if ($row['status'] == '2') {
+                                                $status = 'Confirmed';
                                             }
+                                            echo '<tr>
+                                                    <td>'.$row['ride_date'].'</td>
+                                                    <td>'.$row['from'].'</td>
+                                                    <td>'.$row['to'].'</td>
+                                                    <td>'.$row['total_distance'].' Km</td>
+                                                    <td>'.$row['luggage'].' Kg</td>
+                                                    <td>Rs.'.$row['total_fare'].'</td>
+                                                    <td>'.$status.'</td>
+                                                    <td>'.$row['customer_user_id'].'</td>
+                                                    <td><a href="allrides.php?id='.$row['ride_id'].'">Delete</a></td>
+                                                </tr>';
                                         }
                                     ?>
                                 </tbody>
                             </table>      
                             <?php 
-                                $sql = "SELECT * FROM ride WHERE `status`='2' OR `status`='1'";
-                                $result = $db->conn->query($sql); 
+                                $rows = $ride->earned($db->conn);
+
                                 $totalearned = 0;
-                                if ($result->num_rows > 0) {
-                                    while($row = $result->fetch_assoc()) {
-                                        $totalearned += $row['total_fare'];
-                                    }
+                                foreach ($rows as $row) {
+                                    $totalearned += $row['total_fare'];
                                 }
                                 echo '<h2 class="text-center">You have Earned Total Rs.'.$totalearned.' From Cab</h2>';
                             ?> 

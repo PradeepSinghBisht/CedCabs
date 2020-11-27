@@ -2,14 +2,35 @@
 	 require "User.php";
 	 $user = new User();
 	 $db = new Dbconnection();
-     $errors = array();
-     session_start();
+	 $errors = array();
+	 session_start();
+
+	if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '1') {
+            header('Location: ../Backend/admindashboard.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
  
     if (isset($_POST['update'])) {
         $password = isset($_POST['password'])?MD5($_POST['password']):'';
-        $confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
-    
-        $errors = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+		$confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
+		
+		if ($password != $confirmpassword) {
+			$errors[] = array('msg'=>'Password Doesn\'t Match');
+		}
+
+		if (sizeof($errors) == 0) {
+			$sql = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+
+			if ($db->conn->query($sql) === true) {
+                echo "<script> alert('Updated Successfully')</script>";
+            } else {
+                $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+		}
     }
 
 ?>

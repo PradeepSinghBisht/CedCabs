@@ -5,11 +5,19 @@
     $errors = array();
     session_start();
 
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
+
     if (isset($_POST['update'])) {
         $password = isset($_POST['password'])?MD5($_POST['password']):'';
         $confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
     
-       $errors = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+        $errors = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
     }
 
 ?>

@@ -2,16 +2,30 @@
 	 require "User.php";
 	 $user = new User();
 	 $db = new Dbconnection();
-     $errors = array();
-     //$_SESSION['userdata'] = array();
-     session_start();
+	 $errors = array();
+	 session_start();
+
+	 if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '1') {
+            header('Location: ../Backend/admindashboard.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
  
  if (isset($_POST['update'])) {
 	 $username = isset($_POST['username'])?$_POST['username']:'';
 	 $name = isset($_POST['name'])?$_POST['name']:'';
 	 $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
  
-	 $errors = $user->updateinfo($errors, $username, $name, $mobile, $db->conn);
+	 $sql = $user->updateinfo($errors, $username, $name, $mobile, $db->conn);
+
+	if ($db->conn->query($sql) === true) {
+		echo "<script> alert('Updated Successfully')</script>";
+	} else {
+		$errors[] = array('input'=>'form', 'msg'=>$conn->error);
+		echo "Error: " . $sql . "<br>" . $conn->error;
+	}
  }
 
 ?>

@@ -1,25 +1,28 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/User.php";
     $db = new Dbconnection();
+    $user = new User();
     session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
 
     if (isset($_GET['id'])) {
         if ($_GET['action'] == 'delete'){
             $id = $_GET['id'];
-            $sql = "DELETE from user WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
+            $user->deleteuser($db->conn, $id);
         }
     }
 
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        if ($_GET['action'] == 'Blocked'){
-            $sql = "UPDATE user SET `isblock`='1' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        } else if ($_GET['action'] == 'Unblocked'){
-            $sql = "UPDATE user SET `isblock`='0' WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+        $action = $_GET['action'];
+        $user->updateuserrequest($db->conn, $id, $action);
     }
 ?>
 <!DOCTYPE html>
@@ -114,26 +117,26 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM user WHERE `is_admin`='0'";
-                                        $result = $db->conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if($row['isblock']=='0') { 
-                                                    $block = 'Blocked'; 
-                                                } else { 
-                                                    $block = 'Unblocked'; 
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['user_id'].'</td>
-                                                        <td>'.$row['user_name'].'</td>
-                                                        <td>'.$row['name'].'</td>
-                                                        <td>'.$row['dateofsignup'].'</td>
-                                                        <td>'.$row['mobile'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'">'.$block.'</a></td>
-                                                        <td>'.$row['password'].'</td>
-                                                        <td><a href="allusers.php?id='.$row['user_id'].'&action=delete">Delete</a></td>
-                                                    </tr>';
+                                        $rows = $user->allusers($db->conn);
+
+                                        foreach ($rows as $row) {
+
+                                            if($row['isblock']=='0') { 
+                                                $block = 'Blocked'; 
+                                            } else { 
+                                                $block = 'Unblocked'; 
                                             }
+
+                                            echo '<tr>
+                                                    <td>'.$row['user_id'].'</td>
+                                                    <td>'.$row['user_name'].'</td>
+                                                    <td>'.$row['name'].'</td>
+                                                    <td>'.$row['dateofsignup'].'</td>
+                                                    <td>'.$row['mobile'].'</td>
+                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'">'.$block.'</a></td>
+                                                    <td>'.$row['password'].'</td>
+                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete">Delete</a></td>
+                                                </tr>'; 
                                         }
                                     ?>
                                 </tbody>

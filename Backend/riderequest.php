@@ -1,22 +1,27 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/Ride.php";
     $db = new Dbconnection();
+    $ride = new Ride();
     session_start();
-
-    if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'confirm'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='2' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
+    $prady = "";
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
         }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
+
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+        $sql = "SELECT * FROM ride WHERE `status` = '1' ORDER BY `ride_id` DESC";
+        $prady = $db->conn->query($sql);
     }
 
     if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'cancel'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='0' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+        $id = $_GET['id'];
+        $action = $_GET['action'];
+        $ride->updateriderequest($db->conn, $id, $action);
     }
 ?>
 <!DOCTYPE html>
@@ -54,17 +59,7 @@
                     <a class="dropdown-item" id="d" href="completedrides.php">Completed Rides</a>
                     <a class="dropdown-item" id="d" href="cancelledrides.php">Cancelled Rides</a>
                     <a class="dropdown-item" id="d" href="allrides.php">All Rides</a>
-                </li> 
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Users
-                    </a>
-                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" id="d" href="userrequest.php">Pending User Request</a>
-                    <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
-                    <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
-                </li>
+                </li> ?action=date
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -97,8 +92,8 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Ride Date</th>
-                                    <th>From</th>
+                                    <th><a href="riderequest.php?action=date&order=desc" class="dropdown-toggle">Ride Date <span class="caret"></span><a href="" class="dropdown-toggle"></a> <span class="caret"></span></a></th>
+                                    <th class="dropup"><a href="riderequest.php?action=date&order=desc" class="dropdown-toggle">Ride Date </a><span class="caret"></span></th>
                                     <th>To</th>
                                     <th>Distance</th>
                                     <th>Luggage</th>
@@ -106,34 +101,36 @@
                                     <th>Status</th>
                                     <th>Customer_Id</th>
                                     <th>Action</th>
-                                </tr>
+                                </tr>   
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM ride WHERE `status`='1'";
-                                        $result = $db->conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if ($row['status'] == '0') {
-                                                    $status = 'Cancelled';
-                                                } else if ($row['status'] == '1') {
-                                                    $status = 'Pending';
-                                                } else if ($row['status'] == '2') {
-                                                    $status = 'Confirmed';
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['ride_date'].'</td>
-                                                        <td>'.$row['from'].'</td>
-                                                        <td>'.$row['to'].'</td>
-                                                        <td>'.$row['total_distance'].' Km</td>
-                                                        <td>'.$row['luggage'].'Kg</td>
-                                                        <td>Rs.'.$row['total_fare'].'</td>
-                                                        <td>'.$status.'</td>
-                                                        <td>'.$row['customer_user_id'].'</td>
-                                                        <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm">Confirm</a>
-                                                        <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel">Cancel</a></td>
-                                                    </tr>';
+                                        if($prady != ""){
+                                            $rows = $prady;
+                                        } else {
+                                            $rows = $ride->allpendingride($db->conn);
+                                        }
+
+                                        foreach ($rows as $row) {
+                                            if ($row['status'] == '0') {
+                                                $status = 'Cancelled';
+                                            } else if ($row['status'] == '1') {
+                                                $status = 'Pending';
+                                            } else if ($row['status'] == '2') {
+                                                $status = 'Confirmed';
                                             }
+                                            echo '<tr>
+                                                    <td>'.$row['ride_date'].'</td>
+                                                    <td>'.$row['from'].'</td>
+                                                    <td>'.$row['to'].'</td>
+                                                    <td>'.$row['total_distance'].' Km</td>
+                                                    <td>'.$row['luggage'].' Kg</td>
+                                                    <td>Rs.'.$row['total_fare'].'</td>
+                                                    <td>'.$status.'</td>
+                                                    <td>'.$row['customer_user_id'].'</td>
+                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm">Confirm</a>
+                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel">Cancel</a></td>
+                                                </tr>';
                                         }
                                     ?>
                                 </tbody>

@@ -1,10 +1,25 @@
 <?php
-    require "Ride.php";
+    require_once "Location.php";
+    require_once "Ride.php";
     $ride = new Ride();
     $db = new Dbconnection();
+    $loc = new Location();
+    session_start();
 
-    $cities = array('Charbagh'=>'0','Indira Nagar'=>'10','BBD'=>'30','Barabanki'=>'60',
-                        'Faizabad'=>'100','Basti'=>'150','Gorakhpur'=>'210');
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '1') {
+            header('Location: ../Backend/admindashboard.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
+
+    $rows = $loc->alllocation($db->conn);
+    $cities = array();
+
+    foreach ($rows as $row) {
+        $cities = $cities + array($row['name']=>$row['distance']);
+    }
     
     $pickup = $_POST['pickup'];
     $drop = $_POST['drop'];
@@ -77,7 +92,13 @@
     }
 
     if (isset($_POST['booknow'])) {
-        $sql = $ride->index($pickup, $drop, $distance, $luggage, $fare, $db->conn);
-        echo $sql;
+        $result = $ride->index($pickup, $drop, $distance, $luggage, $fare, $db->conn);
+
+        if ($result === true) {
+            echo "Your Ride Booked Successfully";
+
+        } else {
+            echo "Error: " . $result . "<br>" . $conn->error;
+        }
     }
 ?>

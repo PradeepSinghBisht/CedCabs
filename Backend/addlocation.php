@@ -4,16 +4,23 @@
     $loc = new Location();
     session_start();
 
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
+
     if (isset($_POST['submit'])) {
         $name = $_POST['locationname'];
         $distance = $_POST['distance'];
         $available = $_POST['available'];
-        echo $available;
-
+        
         if ($available == '') {
             echo '<script>alert("Please Fill All Fields")</script>';
         } else {
-            $sql = "INSERT INTO location(`name`,`distance`,`is_available`) values('".$name."', '".$distance."', '".$available."')";
+            $sql = $loc->addlocation($name, $distance, $available);
             
             if ($db->conn->query($sql) === true) {
                 echo '<script> alert("Location Added Successfully")</script>';

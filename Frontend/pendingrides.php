@@ -2,6 +2,16 @@
     require "Ride.php";
     $db = new Dbconnection();
     $ride = new Ride();
+    session_start();
+
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '1') {
+            header('Location: ../Backend/admindashboard.php');
+        }
+    } else {
+        header('Location: ../Frontend/index.php');
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,7 +104,7 @@
                                         <td>'.$row['from'].'</td>
                                         <td>'.$row['to'].'</td>
                                         <td>'.$row['total_distance'].' Km</td>
-                                        <td>'.$row['luggage'].'</td>
+                                        <td>'.$row['luggage'].' Kg</td>
                                         <td>Rs.'.$row['total_fare'].'</td>
                                         <td>'.$status.'</td>
                                         <td>'.$row['customer_user_id'].'</td>

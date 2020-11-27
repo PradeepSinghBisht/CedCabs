@@ -1,22 +1,15 @@
 <?php
-    require "../Frontend/config.php";
+    require "../Frontend/Ride.php";
     $db = new Dbconnection();
+    $ride = new Ride();
     session_start();
 
-    if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'confirm'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='2' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
+    if (isset($_SESSION['userdata'])) {
+        if ($_SESSION['userdata']['is_admin'] == '0') {
+            header('Location: ../Frontend/index.php');
         }
-    }
-
-    if (isset($_GET['id'])) {
-        if ($_GET['action'] == 'cancel'){
-            $id = $_GET['id'];
-            $sql = "UPDATE ride SET `status`='0' WHERE `ride_id`='$id'";
-            $result = $db->conn->query($sql);
-        }
+    } else {
+        header('Location: ../Frontend/index.php');
     }
 ?>
 <!DOCTYPE html>
@@ -109,28 +102,26 @@
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $sql = "SELECT * FROM ride WHERE `status`='2'";
-                                        $result = $db->conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                if ($row['status'] == '0') {
-                                                    $status = 'Cancelled';
-                                                } else if ($row['status'] == '1') {
-                                                    $status = 'Pending';
-                                                } else if ($row['status'] == '2') {
-                                                    $status = 'Confirmed';
-                                                }
-                                                echo '<tr>
-                                                        <td>'.$row['ride_date'].'</td>
-                                                        <td>'.$row['from'].'</td>
-                                                        <td>'.$row['to'].'</td>
-                                                        <td>'.$row['total_distance'].' Km</td>
-                                                        <td>'.$row['luggage'].'Kg</td>
-                                                        <td>Rs.'.$row['total_fare'].'</td>
-                                                        <td>'.$status.'</td>
-                                                        <td>'.$row['customer_user_id'].'</td>
-                                                    </tr>';
+                                        $rows = $ride->allcompletedride($db->conn);
+
+                                        foreach ($rows as $row) {
+                                            if ($row['status'] == '0') {
+                                                $status = 'Cancelled';
+                                            } else if ($row['status'] == '1') {
+                                                $status = 'Pending';
+                                            } else if ($row['status'] == '2') {
+                                                $status = 'Confirmed';
                                             }
+                                            echo '<tr>
+                                                    <td>'.$row['ride_date'].'</td>
+                                                    <td>'.$row['from'].'</td>
+                                                    <td>'.$row['to'].'</td>
+                                                    <td>'.$row['total_distance'].' Km</td>
+                                                    <td>'.$row['luggage'].' Kg</td>
+                                                    <td>Rs.'.$row['total_fare'].'</td>
+                                                    <td>'.$status.'</td>
+                                                    <td>'.$row['customer_user_id'].'</td>
+                                                </tr>';
                                         }
                                     ?>
                                 </tbody>

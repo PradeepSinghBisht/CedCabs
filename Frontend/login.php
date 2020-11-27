@@ -1,15 +1,40 @@
 <?php
     require "User.php";
     $user = new User();
-    $db1 = new Dbconnection();
-    $errors = array();
-    session_start();
+    $db = new Dbconnection();
+	$errors = array();
+	session_start();
 
 if (isset($_POST['login'])) {
     $username = isset($_POST['username'])?$_POST['username']:'';
     $password = isset($_POST['password'])?md5($_POST['password']):'';
 
-    $errors = $user->login($errors, $username, $password, $db1->conn);
+	$rows = $user->login($errors, $username, $password, $db->conn);
+	
+	foreach ($rows as $row) {
+		if ($row['isblock'] == 1 and $row['is_admin'] == 0) {
+			$_SESSION['userdata'] = array('user_id'=>$row['user_id'],
+			'user_name'=>$row['user_name'], 'name'=>$row['name'],
+			'dateofsignup'=>$row['dateofsignup'], 'mobile'=>$row['mobile'], 
+			'isblock'=>$row['isblock'], 'is_admin'=>$row['is_admin']);
+			
+			header('Location: index.php');
+
+		} else if ($row['isblock'] == 1 and $row['is_admin'] == 1){
+			$_SESSION['userdata'] = array('user_id'=>$row['user_id'],
+			'user_name'=>$row['user_name'], 'name'=>$row['name'],
+			'dateofsignup'=>$row['dateofsignup'], 'mobile'=>$row['mobile'], 
+			'isblock'=>$row['isblock'], 'is_admin'=>$row['is_admin']);
+
+			header('Location: ../Backend/admindashboard.php');
+			
+		} else if ($row['isblock'] == 0){
+			echo '<script> alert("Please Wait for Admin Approval")</script>';
+		}
+	}
+	if ($rows->num_rows == 0){
+		$errors[] = array('input'=>'login', 'msg'=>'Invalid Login Details');
+	}
 }
 ?>
 
