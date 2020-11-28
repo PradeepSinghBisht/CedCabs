@@ -102,6 +102,9 @@ if (isset($_POST['login'])) {
 					<label for='password'>Password:</label>
 					<input type="password" class='form-control' name="password">
 				</div>
+				<div class="form-group " style="padding: 5px 0px;">
+					<input type="checkbox" name="remember"> Remember Me !!
+				</div>
 				<div class="form-group " style="padding: 10px 0px;">
 					<input type="submit" class="btn btn-success form-control"  name="login" value="Login" style="padding: 5px 30px;">
 				</div>

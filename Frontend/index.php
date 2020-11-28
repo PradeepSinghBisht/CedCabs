@@ -1,12 +1,31 @@
 <?php
-    require "Location.php";
+    require_once "Location.php";
+    require_once "Ride.php";
     $db = new Dbconnection();
     $location = new Location();
+    $ride = new Ride();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
             header('Location: ../Backend/admindashboard.php');
+        } else if (isset($_SESSION['landingdata'])) {
+
+            $pickup = $_SESSION['landingdata']['pickup'];
+            $drop = $_SESSION['landingdata']['drop'];
+            $distance = $_SESSION['landingdata']['distance'];
+            $cabtype = $_SESSION['landingdata']['cabtype'];
+            $luggage = $_SESSION['landingdata']['luggage'];
+            $fare = $_SESSION['landingdata']['fare'];
+
+            $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
+
+            if ($result === true) {
+                echo "<script> alert('Your Ride Booked Successfully') </script>";
+
+            } else {
+                echo "Error: " . $result . "<br>" . $conn->error;
+            }
         }
     }
 ?>
@@ -56,14 +75,17 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="updateinfo.php">Update Account</a>
                                         <a class="dropdown-item" href="changepassword.php">Change Password</a>
+                                       </li>
+                                       <li> 
+                                        <a class="nav-item nav-link ml-3" href="#">'.$_SESSION['userdata']['name'].'</a>
                                     </li>';
                             } else {
                                 echo '<a class="nav-item nav-link ml-3" href="login.php">Login</a>
                                       <a class="nav-item nav-link mx-3" href="#">Our Services</a>
-                                      <a class="nav-item nav-link mx-3" href="#">About Us</a>';
+                                      <a class="nav-item nav-link mx-3" href="#">About Us</a>
+                                      <a class="nav-item nav-link ml-3" href="#">Contact Us</a>';
                             }
                         ?>                       
-                        <a class="nav-item nav-link ml-3" href="#">Contact Us</a>
                     </div>
                 </div>
             </div>

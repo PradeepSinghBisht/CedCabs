@@ -22,6 +22,8 @@
 
 	if ($db->conn->query($sql) === true) {
 		echo "<script> alert('Updated Successfully')</script>";
+		$_SESSION['userdata']['name'] = $name;
+		$_SESSION['userdata']['mobile'] = $mobile;
 	} else {
 		$errors[] = array('input'=>'form', 'msg'=>$conn->error);
 		echo "Error: " . $sql . "<br>" . $conn->error;

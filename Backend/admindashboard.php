@@ -89,7 +89,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Welcome Admin</h1>
+                        <h1>Welcome <?php echo $_SESSION['userdata']['name']?></h1>
                         <div class="container mt-2">
                             <h2>Dashboard</h2>  
                             <div class="row mt-3">

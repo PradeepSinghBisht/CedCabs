@@ -97,8 +97,8 @@
                         <h3>From:</h3>
                         <h3>To:</h3>
                         <h3>Total Distance: </h3>
-                        <h3>Cab Type:</h3>
                         <h3>Luggage:</h3>
+                        <h3>Cab Type:</h3>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <?php
@@ -110,9 +110,9 @@
                                     <h3><?php echo $row['ride_id']; ?></h3>
                                     <h3><?php echo $row['from']; ?></h3>
                                     <h3><?php echo $row['to']; ?></h3>
-                                    <h3><?php echo $row['total_distance']; ?></h3>
-                                    <h3><?php echo $row['cab_type']; ?></h3>
-                                    <h3><?php echo $row['luggage']; ?></h3>        
+                                    <h3><?php echo $row['total_distance'].' Km'; ?></h3>
+                                    <h3><?php echo $row['luggage'].' Kg'; ?></h3>   
+                                    <h3><?php echo $row['cab_type'].''; ?></h3>     
                     </div>
                 </div>
                 <div class="text-center ">

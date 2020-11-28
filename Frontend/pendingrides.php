@@ -73,14 +73,18 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="updateinfo.php">Update Account</a>
                                         <a class="dropdown-item" href="changepassword.php">Change Password</a>
+                                       </li>
+                                       <li> 
+                                        <a class="nav-item nav-link ml-3" href="#">'.$_SESSION['userdata']['name'].'</a>
                                     </li>';
                             } else {
                                 echo '<a class="nav-item nav-link ml-3" href="login.php">Login</a>
                                       <a class="nav-item nav-link mx-3" href="#">Our Services</a>
-                                      <a class="nav-item nav-link mx-3" href="#">About Us</a>';
+                                      <a class="nav-item nav-link mx-3" href="#">About Us</a>
+                                      <a class="nav-item nav-link ml-3" href="#">Contact Us</a>';
                             }
                         ?>                       
-                        <a class="nav-item nav-link ml-3" href="#">Contact Us</a>
+                        
                     </div>
                 </div>
             </div>

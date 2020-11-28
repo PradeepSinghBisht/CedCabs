@@ -10,8 +10,6 @@
         if ($_SESSION['userdata']['is_admin'] == '1') {
             header('Location: ../Backend/admindashboard.php');
         }
-    } else {
-        header('Location: ../Frontend/index.php');
     }
 
     $rows = $loc->alllocation($db->conn);
@@ -87,6 +85,11 @@
             $fare += 250 + (10 * 16.50) + (50 * 15) + (100 * 13.20) + ($distance-160) * 11.50;
         }
     }
+
+    if (!isset($_SESSION['userdata'])) {
+        $_SESSION['landingdata'] = array('pickup'=>$pickup, 'drop'=>$drop, 'distance'=>$distance, 'cabtype'=>$cabtype, 'luggage'=>$luggage, 'fare'=>$fare);
+    }
+
     if (isset($_POST['fare'])) {
         echo $fare;
     }
