@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
+    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
@@ -10,6 +11,20 @@
         }
     } else {
         header('Location: ../Frontend/index.php');
+    }
+
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+        $order = $_GET['order'];
+        
+        $select = $ride->sortinguserpendingrides($db->conn, $action, $order);
+    }
+
+    if (isset($_GET['apply'])) {
+        $date1 = $_GET['date1'];
+        $date2 = $_GET['date2'];
+
+        $select = $ride->filterbydatepending($db->conn, $date1, $date2);
     }
 
 ?>
@@ -73,44 +88,60 @@
     </header>
     <section>
         <div class="container">
-            <h2>Pending Rides Details</h2>            
+            <h2>Pending Rides Details</h2> 
+            <form action="previousrides.php" method="GET">
+                <p>
+                    From :- <input name="date1" type="date">  
+                    To :- <input name="date2" type="date">
+                    <input type="submit" name="apply" value="Apply">
+                </p>
+            </form>           
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Ride Date</th>
+                    <th>Ride Date<a href="pendingrides.php?action=ride_date&order=desc"> Down</a>
+                        <a href="pendingrides.php?action=ride_date&order=asc"> Up</a></th>
                     <th>From</th>
                     <th>To</th>
                     <th>Distance</th>
+                    <th>Cab Type</th>
                     <th>Luggage</th>
-                    <th>Fare</th>
+                    <th>Fare<a href="pendingrides.php?action=total_fare&order=desc"> Down</a>
+                        <a href="pendingrides.php?action=total_fare&order=asc"> Up</a></th>
                     <th>Status</th>
                     <th>Customer_Id</th>
                 </tr>
                 </thead>
                 <tbody id= "hello">
                     <?php
-                        $rows = $ride->pendingrides($db->conn);
+                        if ($select != '') {
+                            $rows = $select;
+                        } else {
+                            $rows = $ride->pendingrides($db->conn);
+                        }
                         
-                            foreach ($rows as $row) {
-                                if ($row['status'] == '0') {
-                                    $status = 'Cancelled';
-                                } else if ($row['status'] == '1') {
-                                    $status = 'Pending';
-                                } else if ($row['status'] == '2') {
-                                    $status = 'Confirmed';
-                                }
-                                echo '<tr>
-                                        <td>'.$row['ride_date'].'</td>
-                                        <td>'.$row['from'].'</td>
-                                        <td>'.$row['to'].'</td>
-                                        <td>'.$row['total_distance'].' Km</td>
-                                        <td>'.$row['luggage'].' Kg</td>
-                                        <td>Rs.'.$row['total_fare'].'</td>
-                                        <td>'.$status.'</td>
-                                        <td>'.$row['customer_user_id'].'</td>
-                                      </tr>';
-                                
+                        
+                        foreach ($rows as $row) {
+                            if ($row['status'] == '0') {
+                                $status = 'Cancelled';
+                            } else if ($row['status'] == '1') {
+                                $status = 'Pending';
+                            } else if ($row['status'] == '2') {
+                                $status = 'Confirmed';
                             }
+                            echo '<tr>
+                                    <td>'.$row['ride_date'].'</td>
+                                    <td>'.$row['from'].'</td>
+                                    <td>'.$row['to'].'</td>
+                                    <td>'.$row['total_distance'].' Km</td>
+                                    <td>'.$row['cab_type'].'</td>
+                                    <td>'.$row['luggage'].' Kg</td>
+                                    <td>Rs.'.$row['total_fare'].'</td>
+                                    <td>'.$status.'</td>
+                                    <td>'.$row['customer_user_id'].'</td>
+                                    </tr>';
+                            
+                        }
                         
                     ?>
                 </tbody>

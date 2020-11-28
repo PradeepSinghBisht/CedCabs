@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
+    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
@@ -10,6 +11,20 @@
         }
     } else {
         header('Location: ../Frontend/index.php');
+    }
+
+    if (isset($_GET['order'])) {
+        $action = $_GET['action'];
+        $order = $_GET['order'];
+        
+        $select = $ride->sortinguserallrides($db->conn, $action, $order);
+    }
+
+    if (isset($_GET['apply'])) {
+        $date1 = $_GET['date1'];
+        $date2 = $_GET['date2'];
+       
+        $select = $ride->filterbydate($db->conn, $date1, $date2);
     }
 ?>
 <!DOCTYPE html>
@@ -70,25 +85,41 @@
             </div>
         </nav>
     </header>
+
     <section>
         <div class="container">
-            <h2>All Rides Details</h2>            
+            <h2>All Rides Details</h2>
+            <form action="previousrides.php" method="GET">
+                <p>
+                    From :- <input name="date1" type="date">  
+                    To :- <input name="date2" type="date">
+                    <input type="submit" name="apply" value="Apply">
+                </p>
+            </form>         
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Ride Date</th>
+                    <th>Ride Date<a href="previousrides.php?action=ride_date&order=desc"> Down</a>
+                        <a href="previousrides.php?action=ride_date&order=asc"> Up</a></th>
                     <th>From</th>
                     <th>To</th>
                     <th>Distance</th>
+                    <th>Cab Type</th>
                     <th>Luggage</th>
-                    <th>Fare</th>
+                    <th>Fare<a href="previousrides.php?action=total_fare&order=desc"> Down</a>
+                        <a href="previousrides.php?action=total_fare&order=asc"> Up</a></th>
                     <th>Status</th>
                     <th>Customer_Id</th>
                 </tr>
                 </thead>
                 <tbody id= "hello">
                     <?php
-                        $rows = $ride->previousrides($db->conn);
+                        if ($select != '') {
+                            $rows = $select;
+                        } else {
+                            $rows = $ride->previousrides($db->conn);
+                        }
+                        
                         
                         foreach ($rows as $row) {
                             if ($row['status'] == '0') {
@@ -103,6 +134,7 @@
                                     <td>'.$row['from'].'</td>
                                     <td>'.$row['to'].'</td>
                                     <td>'.$row['total_distance'].' Km</td>
+                                    <td>'.$row['cab_type'].'</td>
                                     <td>'.$row['luggage'].' Kg</td>
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>

@@ -92,7 +92,7 @@
     }
 
     if (isset($_POST['booknow'])) {
-        $result = $ride->index($pickup, $drop, $distance, $luggage, $fare, $db->conn);
+        $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
 
         if ($result === true) {
             echo "Your Ride Booked Successfully";

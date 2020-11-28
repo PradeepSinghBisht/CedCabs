@@ -1,5 +1,5 @@
 <?php
-    require "config.php";
+    require_once "config.php";
 
     class User {
 
@@ -70,7 +70,7 @@
 
         public function deleteuser($conn, $id) {
             $sql = "DELETE from user WHERE `user_id`='$id'";
-            $result = $db->conn->query($sql);
+            $result = $conn->query($sql);
         }
 
         public function updateuserrequest($conn, $id, $action) {
@@ -94,6 +94,42 @@
 
         public function pendinguser($conn) {
             $sql = "SELECT * FROM user where `isblock`='0' AND `is_admin`='0'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function sortingpendinguser($conn, $action, $order) {
+
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `user` WHERE (`isblock`='0' AND `is_admin`='0') ORDER BY (`$action`) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `user` where (`isblock`='0' AND `is_admin`='0') ORDER BY (`$action`) DESC";
+            }
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function sortingapproveduser($conn, $action, $order) {
+            
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `user` WHERE (`isblock`='1' AND `is_admin`='0') ORDER BY (`$action`) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `user` where (`isblock`='1' AND `is_admin`='0') ORDER BY (`$action`) DESC";
+            }
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function sortingalluser($conn, $action, $order) {
+            
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `user` WHERE (`is_admin`='0') ORDER BY (`$action`) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `user` where (`is_admin`='0') ORDER BY (`$action`) DESC";
+            }
             $result = $conn->query($sql);
 
             return $result;
