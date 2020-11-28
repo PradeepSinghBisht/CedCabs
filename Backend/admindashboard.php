@@ -1,4 +1,9 @@
 <?php
+    require_once "../Frontend/Ride.php";
+    require_once "../Frontend/User.php";
+    $db = new Dbconnection();
+    $ride = new Ride();
+    $user = new User();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
@@ -85,34 +90,59 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Welcome Admin</h1>
-                        <div class="container">
-                            <h2>Dashboard</h2>           
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Firstname</th>
-                                    <th>Lastname</th>
-                                    <th>Email</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>john@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>Mary</td>
-                                    <td>Moe</td>
-                                    <td>mary@example.com</td>
-                                </tr>
-                                <tr>
-                                    <td>July</td>
-                                    <td>Dooley</td>
-                                    <td>july@example.com</td>
-                                </tr>
-                                </tbody>
-                            </table>       
+                        <div class="container mt-2">
+                            <h2>Dashboard</h2>  
+                            <div class="row mt-3">
+                                <div class="card text-white bg-warning mb-5 col-md-3" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Pending Rides</h3>
+                                        <p class="card-text "><h1 class="text-center"><?php $rows = $ride->allpendingride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="riderequest.php">View Details</a></div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="card text-white bg-success mb-5 col-md-4" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Completed Rides</h3>
+                                        <p class="card-text"><h1 class="text-center"><?php $rows = $ride->allcompletedride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="completedrides.php">View Details</a></div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="card text-white bg-danger mb-5 col-md-3" style="max-width: 18rem;"> 
+                                    <div class="card-body">
+                                        <h4 class="card-title">Cancelled Rides</h4>
+                                        <p class="card-text"><h1 class="text-center"><?php $rows = $ride->allcancelledride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="cancelledrides.php">View Details</a></div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="card text-white bg-info mb-3 col-md-3" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Users Request</h3>
+                                        <p class="card-text"><h1 class="text-center"><?php $rows = $user->pendinguser($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="userrequest.php">View Details</a></div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="card text-white bg-secondary mb-3 col-md-4" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h3 class="card-title">Total Earned</h3>
+                                        <p class="card-text"><h1 class="text-center"><?php $rows = $ride->earned($db->conn); $total = 0; foreach($rows as $row) {$total += $row['total_fare'];} echo $total;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="allrides.php">View Details</a></div>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="card text-white bg-primary mb-3 col-md-3" style="max-width: 18rem;">
+                                    <div class="card-body">
+                                        <h3 class="card-title">All Users</h3>
+                                        <p class="card-text"><h1 class="text-center"><?php $rows = $user->allusers($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?></h1></p>
+                                    </div>
+                                    <div class="card-header"><a style="color:white" href="allusers.php">View Details</a></div>
+                                </div> 
+                            </div>                 
                         </div>
                     </div>
                 </div>

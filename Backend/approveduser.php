@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $user = new User();
     session_start();
+    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
@@ -10,6 +11,13 @@
         }
     } else {
         header('Location: ../Frontend/index.php');
+    }
+
+    if (isset($_GET['order'])) {
+        $action = $_GET['action'];
+        $order = $_GET['order'];
+        
+        $select = $user->sortingapproveduser($db->conn, $action, $order);
     }
 
     if (isset($_GET['id'])) {
@@ -97,16 +105,23 @@
                                 <thead>
                                 <tr>
                                     <th>Username</th>
-                                    <th>Name</th>
+                                    <th>Name<a href="approveduser.php?action=name&order=desc"> Down</a>
+                                    <a href="approveduser.php?action=name&order=asc"> Up</a></th>
                                     <th>DateOfSignup</th>
-                                    <th>Mobile</th>
+                                    <th>Mobile<a href="approveduser.php?action=mobile&order=desc"> Down</a>
+                                    <a href="approveduser.php?action=mobile&order=asc"> Up</a></th>
                                     <th>Password</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $rows = $user->approveduser($db->conn);
+                                        if ($select != '') {
+                                            $rows = $select;
+                                        } else {
+                                            $rows = $user->approveduser($db->conn);
+                                        }
+                                        
                                         
                                         foreach ($rows as $row) {
                                             echo '<tr>

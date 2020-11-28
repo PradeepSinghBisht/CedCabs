@@ -3,7 +3,8 @@
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
-    $prady = "";
+    $select = "";
+
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
             header('Location: ../Frontend/index.php');
@@ -12,10 +13,11 @@
         header('Location: ../Frontend/index.php');
     }
 
-    if (isset($_GET['action'])) {
+    if (isset($_GET['order'])) {
         $action = $_GET['action'];
-        $sql = "SELECT * FROM ride WHERE `status` = '1' ORDER BY `ride_id` DESC";
-        $prady = $db->conn->query($sql);
+        $order = $_GET['order'];
+        
+        $select = $ride->sortingpendingrides($db->conn, $action, $order);
     }
 
     if (isset($_GET['id'])) {
@@ -59,8 +61,7 @@
                     <a class="dropdown-item" id="d" href="completedrides.php">Completed Rides</a>
                     <a class="dropdown-item" id="d" href="cancelledrides.php">Cancelled Rides</a>
                     <a class="dropdown-item" id="d" href="allrides.php">All Rides</a>
-                </li> ?action=date
-
+                </li> 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Location
@@ -92,21 +93,24 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th><a href="riderequest.php?action=date&order=desc" class="dropdown-toggle">Ride Date <span class="caret"></span><a href="" class="dropdown-toggle"></a> <span class="caret"></span></a></th>
-                                    <th class="dropup"><a href="riderequest.php?action=date&order=desc" class="dropdown-toggle">Ride Date </a><span class="caret"></span></th>
+                                    <th>Ride Date<a href="riderequest.php?action=ride_date&order=desc"> Down</a>
+                                    <a href="riderequest.php?action=ride_date&order=asc"> Up</a></th>
+                                    <th>From</th>
                                     <th>To</th>
                                     <th>Distance</th>
+                                    <th>Cab Type</th>
                                     <th>Luggage</th>
-                                    <th>Fare</th>
+                                    <th>Fare<a href="riderequest.php?action=total_fare&order=desc"> Down</a>
+                                    <a href="riderequest.php?action=total_fare&order=asc"> Up</a></th>
                                     <th>Status</th>
-                                    <th>Customer_Id</th>
+                                    <th>User_Id</th>
                                     <th>Action</th>
                                 </tr>   
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        if($prady != ""){
-                                            $rows = $prady;
+                                        if($select != ""){
+                                            $rows = $select;
                                         } else {
                                             $rows = $ride->allpendingride($db->conn);
                                         }
@@ -124,6 +128,7 @@
                                                     <td>'.$row['from'].'</td>
                                                     <td>'.$row['to'].'</td>
                                                     <td>'.$row['total_distance'].' Km</td>
+                                                    <td>'.$row['cab_type'].'</td>
                                                     <td>'.$row['luggage'].' Kg</td>
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>

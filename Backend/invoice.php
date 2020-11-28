@@ -3,7 +3,6 @@
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
-    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
@@ -13,19 +12,10 @@
         header('Location: ../Frontend/index.php');
     }
 
-    if (isset($_GET['action'])) {
-        $action = $_GET['action'];
-        $order = $_GET['order'];
-        
-        $select = $ride->sortingallrides($db->conn, $action, $order);
-    }
-
     if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        $ride->deleteride($db->conn, $id);
-    }   
+    }
 ?>
-<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +28,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>All Rides</title>
+    <title>Completed Rides</title>
 </head>
 <body>
     <div id="wrapper">
@@ -95,77 +85,42 @@
             </ul>
         </div>
 
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="container">
-                            <h2>All Rides</h2>            
-                            <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Ride Date<a href="allrides.php?action=ride_date&order=desc"> Down</a>
-                                    <a href="allrides.php?action=ride_date&order=asc"> Up</a></th>
-                                    <th>From</th>
-                                    <th>To</th>
-                                    <th>Distance</th>
-                                    <th>Cab Type</th>
-                                    <th>Luggage</th>
-                                    <th>Fare<a href="allrides.php?action=total_fare&order=desc"> Down</a>
-                                    <a href="allrides.php?action=total_fare&order=asc"> Up</a></th>
-                                    <th>Status</th>
-                                    <th>User_Id</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody id= "hello">
-                                    <?php
-
-                                        if ($select != '') {
-                                            $rows = $select;
-                                        } else {
-                                            $rows = $ride->allrides($db->conn);
-                                        }
-                                        
-                                        
-                                        foreach ($rows as $row) {
-                                            if ($row['status'] == '0') {
-                                                $status = 'Cancelled';
-                                            } else if ($row['status'] == '1') {
-                                                $status = 'Pending';
-                                            } else if ($row['status'] == '2') {
-                                                $status = 'Confirmed';
-                                            }
-                                            echo '<tr>
-                                                    <td>'.$row['ride_date'].'</td>
-                                                    <td>'.$row['from'].'</td>
-                                                    <td>'.$row['to'].'</td>
-                                                    <td>'.$row['total_distance'].' Km</td>
-                                                    <td>'.$row['cab_type'].'</td>
-                                                    <td>'.$row['luggage'].' Kg</td>
-                                                    <td>Rs.'.$row['total_fare'].'</td>
-                                                    <td>'.$status.'</td>
-                                                    <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="allrides.php?id='.$row['ride_id'].'">Delete</a></td>
-                                                </tr>';
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>      
-                            <?php 
-                                $rows = $ride->earned($db->conn);
-
-                                $totalearned = 0;
-                                foreach ($rows as $row) {
-                                    $totalearned += $row['total_fare'];
-                                }
-                                echo '<h2 class="text-center">You have Earned Total Rs.'.$totalearned.' From Cab</h2>';
-                            ?> 
-                        </div>
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 col-lg-3"></div>
+            <div class="col-md-6 col-lg-6">
+                <div class="text-center mt-5 py-2" style="background-color:lightgrey"><h1>Invoice</h1></div>
+                <div class="row py-4" >
+                    <div class="col-md-6 col-lg-6">
+                        <h3>Date:</h3>
+                        <h3>Ride Id:</h3>
+                        <h3>From:</h3>
+                        <h3>To:</h3>
+                        <h3>Total Distance: </h3>
+                        <h3>Cab Type:</h3>
+                        <h3>Luggage:</h3>
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <?php
+                            $rows = $ride->invoice($db->conn, $id);
+                    
+                            foreach($rows as $row) {
+                                ?>
+                                    <h3><?php echo $row['ride_date']; ?></h3>
+                                    <h3><?php echo $row['ride_id']; ?></h3>
+                                    <h3><?php echo $row['from']; ?></h3>
+                                    <h3><?php echo $row['to']; ?></h3>
+                                    <h3><?php echo $row['total_distance']; ?></h3>
+                                    <h3><?php echo $row['cab_type']; ?></h3>
+                                    <h3><?php echo $row['luggage']; ?></h3>        
                     </div>
                 </div>
+                <div class="text-center ">
+                    <h2 class="text-center py-2" style="background-color:lightgrey">Total Fare:  <?php echo $row['total_fare']; }?></h2>
+                </div>
             </div>
+            <div class="col-md-3 col-lg-3"></div>
         </div>
-    </div>
+      </div>
 </body>
 </html>

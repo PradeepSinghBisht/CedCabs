@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
+    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
@@ -11,6 +12,14 @@
     } else {
         header('Location: ../Frontend/index.php');
     }
+
+    if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+        $order = $_GET['order'];
+        
+        $select = $ride->sortingcancelledrides($db->conn, $action, $order);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,19 +99,26 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Ride Date</th>
+                                    <th>Ride Date<a href="cancelledrides.php?action=ride_date&order=desc"> Down</a>
+                                    <a href="cancelledrides.php?action=ride_date&order=asc"> Up</a></th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Distance</th>
+                                    <th>Cab Type</th>
                                     <th>Luggage</th>
-                                    <th>Fare</th>
+                                    <th>Fare<a href="cancelledrides.php?action=total_fare&order=desc"> Down</a>
+                                    <a href="cancelledrides.php?action=total_fare&order=asc"> Up</a></th>
                                     <th>Status</th>
-                                    <th>Customer_Id</th>
+                                    <th>User_Id</th>
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $rows = $ride->allcancelledride($db->conn);
+                                        if ($select != '') {
+                                            $rows = $select;
+                                        } else {
+                                            $rows = $ride->allcancelledride($db->conn);
+                                        }
 
                                         foreach ($rows as $row) {
                                             if ($row['status'] == '0') {
@@ -117,6 +133,7 @@
                                                     <td>'.$row['from'].'</td>
                                                     <td>'.$row['to'].'</td>
                                                     <td>'.$row['total_distance'].' Km</td>
+                                                    <td>'.$row['cab_type'].'</td>
                                                     <td>'.$row['luggage'].' Kg</td>
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
