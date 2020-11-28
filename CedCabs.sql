@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 27, 2020 at 04:04 PM
+-- Generation Time: Nov 28, 2020 at 03:01 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -60,6 +60,7 @@ CREATE TABLE `ride` (
   `from` varchar(50) NOT NULL,
   `to` varchar(50) NOT NULL,
   `total_distance` varchar(50) NOT NULL,
+  `cab_type` varchar(10) NOT NULL,
   `luggage` varchar(50) NOT NULL,
   `total_fare` varchar(50) NOT NULL,
   `status` int(10) NOT NULL,
@@ -70,15 +71,14 @@ CREATE TABLE `ride` (
 -- Dumping data for table `ride`
 --
 
-INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES
-(39, '2020-11-25', 'Indira Nagar', 'BBD', '20', '1', '545', 1, '12'),
-(43, '2020-11-26', 'Charbagh', 'Indira Nagar', '10', '23', '495', 2, '14'),
-(44, '2020-11-26', 'Indira Nagar', 'Gorakhpur', '200', '', '2145', 2, '12'),
-(48, '2020-11-27', 'Charbagh', 'Indira Nagar', '10', '1', '345', 0, '14'),
-(49, '2020-11-27', 'Charbagh', 'Prayagraj', '300', '1', '3445', 1, '14'),
-(50, '2020-11-27', 'Charbagh', 'Faizabad', '100', '1', '1593', 1, '14'),
-(51, '2020-11-27', 'Charbagh', 'Indira Nagar', '10', '', '185', 2, '14'),
-(52, '2020-11-27', 'Indira Nagar', 'Gorakhpur', '200', '', '2145', 0, '14');
+INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `cab_type`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES
+(39, '2020-11-25', 'Indira Nagar', 'BBD', '20', '', '1', '545', 1, '12'),
+(44, '2020-11-26', 'Indira Nagar', 'Gorakhpur', '200', '', '', '2145', 2, '12'),
+(48, '2020-11-27', 'Charbagh', 'Indira Nagar', '10', '', '1', '345', 0, '14'),
+(49, '2020-11-27', 'Charbagh', 'Prayagraj', '300', '', '1', '3445', 2, '14'),
+(50, '2020-11-27', 'Charbagh', 'Faizabad', '100', '', '1', '1593', 0, '14'),
+(51, '2020-11-27', 'Charbagh', 'Indira Nagar', '10', '', '', '185', 2, '14'),
+(53, '2020-11-28', 'BBD', 'Indira Nagar', '20', 'CedRoyal', '11', '595', 2, '14');
 
 -- --------------------------------------------------------
 
@@ -142,13 +142,13 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
-  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
