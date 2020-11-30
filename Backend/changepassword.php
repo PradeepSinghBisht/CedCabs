@@ -1,5 +1,5 @@
 <?php
-    require "../Frontend/User.php";
+    require "../User.php";
     $db = new Dbconnection();
     $user = new User();
     $errors = array();
@@ -7,17 +7,30 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_POST['update'])) {
         $password = isset($_POST['password'])?MD5($_POST['password']):'';
-        $confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
-    
-        $errors = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+		$confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
+		
+		if ($password != $confirmpassword) {
+			$errors[] = array('msg'=>'Password Doesn\'t Match');
+		}
+
+		if (sizeof($errors) == 0) {
+			$sql = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+
+			if ($db->conn->query($sql) === true) {
+				echo "<script> alert('Updated Successfully')</script>";
+            } else {
+                $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                echo "Error: " . $sql . "<br>" . $conn->error;
+            }
+		}
     }
 
 ?>
@@ -85,7 +98,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -101,7 +114,7 @@
                                         <?php echo $errors[$key]['msg'];
                                 } ?> 
                                     </li>
-                            </div>          
+                            </div>         
                             <h2 style="text-align: center;">Update Password</h2>
                             <form action="changepassword.php" method="POST">
                                 <div class="form-group " style="padding: 5px 0px;">

@@ -1,15 +1,15 @@
 <?php
-    require "../Frontend/Ride.php";
+    require "../Ride.php";
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['id'])) {
@@ -80,7 +80,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>

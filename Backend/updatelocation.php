@@ -1,15 +1,15 @@
 <?php
-    require "../Frontend/Location.php";
+    require "../Location.php";
     $db = new Dbconnection();
     $loc = new Location();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_POST['submit'])) {
@@ -93,8 +93,12 @@
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                     </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
+                </li>
+                
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>

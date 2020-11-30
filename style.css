@@ -1,0 +1,89 @@
+.body{
+    margin: 0;
+}
+#logo{
+    height: 200px;
+    width: 190px;
+    margin: -70px 0px -65px; 
+}
+#navbtn a{
+    color: black;
+}
+#navbtn a:hover{
+    color: black;
+    background-color: rgb(151, 228, 35);
+}
+#book{
+    background-color: greenyellow;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.bg-overlay {
+    background: linear-gradient(rgba(41, 39, 39,0.2),  rgba(41, 39, 39, 0.6)), url("cabs.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    padding-top: 50px;
+}
+#section1 h1{
+    color: white;
+    font-weight: bolder;
+}
+#section1 p{
+    color: white;
+    font-size: 19px;
+}
+#form{
+    border-radius: 8px;
+}
+#form h6{
+    color: white;
+    font-weight: bolder;
+}
+#form h5{
+    font-weight: bolder;
+    padding: 5px;
+    background-color: greenyellow;
+    border-radius: 5px;
+}
+#form p {
+    color: white;
+}
+select{
+    -webkit-appearance: none;
+}
+#form button:hover{
+    background-color: rgb(151, 228, 35);
+}
+#form button{
+    color: black;
+    background-color:  greenyellow;
+    border: 1px solid greenyellow;
+    width: 100%;
+}
+#booknow {
+    display: none;
+}
+
+#footer1 i{
+    padding: 10px 10px;
+    color: white;
+    border: 1px solid black;
+    border-radius: 150%;
+    background-color: black;
+    margin: 0px 10px;
+}
+#footer3 ul{
+    list-style-type: none;
+    padding: 0px;
+}
+#footer3 li{
+    display: inline;;
+    margin: 0px 12px;
+}
+#footer3 a{
+    text-decoration: none;
+    font-size: 14px;
+    color: rgb(73, 71, 71);
+    font-weight: bold;
+}

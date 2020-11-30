@@ -1,15 +1,15 @@
 <?php
-    require "../Frontend/Location.php";
+    require "../Location.php";
     $db = new Dbconnection();
     $loc = new Location();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['id'])) {
@@ -83,7 +83,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -118,8 +118,8 @@
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['distance'].' Km</td>
                                                     <td>'.$isavailable.'</td>
-                                                    <td><a href="updatelocation.php?id='.$row['id'].'">Edit</a>
-                                                    <a href="location.php?id='.$row['id'].'&action=delete">Delete</a></td>
+                                                    <td><a href="updatelocation.php?id='.$row['id'].'" class="btn btn-primary">Edit</a>
+                                                    <a href="location.php?id='.$row['id'].'&action=delete" class="btn btn-danger">Delete</a></td>
                                                 </tr>';
                                         }
                                     ?>

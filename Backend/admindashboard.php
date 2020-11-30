@@ -1,6 +1,6 @@
 <?php
-    require_once "../Frontend/Ride.php";
-    require_once "../Frontend/User.php";
+    require_once "../Ride.php";
+    require_once "../User.php";
     $db = new Dbconnection();
     $ride = new Ride();
     $user = new User();
@@ -8,10 +8,10 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 ?>
 <!DOCTYPE html>
@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <title>Admin Dashboard</title>
 </head>
 <body>
@@ -80,7 +81,7 @@
                 </li>
 
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -142,7 +143,58 @@
                                     </div>
                                     <div class="card-header"><a style="color:white" href="allusers.php">View Details</a></div>
                                 </div> 
-                            </div>                 
+                            </div>   
+                            
+                            <div class="row">
+                                <div id="piechart-users" class="col-md-5 col-lg-5"></div>
+                                <div id="piechart-rides" class="col-md-5 col-lg-5"></div> 
+                            </div>
+
+                            <script type="text/javascript">
+                                // Load google charts
+                                google.charts.load('current', {'packages':['corechart']});
+                                google.charts.setOnLoadCallback(drawChart);
+
+                                // Draw the chart and set the chart values
+                                function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                ['Users', 'Number of Users'],
+                                ['Approved Users', <?php $rows = $user->approveduser($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
+                                ['Pending Users', <?php $rows = $user->pendinguser($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
+                                ]);
+
+                                // Optional; add a title and set the width and height of the chart
+                                var options = {'title':'All Users', 'width':550, 'height':400};
+
+                                // Display the chart inside the <div> element with id="piechart"
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart-users'));
+                                chart.draw(data, options);
+                                }    
+                            </script>       
+
+                            <script type="text/javascript">
+                                // Load google charts
+                                google.charts.load('current', {'packages':['corechart']});
+                                google.charts.setOnLoadCallback(drawChart);
+
+                                // Draw the chart and set the chart values
+                                function drawChart() {
+                                var data = google.visualization.arrayToDataTable([
+                                ['Rides', 'Number of Rides'],
+                                ['Completed Rides', <?php $rows = $ride->allcompletedride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
+                                ['Cancelled Rides', <?php $rows = $ride->allcancelledride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
+                                ['Pending Rides', <?php $rows = $ride->allpendingride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ]
+                                ]);
+
+                                // Optional; add a title and set the width and height of the chart
+                                var options = {'title':'All Rides', 'width':550, 'height':400};
+
+                                // Display the chart inside the <div> element with id="piechart"
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart-rides'));
+                                chart.draw(data, options);
+                                }
+                            </script>
+
                         </div>
                     </div>
                 </div>

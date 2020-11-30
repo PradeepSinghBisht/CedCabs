@@ -1,5 +1,5 @@
 <?php
-    require "../Frontend/User.php";
+    require "../User.php";
     $db = new Dbconnection();
     $user = new User();
     session_start();
@@ -7,10 +7,10 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['order'])) {
@@ -98,7 +98,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -114,11 +114,10 @@
                                 <tr>
                                     <th>User_ID</th>
                                     <th>Username</th>
-                                    <th>Name<a href="allusers.php?action=name&order=desc"> Down</a>
-                                    <a href="allusers.php?action=name&order=asc"> Up</a></th>
-                                    <th>Date Of SignUp</th>
-                                    <th>Mobile<a href="allusers.php?action=mobile&order=desc"> Down</a>
-                                    <a href="allusers.php?action=mobile&order=asc"> Up</a></th>
+                                    <th>Name<a href="allusers.php?action=name&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allusers.php?action=name&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                                    <th>Mobile<a href="allusers.php?action=mobile&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allusers.php?action=mobile&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Is_Block</th>
                                     <th>Password</th>
                                     <th>Action</th>
@@ -132,25 +131,23 @@
                                         } else {
                                             $rows = $user->allusers($db->conn);
                                         }
-                                        
 
                                         foreach ($rows as $row) {
 
                                             if($row['isblock']=='0') { 
-                                                $block = 'Blocked'; 
+                                                $block = 'Blocked';
                                             } else { 
-                                                $block = 'Unblocked'; 
+                                                $block = 'Unblocked';
                                             }
 
                                             echo '<tr>
                                                     <td>'.$row['user_id'].'</td>
                                                     <td>'.$row['user_name'].'</td>
                                                     <td>'.$row['name'].'</td>
-                                                    <td>'.$row['dateofsignup'].'</td>
                                                     <td>'.$row['mobile'].'</td>
-                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'">'.$block.'</a></td>
+                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'" class="btn btn-primary">'.$block.'</a></td>
                                                     <td>'.$row['password'].'</td>
-                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete">Delete</a></td>
+                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete" class="btn btn-danger">Delete</a></td>
                                                 </tr>'; 
                                         }
                                     ?>

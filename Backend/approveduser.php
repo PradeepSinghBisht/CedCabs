@@ -1,5 +1,5 @@
 <?php
-    require "../Frontend/User.php";
+    require "../User.php";
     $db = new Dbconnection();
     $user = new User();
     session_start();
@@ -7,10 +7,10 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['order'])) {
@@ -90,7 +90,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -105,11 +105,11 @@
                                 <thead>
                                 <tr>
                                     <th>Username</th>
-                                    <th>Name<a href="approveduser.php?action=name&order=desc"> Down</a>
-                                    <a href="approveduser.php?action=name&order=asc"> Up</a></th>
+                                    <th>Name<a href="approveduser.php?action=name&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="approveduser.php?action=name&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>DateOfSignup</th>
-                                    <th>Mobile<a href="approveduser.php?action=mobile&order=desc"> Down</a>
-                                    <a href="approveduser.php?action=mobile&order=asc"> Up</a></th>
+                                    <th>Mobile<a href="approveduser.php?action=mobile&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="approveduser.php?action=mobile&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Password</th>
                                     <th>Action</th>
                                 </tr>
@@ -130,7 +130,7 @@
                                                     <td>'.$row['dateofsignup'].'</td>
                                                     <td>'.$row['mobile'].'</td>
                                                     <td>'.$row['password'].'</td>
-                                                    <td><a href="approveduser.php?id='.$row['user_id'].'&action=Unblocked">Block</a></td>
+                                                    <td><a href="approveduser.php?id='.$row['user_id'].'&action=Unblocked" class="btn btn-danger">Block</a></td>
                                                 </tr>';
                                         }
                                     ?>

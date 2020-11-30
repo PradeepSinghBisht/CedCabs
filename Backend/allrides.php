@@ -1,5 +1,5 @@
 <?php
-    require "../Frontend/Ride.php";
+    require "../Ride.php";
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
@@ -7,10 +7,10 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['action'])) {
@@ -90,7 +90,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -104,15 +104,15 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Ride Date<a href="allrides.php?action=ride_date&order=desc"> Down</a>
-                                    <a href="allrides.php?action=ride_date&order=asc"> Up</a></th>
+                                    <th>Ride Date<a href="allrides.php?action=ride_date&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Distance</th>
                                     <th>Cab Type</th>
                                     <th>Luggage</th>
-                                    <th>Fare<a href="allrides.php?action=total_fare&order=desc"> Down</a>
-                                    <a href="allrides.php?action=total_fare&order=asc"> Up</a></th>
+                                    <th>Fare<a href="allrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Status</th>
                                     <th>User_Id</th>
                                     <th>Action</th>
@@ -146,7 +146,7 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="allrides.php?id='.$row['ride_id'].'">Delete</a></td>
+                                                    <td><a href="allrides.php?id='.$row['ride_id'].'" class="btn btn-danger">Delete</a></td>
                                                 </tr>';
                                         }
                                     ?>

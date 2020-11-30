@@ -1,5 +1,5 @@
 <?php
-    require "../Frontend/Ride.php";
+    require "../Ride.php";
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
@@ -7,10 +7,10 @@
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
-            header('Location: ../Frontend/index.php');
+            header('Location: ../index.php');
         }
     } else {
-        header('Location: ../Frontend/index.php');
+        header('Location: ../index.php');
     }
 
     if (isset($_GET['order'])) {
@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <title>Pending Rides</title>
 </head>
 <body>
@@ -62,6 +63,17 @@
                     <a class="dropdown-item" id="d" href="cancelledrides.php">Cancelled Rides</a>
                     <a class="dropdown-item" id="d" href="allrides.php">All Rides</a>
                 </li> 
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Users
+                    </a>
+                    <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" id="d" href="userrequest.php">Pending User Request</a>
+                    <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
+                    <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Location
@@ -79,7 +91,7 @@
                     <a class="dropdown-item" id="d" href="changepassword.php">Change Password</a>
                 </li>
                 <li>
-                    <a href="../Frontend/logout.php">Logout</a>
+                    <a href="../logout.php">Logout</a>
                 </li>
             </ul>
         </div>
@@ -93,15 +105,15 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Ride Date<a href="riderequest.php?action=ride_date&order=desc"> Down</a>
-                                    <a href="riderequest.php?action=ride_date&order=asc"> Up</a></th>
+                                    <th>Ride Date <a href="riderequest.php?action=ride_date&order=desc"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="riderequest.php?action=ride_date&order=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>Distance</th>
                                     <th>Cab Type</th>
                                     <th>Luggage</th>
-                                    <th>Fare<a href="riderequest.php?action=total_fare&order=desc"> Down</a>
-                                    <a href="riderequest.php?action=total_fare&order=asc"> Up</a></th>
+                                    <th>Fare<a href="riderequest.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="riderequest.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Status</th>
                                     <th>User_Id</th>
                                     <th>Action</th>
@@ -133,8 +145,8 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm">Confirm</a>
-                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel">Cancel</a></td>
+                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm" class="btn btn-success">Confirm</a>
+                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel" class="btn btn-danger">Cancel</a></td>
                                                 </tr>';
                                         }
                                     ?>
