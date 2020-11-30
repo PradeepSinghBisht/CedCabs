@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $loc = new Location();
     session_start();
+    $errors = array();
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
@@ -20,14 +21,7 @@
         if ($available == '') {
             echo '<script>alert("Please Fill All Fields")</script>';
         } else {
-            $sql = $loc->addlocation($name, $distance, $available);
-            
-            if ($db->conn->query($sql) === true) {
-                echo '<script> alert("Location Added Successfully")</script>';
-
-            } else {
-                echo "Error: " . $sql . "<br>" . $db->conn->error;
-            }
+            $errors = $loc->addlocation($db->conn, $errors, $name, $distance, $available);
         }
     }
 ?>
@@ -107,6 +101,13 @@
                     <div class="col-lg-12">
                         <div class="container">
                             <h2>Add New Location</h2>
+                            <div id = "errors">
+                                <?php foreach ($errors as $key=>$value) { ?>
+                                    <li> 
+                                        <?php echo $errors[$key]['msg'];
+                                } ?> 
+                                    </li>
+                            </div>
                             <form action="#" method="POST">
                                 <div class="form-group">
                                     <label for="name">Location Name</label>

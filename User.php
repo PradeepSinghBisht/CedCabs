@@ -134,6 +134,14 @@
 
             return $result;
         }
+
+        public function invoice($conn, $id) {
+
+            $sql = "SELECT * FROM user WHERE `user_id`='".$id."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
     }
 
 ?>

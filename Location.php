@@ -10,9 +10,33 @@
             return $result;
         }
 
-        public function addlocation($name, $distance, $available) {
-            $sql = "INSERT INTO location(`name`,`distance`,`is_available`) values('".$name."', '".$distance."', '".$available."')";
-            return $sql;
+        public function addlocation($conn, $errors, $name, $distance, $available) {
+
+            $sql = "SELECT * FROM location WHERE `name`='".$name."'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($name == $row['name']) {
+                       $errors[] = array('input'=>'name',
+                                   'msg'=>'Location Already Exists.');
+                    }
+                }
+            }
+
+            if (sizeof($errors) == 0) {
+                $sql = "INSERT INTO location(`name`,`distance`,`is_available`) values('".$name."', '".$distance."', '".$available."')";
+        
+                if ($conn->query($sql) === true) {
+                    echo '<script>alert("Location Added Successfully")</script>';
+        
+                } else {
+                    $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                }
+            } 
+
+            return $errors;
+
         }
 
         public function alllocation($conn) {

@@ -1,7 +1,9 @@
 <?php
-    require "../Ride.php";
+    require_once "../Ride.php";
+    require_once "../User.php";
     $db = new Dbconnection();
     $ride = new Ride();
+    $user = new User();
     session_start();
 
     if (isset($_SESSION['userdata'])) {
@@ -12,8 +14,9 @@
         header('Location: ../index.php');
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
+    if (isset($_GET['rid']) && isset($_GET['uid'])) {
+        $rid = $_GET['rid'];
+        $uid = $_GET['uid'];
     }
 ?>
 <!DOCTYPE html>
@@ -87,11 +90,13 @@
 
         <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3 col-lg-3"></div>
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-7 col-lg-7">
                 <div class="text-center mt-5 py-2" style="background-color:lightgrey"><h1>Invoice</h1></div>
                 <div class="row py-4" >
                     <div class="col-md-6 col-lg-6">
+                        <h3>Name:</h3>
+                        <h3>Mobile:</h3>
                         <h3>Date:</h3>
                         <h3>Ride Id:</h3>
                         <h3>From:</h3>
@@ -102,8 +107,14 @@
                     </div>
                     <div class="col-md-6 col-lg-6">
                         <?php
-                            $rows = $ride->invoice($db->conn, $id);
-                    
+                            $rows = $ride->invoice($db->conn, $rid);
+                            $row1 = $user->invoice($db->conn, $uid);
+
+                            foreach($row1 as $row) {
+                                echo '<h3>'.$row['name'].'</h3>';
+                                echo '<h3>'.$row['mobile'].'</h3>';
+                            }
+                            
                             foreach($rows as $row) {
                                 ?>
                                     <h3><?php echo $row['ride_date']; ?></h3>
