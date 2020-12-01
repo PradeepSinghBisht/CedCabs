@@ -1,9 +1,8 @@
 <?php
-    require "Ride.php";
+    require_once "Ride.php";
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
-    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
@@ -13,27 +12,32 @@
         header('Location: index.php');
     }
 
-    if (isset($_GET['order'])) {
-        $action = $_GET['action'];
-        $order = $_GET['order'];
-        
-        $select = $ride->sortinguserallrides($db->conn, $action, $order);
-    }
+    if (isset($_GET['action'])) {
+        if ($_GET['action'] == 'confirm') {
 
-    if (isset($_GET['apply'])) {
-        $date1 = $_GET['date1'];
-        $date2 = $_GET['date2'];
-       
-        $select = $ride->filterbydate($db->conn, $date1, $date2);
-    }
+            $pickup = $_SESSION['landingdata']['pickup'];
+            $drop = $_SESSION['landingdata']['drop'];
+            $distance = $_SESSION['landingdata']['distance'];
+            $cabtype = $_SESSION['landingdata']['cabtype'];
+            $luggage = $_SESSION['landingdata']['luggage'];
+            $fare = $_SESSION['landingdata']['fare'];
 
-    if (isset($_GET['applyweek'])) {
-        $week = $_GET['week'];
-       
-        $select = $ride->filterbyweek($db->conn, $week);
-    }
+            $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
 
+            if ($result === true) {
+                echo "<script> alert('Your Ride Booked Successfully'); window.location.href='pendingrides.php'; </script>";
+                unset($_SESSION['landingdata']);
+
+            } else {
+                echo "Error: " . $result . "<br>" . $conn->error;
+            }
+        } else if ($_GET['action'] == 'cancel') {
+            unset($_SESSION['landingdata']);
+            echo "<script> window.location.href='index.php'; </script>";
+        }
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,10 +51,10 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="action.js"></script>
-    <title>All Rides Details</title>
+    <title>CedCabs</title>
 </head>
 <body>
-<header>
+    <header>
         <nav class="navbar navbar-expand-md navbar-light py-2">
             <div class="container">
                 <img src="cedcabs.png" alt="CedCabs" id="logo">
@@ -59,7 +63,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ml-auto" id="navbtn">
-                        <a class="nav-item btn mx-3 py-2" href="index.php" id="book">Book Now<span class="sr-only">(current)</span></a>
+                        <a class="nav-item btn mx-3 py-2" href="#taxifare" id="book">Book Now<span class="sr-only">(current)</span></a>
                         <?php 
                             if (isset($_SESSION['userdata'])) {
                                 echo '<li class="nav-item dropdown ml-3">
@@ -84,106 +88,50 @@
                                     </li>
                                     <a class="nav-item nav-link ml-3" href="logout.php">Logout</a>';
                             } else {
-                                echo '<a class="nav-item nav-link ml-3" href="login.php">Login</a>
-                                      <a class="nav-item nav-link mx-3" href="#">Our Services</a>
+                                echo '<a class="nav-item nav-link mx-3" href="#">Our Services</a>
                                       <a class="nav-item nav-link mx-3" href="#">About Us</a>
-                                      <a class="nav-item nav-link ml-3" href="#">Contact Us</a>';
+                                      <a class="nav-item nav-link ml-3" href="#">Contact Us</a>
+                                      <a class="nav-item nav-link ml-3" href="login.php">Login</a>';
                             }
                         ?>                       
-                        
                     </div>
                 </div>
             </div>
         </nav>
     </header>
-
+    
     <section>
-        <div class="container">
-            <h2>All Rides Details</h2>
-            <div class="row">
-                <div class="col-md-2 col-lg-1"></div>
-                <div class="col-md-6 col-lg-6">
-                    <form action="previousrides.php" method="GET">
-                        <p>
-                            <h6>DateWise Filter</h6>
-                            From :- <input name="date1" type="date" required>  
-                            To :- <input name="date2" type="date" required>
-                            <input type="submit" name="apply" value="Apply" class="btn btn-primary">
-                        </p>
-                    </form>
+        <div class="row">
+            <div class="col-md-2 col-lg-2"></div>
+            <div class="col-md-8 col-lg-8">
+                <div class="text-center mt-4 py-1" style="background-color:lightgrey"><h3>Confirm Your Booking</h3></div>
+                <div class="row py-3" >
+                    <div class="col-md-6 col-lg-6 text-center">
+                        <h3>From:</h3>
+                        <h3>To:</h3>
+                        <h3>Total Distance: </h3>
+                        <h3>Luggage:</h3>
+                        <h3>Cab Type:</h3>
+                        <h3>Fare:</h3>
+                    </div>
+                    <div class="col-md-6 col-lg-6 text-center">
+                        <h3><?php echo $_SESSION['landingdata']['pickup']; ?></h3>
+                        <h3><?php echo $_SESSION['landingdata']['drop']; ?></h3>
+                        <h3><?php echo $_SESSION['landingdata']['distance'].' Km'; ?></h3>
+                        <h3><?php echo $_SESSION['landingdata']['luggage'].' Kg'; ?></h3>   
+                        <h3><?php echo $_SESSION['landingdata']['cabtype']; ?></h3>
+                        <h3><?php echo 'Rs. '.$_SESSION['landingdata']['fare']; ?></h3>     
+                    </div>
                 </div>
-                
-                <div class="col-md-6 col-lg-4">
-                    <form action="previousrides.php" method="GET">
-                        <p>
-                            <h6>WeekWise Filter</h6>
-                            <input name="week" type="week" required>  
-                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
-                        </p>
-                    </form>
+                <div class="text-center">
+                    <a href="confirmbooking.php?action=confirm" class="btn btn-success">Confirm</a>
+                    <a href="confirmbooking.php?action=cancel" class="btn btn-danger">Cancel</a>
                 </div>
             </div>
-                  
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Ride Date<a href="previousrides.php?action=ride_date&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                        <a href="previousrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
-                    <th>From</th>
-                    <th>To</th>
-                    <th>Distance</th>
-                    <th>Cab Type</th>
-                    <th>Luggage</th>
-                    <th>Fare<a href="previousrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                        <a href="previousrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
-                    <th>Status</th>
-                    <th>Customer_Id</th>
-                </tr>
-                </thead>
-                <tbody id= "hello">
-                    <?php
-                        if ($select != '') {
-                            $rows = $select;
-                        } else {
-                            $rows = $ride->previousrides($db->conn);
-                        }
-                        
-                        
-                        foreach ($rows as $row) {
-                            if ($row['status'] == '0') {
-                                $status = 'Cancelled';
-                            } else if ($row['status'] == '1') {
-                                $status = 'Pending';
-                            } else if ($row['status'] == '2') {
-                                $status = 'Confirmed';
-                            }
-                            echo '<tr>
-                                    <td>'.$row['ride_date'].'</td>
-                                    <td>'.$row['from'].'</td>
-                                    <td>'.$row['to'].'</td>
-                                    <td>'.$row['total_distance'].' Km</td>
-                                    <td>'.$row['cab_type'].'</td>
-                                    <td>'.$row['luggage'].' Kg</td>
-                                    <td>Rs.'.$row['total_fare'].'</td>
-                                    <td>'.$status.'</td>
-                                    <td>'.$row['customer_user_id'].'</td>
-                                </tr>';
-                        }
-                    ?>
-                </tbody>
-            </table>      
-            <?php 
-                $rows = $ride->spent($db->conn);
-
-                $totalfare = 0;
-                foreach ($rows as $row) {
-                    $totalfare += $row['total_fare'];
-                }
-                echo '<h2 class="text-center">You have Spent Total Rs.'.$totalfare.' On Cab</h2>';
-            ?>
-               
+            <div class="col-md-2 col-lg-2"></div>
         </div>
     </section>
+
     <footer>
         <div id="footer" class="container">
             <div class="row my-4 text-center">

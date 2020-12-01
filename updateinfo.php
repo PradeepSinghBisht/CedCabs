@@ -14,11 +14,10 @@
     }
  
  if (isset($_POST['update'])) {
-	 $username = isset($_POST['username'])?$_POST['username']:'';
 	 $name = isset($_POST['name'])?$_POST['name']:'';
 	 $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
  
-	 $sql = $user->updateinfo($errors, $username, $name, $mobile, $db->conn);
+	 $sql = $user->updateinfo($name, $mobile, $db->conn);
 
 	if ($db->conn->query($sql) === true) {
 		echo "<script> alert('Updated Successfully')</script>";
@@ -88,11 +87,6 @@
 			</center>
 			<h2 style="text-align: center;">Update Information</h2>
 			<form action="updateinfo.php" method="POST">
-                <div class="form-group " style="padding: 5px 0px;">
-					<label for='username'>Username:</label>
-					<input type="text" class='form-control' name="username" value="<?php 
-                    echo $_SESSION['userdata']['user_name'];?>" readonly>
-				</div>
                 <div class="form-group" style="padding: 5px 0px;">
 					<label for='name'>Name:</label>
 					<input type="text" class='form-control' name="name" value="<?php 
@@ -100,7 +94,7 @@
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='mobile'>Mobile:</label>
-					<input type="number" class='form-control' name="mobile" value="<?php 
+					<input type="text" class='form-control' name="mobile" pattern="[1-9]{1}[0-9]{9}" value="<?php 
                     echo $_SESSION['userdata']['mobile'];?>" >
 				</div>
 				<div class="form-group " style="padding: 10px 0px;">

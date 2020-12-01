@@ -10,23 +10,7 @@
         if ($_SESSION['userdata']['is_admin'] == '1') {
             header('Location: Backend/admindashboard.php');
         } else if (isset($_SESSION['landingdata'])) {
-
-            $pickup = $_SESSION['landingdata']['pickup'];
-            $drop = $_SESSION['landingdata']['drop'];
-            $distance = $_SESSION['landingdata']['distance'];
-            $cabtype = $_SESSION['landingdata']['cabtype'];
-            $luggage = $_SESSION['landingdata']['luggage'];
-            $fare = $_SESSION['landingdata']['fare'];
-
-            $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
-
-            if ($result === true) {
-                echo "<script> alert('Your Ride Booked Successfully'); window.location.href='pendingrides.php'; </script>";
-                unset($_SESSION['landingdata']);
-
-            } else {
-                echo "Error: " . $result . "<br>" . $conn->error;
-            }
+            header('location:confirmbooking.php'); 
         }
     }
 ?>

@@ -115,7 +115,7 @@
                                     <th>Fare<a href="riderequest.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="riderequest.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Status</th>
-                                    <th>User_Id</th>
+                                    <th>Id</th>
                                     <th>Action</th>
                                 </tr>   
                                 </thead>

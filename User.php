@@ -44,16 +44,16 @@
             return $result;
         }
 
-        public function updateinfo($errors, $username, $name, $mobile, $conn) {
+        public function updateinfo($name, $mobile, $conn) {
         
-            $sql = "UPDATE user SET `user_name` = '".$username."', `name` = '".$name."',
+            $sql = "UPDATE user SET `name` = '".$name."',
                         `mobile` = '".$mobile."' 
                     WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
             
             return $sql;
         }
 
-        public function changepassword($errors, $password, $confirmpassword, $conn) {
+        public function changepassword($password, $confirmpassword, $conn) {
             
             $sql = "UPDATE user SET `password` = '".$password."'
                         WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";

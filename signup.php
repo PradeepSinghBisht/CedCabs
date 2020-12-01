@@ -84,7 +84,7 @@ if (isset($_POST['register'])) {
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='mobile'>Mobile:</label>
-					<input type="number" class='form-control' name="mobile" required>
+					<input type="text" class='form-control' name="mobile" pattern="[1-9]{1}[0-9]{9}" required>
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='password'>Password:</label>

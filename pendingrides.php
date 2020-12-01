@@ -99,14 +99,29 @@
     <section>
         <div class="container">
             <h2>Pending Rides Details</h2> 
-            <form action="pendingrides.php" method="GET">
-            <h6>DateWise Filter</h6>
-                <p>
-                    From :- <input name="date1" type="date" required>  
-                    To :- <input name="date2" type="date" required>
-                    <input type="submit" name="apply" value="Apply" class="btn btn-primary">
-                </p>
-            </form>           
+            <div class="row">
+                <div class="col-md-2 col-lg-1"></div>
+                <div class="col-md-6 col-lg-6">
+                    <form action="pendingrides.php" method="GET">
+                        <p>
+                            <h6>DateWise Filter</h6>
+                            From :- <input name="date1" type="date" required>  
+                            To :- <input name="date2" type="date" required>
+                            <input type="submit" name="apply" value="Apply" class="btn btn-primary">
+                        </p>
+                    </form>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <form action="pendingrides.php" method="GET">
+                        <p>
+                            <h6>WeekWise Filter</h6>
+                            <input name="week" type="week" required>  
+                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
+                        </p>
+                    </form>
+                </div>
+            </div>          
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -157,13 +172,7 @@
                     ?>
                 </tbody>
             </table> 
-            <form action="previousrides.php" method="GET">
-                <h6>WeekWise Filter</h6>
-                <p>
-                    <input name="week" type="week" required>  
-                    <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
-                </p>
-            </form>
+            
         </div>
     </section>
     <footer>
