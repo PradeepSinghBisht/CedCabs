@@ -116,13 +116,18 @@
                             }
                             
                             foreach($rows as $row) {
+                                if ($row['luggage'] == '') {
+                                    $luggage = 0;
+                                } else {
+                                    $luggage = $row['luggage'];
+                                }
                                 ?>
                                     <h3><?php echo $row['ride_date']; ?></h3>
                                     <h3><?php echo $row['ride_id']; ?></h3>
                                     <h3><?php echo $row['from']; ?></h3>
                                     <h3><?php echo $row['to']; ?></h3>
                                     <h3><?php echo $row['total_distance'].' Km'; ?></h3>
-                                    <h3><?php echo $row['luggage'].' Kg'; ?></h3>   
+                                    <h3><?php echo $luggage.' Kg'; ?></h3>   
                                     <h3><?php echo $row['cab_type'].''; ?></h3>     
                     </div>
                 </div>

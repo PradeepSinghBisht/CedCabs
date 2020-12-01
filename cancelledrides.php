@@ -17,20 +17,20 @@
         $action = $_GET['action'];
         $order = $_GET['order'];
         
-        $select = $ride->sortingusercompletedrides($db->conn, $action, $order);
+        $select = $ride->sortingusercancelledrides($db->conn, $action, $order);
     }
 
     if (isset($_GET['apply'])) {
         $date1 = $_GET['date1'];
         $date2 = $_GET['date2'];
 
-        $select = $ride->filterbydatecompleted($db->conn, $date1, $date2);
+        $select = $ride->filterbydatecancelled($db->conn, $date1, $date2);
     }
 
     if (isset($_GET['applyweek'])) {
         $week = $_GET['week'];
        
-        $select = $ride->filterbyweekcompleted($db->conn, $week);
+        $select = $ride->filterbyweekcancelled($db->conn, $week);
     }
 ?>
 <!DOCTYPE html>
@@ -46,7 +46,7 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="action.js"></script>
-    <title>Completed Rides Details</title>
+    <title>Cancelled Rides Details</title>
 </head>
 <body>
 <header>
@@ -99,11 +99,11 @@
 
     <section>
         <div class="container">
-            <h2>Completed Rides Details</h2>  
+            <h2>Cancelled Rides Details</h2>  
             <div class="row">
                 <div class="col-md-2 col-lg-1"></div>
                 <div class="col-md-6 col-lg-6">
-                    <form action="completedrides.php" method="GET">
+                    <form action="cancelledrides.php" method="GET">
                         <p>
                             <h6>DateWise Filter</h6>
                             From :- <input name="date1" type="date" required>  
@@ -114,7 +114,7 @@
                 </div>
                 
                 <div class="col-md-6 col-lg-4">
-                    <form action="completedrides.php" method="GET">
+                    <form action="cancelledrides.php" method="GET">
                         <p>
                             <h6>WeekWise Filter</h6>
                             <input name="week" type="week" required>  
@@ -126,15 +126,15 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Ride Date<a href="completedrides.php?action=ride_date&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                        <a href="completedrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                    <th>Ride Date<a href="cancelledrides.php?action=ride_date&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                        <a href="cancelledrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>From</th>
                     <th>To</th>
                     <th>Distance</th>
                     <th>Cab Type</th>
                     <th>Luggage</th>
-                    <th>Fare<a href="completedrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
-                        <a href="completedrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                    <th>Fare<a href="cancelledrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                        <a href="cancelledrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>Status</th>
                     <th>Customer_Id</th>
                 </tr>
@@ -144,7 +144,7 @@
                         if ($select != '') {
                             $rows = $select;
                         } else {
-                            $rows = $ride->completedrides($db->conn);
+                            $rows = $ride->cancelledrides($db->conn);
                         }
                         
                         

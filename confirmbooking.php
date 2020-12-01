@@ -12,6 +12,10 @@
         header('Location: index.php');
     }
 
+    if (!isset($_SESSION['landingdata'])) {
+        header('location: index.php');
+    }
+
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'confirm') {
 
@@ -63,7 +67,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav ml-auto" id="navbtn">
-                        <a class="nav-item btn mx-3 py-2" href="#taxifare" id="book">Book Now<span class="sr-only">(current)</span></a>
+                        <a class="nav-item btn mx-3 py-2" href="index.php" id="book">Book Now<span class="sr-only">(current)</span></a>
                         <?php 
                             if (isset($_SESSION['userdata'])) {
                                 echo '<li class="nav-item dropdown ml-3">
@@ -73,6 +77,7 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="pendingrides.php">Pending Rides</a>
                                         <a class="dropdown-item" href="completedrides.php">Completed Rides</a>
+                                        <a class="dropdown-item" href="cancelledrides.php">Cancelled Rides</a>
                                         <a class="dropdown-item" href="previousrides.php">All Rides</a>
                                       </li>  
                                       <li class="nav-item dropdown ml-3">
@@ -84,7 +89,7 @@
                                         <a class="dropdown-item" href="changepassword.php">Change Password</a>
                                        </li>
                                        <li> 
-                                        <a class="nav-item nav-link ml-3" href="#">'.$_SESSION['userdata']['name'].'</a>
+                                       <a class="nav-item nav-link ml-3" href="userdashboard.php">DashBoard</a>
                                     </li>
                                     <a class="nav-item nav-link ml-3" href="logout.php">Logout</a>';
                             } else {
@@ -111,14 +116,15 @@
                         <h3>To:</h3>
                         <h3>Total Distance: </h3>
                         <h3>Luggage:</h3>
-                        <h3>Cab Type:</h3>
+                        <h3>Cab Typindex.phpe:</h3>
                         <h3>Fare:</h3>
                     </div>
                     <div class="col-md-6 col-lg-6 text-center">
+                        <?php if ($_SESSION['landingdata']['luggage'] == '') { $luggage = 0;} else { $luggage = $_SESSION['landingdata']['luggage'];}?>
                         <h3><?php echo $_SESSION['landingdata']['pickup']; ?></h3>
                         <h3><?php echo $_SESSION['landingdata']['drop']; ?></h3>
                         <h3><?php echo $_SESSION['landingdata']['distance'].' Km'; ?></h3>
-                        <h3><?php echo $_SESSION['landingdata']['luggage'].' Kg'; ?></h3>   
+                        <h3><?php echo $luggage.' Kg'; ?></h3>   
                         <h3><?php echo $_SESSION['landingdata']['cabtype']; ?></h3>
                         <h3><?php echo 'Rs. '.$_SESSION['landingdata']['fare']; ?></h3>     
                     </div>

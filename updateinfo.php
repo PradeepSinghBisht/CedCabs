@@ -83,7 +83,7 @@
 		</div>
 		<div class="col-md-6 col-lg-6 col-sm-10" id='abc'>
 			<center>
-				<a href="#"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
+				<a href="index.php"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
 			</center>
 			<h2 style="text-align: center;">Update Information</h2>
 			<form action="updateinfo.php" method="POST">

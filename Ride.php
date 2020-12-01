@@ -27,6 +27,14 @@
             return $result;
         }
 
+        public function cancelledrides($conn) {
+
+            $sql = "SELECT * FROM ride where `customer_user_id`='".$_SESSION['userdata']['user_id']."'AND `status`='0'";
+            $result = $conn->query($sql);
+    
+            return $result;
+        }
+
         public function previousrides($conn) {
             $sql = "SELECT * FROM ride where `customer_user_id`='".$_SESSION['userdata']['user_id']."'";
             $result = $conn->query($sql);
@@ -164,6 +172,18 @@
             return $result;
         }
 
+        public function sortingusercancelledrides($conn, $action, $order) {
+
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `ride` where `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='0' ORDER BY cast(`$action` as unsigned) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `ride` where `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='0' ORDER BY cast(`$action` as unsigned) DESC";
+            }
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
         public function sortinguserallrides($conn, $action, $order) {
 
             if ($order == 'asc') {
@@ -208,6 +228,14 @@
             return $result;
         }
 
+        public function filterbydatecancelled($conn, $date1, $date2) {
+
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='0' AND DATE(`ride_date`) BETWEEN '".$date1."' AND '".$date2."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
         public function filterbyweek($conn, $week) {
 
             $weeknumber = substr($week,6)-1;
@@ -230,6 +258,15 @@
 
             $weeknumber = substr($week,6)-1;
             $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='2' AND WEEK(`ride_date`) = '".$weeknumber."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function filterbyweekcancelled($conn, $week) {
+
+            $weeknumber = substr($week,6)-1;
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='0' AND WEEK(`ride_date`) = '".$weeknumber."'";
             $result = $conn->query($sql);
 
             return $result;

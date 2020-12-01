@@ -12,7 +12,7 @@ if (isset($_POST['register'])) {
     $confirmpassword = isset($_POST['confirmpassword'])?md5($_POST['confirmpassword']):'';
     $isadmin = isset($_POST['isadmin'])?$_POST['isadmin']:'';
 
-    $errors = $user->signup($errors, $username, $name, $mobile, $password, $confirmpassword, $isadmin, $db->conn);
+    $errors = $user->signup($errors, $username, $name, $mobile, $password, $confirmpassword, $db->conn);
 
 }
 
@@ -70,8 +70,9 @@ if (isset($_POST['register'])) {
 		</div>
 		<div class="col-md-6 col-lg-6 col-sm-10" id='abc'>
 			<center>
-				<a href="#"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
+				<a href="index.php"><img style="margin:-65px 0px -60px;" src="cedcabs.png" alt="" /></a>
 			</center>
+			<div class="text-center"><a href="index.php" class="btn btn-primary text-center">Home</a></div>
 			<h2 style="text-align: center;">Register Here</h2>
 			<form action="signup.php" method="POST">
                 <div class="form-group " style="padding: 5px 0px;">
@@ -93,14 +94,6 @@ if (isset($_POST['register'])) {
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='confirmpassword'>Confirm Password:</label>
 					<input type="password" class='form-control' name="confirmpassword" required>
-                </div>
-                <div class="form-group" style="padding: 5px 0px;">
-                    <label for='isadmin'>Role</label>
-                    <select name="isadmin" class="form-control">
-                        <option value="">Select From The List</option>
-                        <option value="1">Admin</option>
-                        <option value="0">Customer</option>
-                    </select>
                 </div>
 				<div class="form-group " style="padding: 10px 0px;">
 					<input type="submit" class="btn btn-success form-control"  name="register" value="Register" style="padding: 5px 30px;">

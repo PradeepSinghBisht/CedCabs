@@ -128,13 +128,20 @@
                                             } else if ($row['status'] == '2') {
                                                 $status = 'Confirmed';
                                             }
+
+                                            if ($row['luggage'] == '') {
+                                                $luggage = 0;
+                                            } else {
+                                                $luggage = $row['luggage'];
+                                            }
+
                                             echo '<tr>
                                                     <td>'.$row['ride_date'].'</td>
                                                     <td>'.$row['from'].'</td>
                                                     <td>'.$row['to'].'</td>
                                                     <td>'.$row['total_distance'].' Km</td>
                                                     <td>'.$row['cab_type'].'</td>
-                                                    <td>'.$row['luggage'].' Kg</td>
+                                                    <td>'.$luggage.' Kg</td>
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>

@@ -69,6 +69,7 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="pendingrides.php">Pending Rides</a>
                                         <a class="dropdown-item" href="completedrides.php">Completed Rides</a>
+                                        <a class="dropdown-item" href="cancelledrides.php">Cancelled Rides</a>
                                         <a class="dropdown-item" href="previousrides.php">All Rides</a>
                                       </li>  
                                       <li class="nav-item dropdown ml-3">
@@ -80,7 +81,7 @@
                                         <a class="dropdown-item" href="changepassword.php">Change Password</a>
                                        </li>
                                        <li> 
-                                        <a class="nav-item nav-link ml-3" href="#">'.$_SESSION['userdata']['name'].'</a>
+                                       <a class="nav-item nav-link ml-3" href="userdashboard.php">DashBoard</a>
                                     </li>
                                     <a class="nav-item nav-link ml-3" href="logout.php">Logout</a>';
                             } else {
@@ -148,7 +149,6 @@
                             $rows = $ride->previousrides($db->conn);
                         }
                         
-                        
                         foreach ($rows as $row) {
                             if ($row['status'] == '0') {
                                 $status = 'Cancelled';
@@ -157,13 +157,20 @@
                             } else if ($row['status'] == '2') {
                                 $status = 'Confirmed';
                             }
+
+                            if ($row['luggage'] == '') {
+                                $luggage = 0;
+                            } else {
+                                $luggage = $row['luggage'];
+                            }
+
                             echo '<tr>
                                     <td>'.$row['ride_date'].'</td>
                                     <td>'.$row['from'].'</td>
                                     <td>'.$row['to'].'</td>
                                     <td>'.$row['total_distance'].' Km</td>
                                     <td>'.$row['cab_type'].'</td>
-                                    <td>'.$row['luggage'].' Kg</td>
+                                    <td>'.$luggage.' Kg</td>
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>
                                     <td>'.$row['customer_user_id'].'</td>

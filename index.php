@@ -9,8 +9,6 @@
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
             header('Location: Backend/admindashboard.php');
-        } else if (isset($_SESSION['landingdata'])) {
-            header('location:confirmbooking.php'); 
         }
     }
 ?>
@@ -50,6 +48,7 @@
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <a class="dropdown-item" href="pendingrides.php">Pending Rides</a>
                                         <a class="dropdown-item" href="completedrides.php">Completed Rides</a>
+                                        <a class="dropdown-item" href="cancelledrides.php">Cancelled Rides</a>
                                         <a class="dropdown-item" href="previousrides.php">All Rides</a>
                                       </li>  
                                       <li class="nav-item dropdown ml-3">
@@ -61,7 +60,7 @@
                                         <a class="dropdown-item" href="changepassword.php">Change Password</a>
                                        </li>
                                        <li> 
-                                        <a class="nav-item nav-link ml-3" href="#">'.$_SESSION['userdata']['name'].'</a>
+                                        <a class="nav-item nav-link ml-3" href="userdashboard.php">DashBoard</a>
                                     </li>
                                     <a class="nav-item nav-link ml-3" href="logout.php">Logout</a>';
                             } else {

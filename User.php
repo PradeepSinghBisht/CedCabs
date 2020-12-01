@@ -3,7 +3,7 @@
 
     class User {
 
-        public function signup($errors, $username, $name, $mobile, $password, $confirmpassword, $isadmin, $conn) {
+        public function signup($errors, $username, $name, $mobile, $password, $confirmpassword, $conn) {
             
             if ($password != $confirmpassword) {
                 $errors[] = array('msg'=>'Password Doesn\'t Match');
@@ -23,7 +23,7 @@
 
             if (sizeof($errors) == 0) {
                 $sql = 'INSERT INTO user(`user_name`,`name`,`dateofsignup`,`mobile`,`isblock`,`password`,`is_admin`) 
-                VALUES("'.$username.'","'.$name.'",NOW(),"'.$mobile.'","'.$isadmin.'","'.$password.'","'.$isadmin.'")';
+                VALUES("'.$username.'","'.$name.'",NOW(),"'.$mobile.'","0","'.$password.'","0")';
         
                 if ($conn->query($sql) === true) {
                     echo '<script>alert("Registered Successfully")</script>';
