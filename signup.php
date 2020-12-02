@@ -5,7 +5,7 @@
      $errors = array();
 
 if (isset($_POST['register'])) {
-    $username = isset($_POST['username'])?$_POST['username']:'';
+    $username = strtolower(isset($_POST['username'])?$_POST['username']:'');
     $name = isset($_POST['name'])?$_POST['name']:'';
     $mobile = isset($_POST['mobile'])?$_POST['mobile']:'';
     $password = isset($_POST['password'])?md5($_POST['password']):'';
@@ -59,11 +59,10 @@ if (isset($_POST['register'])) {
 <body>
 <div class="container-fluid" id='main'>
     <div id = "errors">
-        <?php foreach ($errors as $key=>$value) { ?>
-            <li> 
-                <?php echo $errors[$key]['msg'];
-        } ?> 
-            </li>
+        <?php foreach ($errors as $key=>$value) { 
+				echo "<h3 class='text-center'><li>".$errors[$key]['msg']."</li></h3>";  
+			}
+		?>    
     </div>
 	<div class="jumbotron" id='jumb'>
 		<div class="col-md-3 col-lg-3 col-sm-1">

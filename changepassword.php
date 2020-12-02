@@ -14,18 +14,22 @@
     }
  
     if (isset($_POST['update'])) {
-        $password = isset($_POST['password'])?MD5($_POST['password']):'';
+		$password = isset($_POST['password'])?MD5($_POST['password']):'';
+		
 		$confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
 		
 		if ($password != $confirmpassword) {
+			
 			$errors[] = array('msg'=>'Password Doesn\'t Match');
 		}
 
 		if (sizeof($errors) == 0) {
-			$sql = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
-
+			$sql = $user->changepassword($password, $db->conn);
+			
 			if ($db->conn->query($sql) === true) {
+				// $db->conn->query($sql);
 				echo "<script> alert('Updated Successfully')</script>";
+				echo "<script> window.location.href='index.php'</script>";
             } else {
                 $errors[] = array('input'=>'form', 'msg'=>$conn->error);
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -76,11 +80,10 @@
 <body>
 <div class="container-fluid" id='main'>
     <div id = "errors">
-        <?php foreach ($errors as $key=>$value) { ?>
-            <li> 
-                <?php echo $errors[$key]['msg'];
-        } ?> 
-            </li>
+		<?php foreach ($errors as $key=>$value) { 
+				echo "<h3 class='text-center'><li>".$errors[$key]['msg']."</li></h3>";  
+			}
+		?> 
     </div>
 	<div class="jumbotron" id='jumb'>
 		<div class="col-md-3 col-lg-3 col-sm-1">
@@ -93,11 +96,11 @@
 			<form action="changepassword.php" method="POST">
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='password'>Password:</label>
-					<input type="password" class='form-control' name="password">
+					<input type="password" class='form-control' name="password" required>
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='confirmpassword'>Confirm Password:</label>
-					<input type="password" class='form-control' name="confirmpassword">
+					<input type="password" class='form-control' name="confirmpassword" required>
                 </div>
 				<div class="form-group " style="padding: 10px 0px;">
 					<input type="submit" class="btn btn-success form-control"  name="update" value="Update" style="padding: 5px 30px;">

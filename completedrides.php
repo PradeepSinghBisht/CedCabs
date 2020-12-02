@@ -106,8 +106,8 @@
                     <form action="completedrides.php" method="GET">
                         <p>
                             <h6>DateWise Filter</h6>
-                            From :- <input name="date1" type="date" required>  
-                            To :- <input name="date2" type="date" required>
+                            From :- <input name="date1" type="date" value="<?php echo $date1; ?>" required>  
+                            To :- <input name="date2" type="date" value="<?php echo $date2; ?>" required>
                             <input type="submit" name="apply" value="Apply" class="btn btn-primary">
                         </p>
                     </form>
@@ -117,7 +117,7 @@
                     <form action="completedrides.php" method="GET">
                         <p>
                             <h6>WeekWise Filter</h6>
-                            <input name="week" type="week" required>  
+                            <input name="week" type="week" value="<?php echo $week; ?>" required>  
                             <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
                         </p>
                     </form>

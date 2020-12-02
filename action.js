@@ -1,17 +1,20 @@
 $(document).ready(function() {
     $('#pickup').change(function(){
+        $('#booknow').css('display','none');
         var location = $('#pickup').val();
         $("#drop option[value='"+location+"']").prop('disabled','disabled').siblings().removeAttr('disabled');
         $('#fare').html('Calculate Fare');
     });
 
     $('#drop').change(function(){
+        $('#booknow').css('display','none');
         var location = $('#drop').val();
         $("#pickup option[value='"+location+"']").prop('disabled','disabled').siblings().removeAttr('disabled');
         $('#fare').html('Calculate Fare');
     });
 
     $('#cabtype').change(function(){
+        $('#booknow').css('display','none');
         $('#fare').html('Calculate Fare');
         var type = $('#cabtype').val();
         if (type == 'CedMicro') {
@@ -23,6 +26,7 @@ $(document).ready(function() {
     });
 
     $("#luggage").keyup(function(){
+        $('#booknow').css('display','none');
         $('#fare').html('Calculate Fare');
         var weight = $("#luggage").val();
         if(isNaN(weight) == true) {
@@ -61,7 +65,10 @@ $(document).ready(function() {
         var cabtype = $('#cabtype').val();
         var luggage = $('#luggage').val();
         var booknow = "booknow";
-
+        if (pickup == '' || drop =='' || cabtype == ''){
+            alert("Please Fill All Fields");
+            return;
+        }
         $.ajax({
             url: "ajax.php",
             data: {booknow, pickup, drop, cabtype, luggage},
@@ -73,6 +80,7 @@ $(document).ready(function() {
                 $('#drop').val('');
                 $('#cabtype').val('');
                 $('#luggage').val('');
+                window.location.href = "pendingrides.php";
             }
         });
     });

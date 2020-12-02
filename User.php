@@ -53,12 +53,13 @@
             return $sql;
         }
 
-        public function changepassword($password, $confirmpassword, $conn) {
+        public function changepassword($password, $conn) {
             
             $sql = "UPDATE user SET `password` = '".$password."'
                         WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
-                
+                       
             return $sql;
+                
         }
 
         public function allusers($conn) {

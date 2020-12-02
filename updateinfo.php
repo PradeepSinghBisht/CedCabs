@@ -20,9 +20,10 @@
 	 $sql = $user->updateinfo($name, $mobile, $db->conn);
 
 	if ($db->conn->query($sql) === true) {
-		echo "<script> alert('Updated Successfully')</script>";
 		$_SESSION['userdata']['name'] = $name;
 		$_SESSION['userdata']['mobile'] = $mobile;
+		echo "<script> alert('Updated Successfully')</script>";
+		echo "<script> window.location.href='index.php'</script>";
 	} else {
 		$errors[] = array('input'=>'form', 'msg'=>$conn->error);
 		echo "Error: " . $sql . "<br>" . $conn->error;
@@ -72,11 +73,10 @@
 <body>
 <div class="container-fluid" id='main'>
     <div id = "errors">
-        <?php foreach ($errors as $key=>$value) { ?>
-            <li> 
-                <?php echo $errors[$key]['msg'];
-        } ?> 
-            </li>
+		<?php foreach ($errors as $key=>$value) { 
+				echo "<h3 class='text-center'><li>".$errors[$key]['msg']."</li></h3>";  
+			}
+		?> 
     </div>
 	<div class="jumbotron" id='jumb'>
 		<div class="col-md-3 col-lg-3 col-sm-1">
@@ -95,7 +95,7 @@
 				<div class="form-group " style="padding: 5px 0px;">
 					<label for='mobile'>Mobile:</label>
 					<input type="text" class='form-control' name="mobile" pattern="[1-9]{1}[0-9]{9}" value="<?php 
-                    echo $_SESSION['userdata']['mobile'];?>" >
+                    echo $_SESSION['userdata']['mobile'];?>" required>
 				</div>
 				<div class="form-group " style="padding: 10px 0px;">
 					<input type="submit" class="btn btn-success form-control"  name="update" value="Update" style="padding: 5px 30px;">

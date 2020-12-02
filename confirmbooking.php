@@ -13,11 +13,12 @@
     }
 
     if (!isset($_SESSION['landingdata'])) {
-        header('location: index.php');
+        header('Location: index.php');
     }
 
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'confirm') {
+            print_r($_SESSION['landingdata']);
 
             $pickup = $_SESSION['landingdata']['pickup'];
             $drop = $_SESSION['landingdata']['drop'];
@@ -29,14 +30,16 @@
             $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
 
             if ($result === true) {
-                echo "<script> alert('Your Ride Booked Successfully'); window.location.href='pendingrides.php'; </script>";
+                echo "<script> alert('Your Ride Booked Successfully Please Wait to confirm from our side'); window.location.href='pendingrides.php'; </script>";
                 unset($_SESSION['landingdata']);
+                unset($_SESSION['timer']);
 
             } else {
                 echo "Error: " . $result . "<br>" . $conn->error;
             }
         } else if ($_GET['action'] == 'cancel') {
             unset($_SESSION['landingdata']);
+            unset($_SESSION['timer']);
             echo "<script> window.location.href='index.php'; </script>";
         }
     }
@@ -116,7 +119,7 @@
                         <h3>To:</h3>
                         <h3>Total Distance: </h3>
                         <h3>Luggage:</h3>
-                        <h3>Cab Typindex.phpe:</h3>
+                        <h3>Cab Type:</h3>
                         <h3>Fare:</h3>
                     </div>
                     <div class="col-md-6 col-lg-6 text-center">

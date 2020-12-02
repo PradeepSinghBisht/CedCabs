@@ -88,6 +88,7 @@
 
     if (!isset($_SESSION['userdata'])) {
         $_SESSION['landingdata'] = array('pickup'=>$pickup, 'drop'=>$drop, 'distance'=>$distance, 'cabtype'=>$cabtype, 'luggage'=>$luggage, 'fare'=>$fare);
+        $_SESSION['timer'] = time();
     }
 
     if (isset($_POST['fare'])) {
@@ -98,7 +99,7 @@
         $result = $ride->index($pickup, $drop, $distance, $cabtype, $luggage, $fare, $db->conn);
 
         if ($result === true) {
-            echo "Your Ride Booked Successfully";
+            echo "Your Ride Booked Successfully Please Wait to confirm from our side";
 
         } else {
             echo "Error: " . $result . "<br>" . $conn->error;

@@ -25,8 +25,13 @@ if (isset($_POST['login'])) {
 			'user_name'=>$row['user_name'], 'name'=>$row['name'],
 			'dateofsignup'=>$row['dateofsignup'], 'mobile'=>$row['mobile'], 
 			'isblock'=>$row['isblock'], 'is_admin'=>$row['is_admin']);
-			
-			header('Location: userdashboard.php');
+
+			if (time() - $_SESSION['timer'] > 180) {  
+				unset($_SESSION['landingdata']);
+				header('location:userdashboard.php');
+			} else {
+				header('Location: confirmbooking.php');
+			}
 
 		} else if ($row['isblock'] == 1 and $row['is_admin'] == 1){
 			$_SESSION['userdata'] = array('user_id'=>$row['user_id'],
@@ -88,11 +93,10 @@ if (isset($_POST['login'])) {
 
 <div class="container-fluid" id='main'>
     <div id = "errors">
-        <?php foreach ($errors as $key=>$value) { ?>
-            <li> 
-                <?php echo $errors[$key]['msg'];
-        } ?> 
-            </li>
+		<?php foreach ($errors as $key=>$value) { 
+				echo "<h3 class='text-center'><li>".$errors[$key]['msg']."</li></h3>";  
+			}
+		?>
     </div>
 	<div class="jumbotron" id='jumb'>
 		<div class="col-md-3 col-lg-3 col-sm-1">
@@ -102,7 +106,7 @@ if (isset($_POST['login'])) {
 				<a href="index.php"><img src="cedcabs.png" style="margin:-65px 0px -60px;" alt="" /></a>
 			</center>
 			<div class="text-center"><a href="index.php" class="btn btn-primary text-center">Home</a></div>
-			<h2 style="text-align: center;">Login Here</h2>
+			<h2 style="text-align: center">Login Here</h2>
 			<form action="login.php" method="POST">
                 <div class="form-group " style="padding: 5px 0px;">
 					<label for='username'>Username:</label>

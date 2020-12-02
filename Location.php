@@ -29,6 +29,7 @@
         
                 if ($conn->query($sql) === true) {
                     echo '<script>alert("Location Added Successfully")</script>';
+                    echo '<script> window.location.href = "location.php" </script>';
         
                 } else {
                     $errors[] = array('input'=>'form', 'msg'=>$conn->error);
