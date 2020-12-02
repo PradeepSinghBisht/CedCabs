@@ -22,10 +22,11 @@
 		}
 
 		if (sizeof($errors) == 0) {
-			$sql = $user->changepassword($errors, $password, $confirmpassword, $db->conn);
+			$sql = $user->changepassword($password, $db->conn);
 
 			if ($db->conn->query($sql) === true) {
-				echo "<script> alert('Updated Successfully')</script>";
+                echo "<script> alert('Updated Successfully')</script>";
+                echo "<script> window.location.href = 'admindashboard.php'</script>";
             } else {
                 $errors[] = array('input'=>'form', 'msg'=>$conn->error);
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -107,15 +108,14 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="container">  
-                            <div id = "errors">
-                                <?php foreach ($errors as $key=>$value) { ?>
-                                    <li> 
-                                        <?php echo $errors[$key]['msg'];
-                                } ?> 
-                                    </li>
-                            </div>         
+                        <div class="container">           
                             <h2 style="text-align: center;">Update Password</h2>
+                            <div id = "errors">
+                                <?php foreach ($errors as $key=>$value) { 
+                                        echo "<h4><li>".$errors[$key]['msg']."</li></h4>";  
+                                    }
+                                ?> 
+                            </div>
                             <form action="changepassword.php" method="POST">
                                 <div class="form-group " style="padding: 5px 0px;">
                                     <label for='password'>Password:</label>

@@ -102,11 +102,10 @@
                         <div class="container">
                             <h2>Add New Location</h2>
                             <div id = "errors">
-                                <?php foreach ($errors as $key=>$value) { ?>
-                                    <li> 
-                                        <?php echo $errors[$key]['msg'];
-                                } ?> 
-                                    </li>
+                                <?php foreach ($errors as $key=>$value) { 
+                                        echo "<h3 class='text-center'><li>".$errors[$key]['msg']."</li></h3>";  
+                                    }
+                                ?> 
                             </div>
                             <form action="#" method="POST">
                                 <div class="form-group">

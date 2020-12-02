@@ -25,6 +25,7 @@
            
             if ($db->conn->query($sql) === true) {
                 echo '<script> alert("Location Updated Successfully")</script>';
+                echo '<script> window.location.href = "location.php" </script>';
 
             } else {
                 echo "Error: " . $sql . "<br>" . $db->conn->error;

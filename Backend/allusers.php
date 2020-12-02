@@ -27,11 +27,6 @@
         }
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $action = $_GET['action'];
-        $user->updateuserrequest($db->conn, $id, $action);
-    }
 ?>
 <!DOCTYPE html>
 <!DOCTYPE html>
@@ -77,7 +72,7 @@
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" id="d" href="userrequest.php">Pending User Request</a>
-                    <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
+                    <a cPrintss="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
                     <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
                 </li>
 
@@ -145,7 +140,7 @@
                                                     <td>'.$row['user_name'].'</td>
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['mobile'].'</td>
-                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action='.$block.'" class="btn btn-primary">'.$block.'</a></td>
+                                                    <td>'.$block.'</td>
                                                     <td>'.$row['password'].'</td>
                                                     <td><a href="allusers.php?id='.$row['user_id'].'&action=delete" class="btn btn-danger">Delete</a></td>
                                                 </tr>'; 

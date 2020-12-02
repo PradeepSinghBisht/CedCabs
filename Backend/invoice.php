@@ -134,9 +134,19 @@
                 <div class="text-center ">
                     <h2 class="text-center py-2" style="background-color:lightgrey">Total Fare:  <?php echo $row['total_fare']; }?></h2>
                 </div>
+                <div class="text-center" id="print"><button class="btn" style="background-color:lightgrey"  onclick="printSrc()">Print</button></div>
             </div>
             <div class="col-md-3 col-lg-3"></div>
         </div>
       </div>
+      <script>
+          function printSrc() {
+              $('#sidebar-wrapper').css('display','none');
+              $('#print').css('display','none');
+              window.print();
+              $('#sidebar-wrapper').css('display','block');
+              $('#print').css('display','block');
+          }
+      </script>
 </body>
 </html>
