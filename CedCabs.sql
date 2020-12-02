@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2020 at 03:51 PM
+-- Generation Time: Dec 02, 2020 at 02:48 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -86,7 +86,8 @@ INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `cab
 (78, '2020-12-01', 'Indira Nagar', 'Faizabad', '90', 'CedMicro', '', '1091', 0, '12'),
 (81, '2020-12-01', 'BBD', 'Basti', '120', 'CedRoyal', '111', '1987', 1, '12'),
 (82, '2020-12-01', 'Basti', 'Faizabad', '50', 'CedMini', '1', '865', 2, '19'),
-(86, '2020-12-01', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 1, '14');
+(86, '2020-12-01', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 1, '14'),
+(88, '2020-12-02', 'Gorakhpur', 'Prayagraj', '90', 'CedMicro', '', '1091', 1, '14');
 
 -- --------------------------------------------------------
 
@@ -112,10 +113,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `user_name`, `name`, `dateofsignup`, `mobile`, `isblock`, `password`, `is_admin`) VALUES
 (12, 'sam', 'Sameer Khan', '2020-11-30 20:02:31', '8989989882', 1, '332532dcfaa1cbf61e2a266bd723612c', 0),
 (13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '1b80c66fa2d7186a462020c33d639557', 1),
-(14, 'thepsb', 'Pradeep Singh Bisht', '2020-11-25 15:59:52', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 0),
-(17, 'avi', 'avinash', '2020-11-30 12:12:10', '8933877097', 0, '202cb962ac59075b964b07152d234b70', 0),
-(19, 'ab', 'Aishwaray', '2020-12-01 10:16:53', '9889798189', 0, '202cb962ac59075b964b07152d234b70', 0),
-(20, 'avinash', 'avinash', '2020-12-01 13:38:12', '7054734094', 0, 'a208e5837519309129fa466b0c68396b', 0);
+(14, 'thepsb', 'Pradeep Singh Bisht', '2020-12-02 10:57:56', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 0),
+(17, 'avi', 'avinash', '2020-11-30 12:12:10', '8933877097', 0, '202cb962ac59075b964b07152d234b70', 0);
 
 --
 -- Indexes for dumped tables
@@ -137,7 +136,8 @@ ALTER TABLE `ride`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `user_name` (`user_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -147,19 +147,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `location`
 --
 ALTER TABLE `location`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
-  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
