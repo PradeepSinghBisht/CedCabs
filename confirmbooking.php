@@ -18,7 +18,6 @@
 
     if (isset($_GET['action'])) {
         if ($_GET['action'] == 'confirm') {
-            print_r($_SESSION['landingdata']);
 
             $pickup = $_SESSION['landingdata']['pickup'];
             $drop = $_SESSION['landingdata']['drop'];

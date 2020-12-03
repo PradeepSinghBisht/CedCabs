@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 02, 2020 at 02:48 PM
+-- Generation Time: Dec 03, 2020 at 02:33 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -74,7 +74,7 @@ CREATE TABLE `ride` (
 INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `cab_type`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES
 (39, '2020-11-25', 'Indira Nagar', 'BBD', '20', 'CedRoyal', '1', '545', 0, '12'),
 (44, '2020-11-26', 'Indira Nagar', 'Gorakhpur', '200', 'CedMicro', '', '2145', 2, '12'),
-(50, '2020-11-27', 'Charbagh', 'Faizabad', '100', 'CedRoyal', '1', '1593', 0, '14'),
+(50, '2020-11-27', 'Charbagh', 'Faizabad', '100', 'CedRoyal', '1', '1593', 2, '14'),
 (53, '2020-11-28', 'BBD', 'Indira Nagar', '20', 'CedRoyal', '11', '595', 2, '14'),
 (54, '2020-11-30', 'BBD', 'Basti', '120', 'CedRoyal', '22', '1987', 2, '12'),
 (59, '2020-11-30', 'Indira Nagar', 'BBD', '20', 'CedMicro', '', '305', 0, '14'),
@@ -86,8 +86,13 @@ INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `cab
 (78, '2020-12-01', 'Indira Nagar', 'Faizabad', '90', 'CedMicro', '', '1091', 0, '12'),
 (81, '2020-12-01', 'BBD', 'Basti', '120', 'CedRoyal', '111', '1987', 1, '12'),
 (82, '2020-12-01', 'Basti', 'Faizabad', '50', 'CedMini', '1', '865', 2, '19'),
-(86, '2020-12-01', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 1, '14'),
-(88, '2020-12-02', 'Gorakhpur', 'Prayagraj', '90', 'CedMicro', '', '1091', 1, '14');
+(86, '2020-12-01', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 2, '14'),
+(88, '2020-12-02', 'Gorakhpur', 'Prayagraj', '90', 'CedMicro', '', '1091', 2, '14'),
+(111, '2020-12-03', 'Barabanki', 'Faizabad', '40', 'CedMini', '123', '885', 0, '29'),
+(112, '2020-12-03', 'Indira Nagar', 'Gorakhpur', '200', 'CedRoyal', '25', '2895', 2, '29'),
+(113, '2020-12-03', 'Indira Nagar', 'Faizabad', '90', 'CedSUV', '15', '1761', 1, '29'),
+(114, '2020-12-03', 'Gorakhpur', 'BBD', '180', 'CedMicro', '', '1975', 1, '31'),
+(115, '2020-12-03', 'Faizabad', 'Prayagraj', '200', 'CedSUV', '5', '3045', 1, '29');
 
 -- --------------------------------------------------------
 
@@ -114,7 +119,9 @@ INSERT INTO `user` (`user_id`, `user_name`, `name`, `dateofsignup`, `mobile`, `i
 (12, 'sam', 'Sameer Khan', '2020-11-30 20:02:31', '8989989882', 1, '332532dcfaa1cbf61e2a266bd723612c', 0),
 (13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '1b80c66fa2d7186a462020c33d639557', 1),
 (14, 'thepsb', 'Pradeep Singh Bisht', '2020-12-02 10:57:56', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 0),
-(17, 'avi', 'avinash', '2020-11-30 12:12:10', '8933877097', 0, '202cb962ac59075b964b07152d234b70', 0);
+(17, 'avi', 'avinash', '2020-11-30 12:12:10', '8933877097', 0, '202cb962ac59075b964b07152d234b70', 0),
+(29, 'sak', 'Sakeena', '2020-12-03 08:46:24', '1234567890', 1, 'd09b9d3cb4f7cbef107bef0425ca8eaf', 0),
+(31, 'raj', 'Rajiv', '2020-12-03 09:03:03', '1234567890', 0, '65a1223dae83b8092c4edba0823a793c', 0);
 
 --
 -- Indexes for dumped tables
@@ -153,13 +160,13 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
-  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

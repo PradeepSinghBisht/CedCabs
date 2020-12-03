@@ -72,7 +72,7 @@
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" id="d" href="userrequest.php">Pending User Request</a>
-                    <a cPrintss="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
+                    <a class="dropdown-item" id="d" href="approveduser.php">Approved User Request</a>
                     <a class="dropdown-item" id="d" href="allusers.php">All Users</a>
                 </li>
 

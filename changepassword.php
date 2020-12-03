@@ -19,21 +19,12 @@
 		$confirmpassword = isset($_POST['confirmpassword'])?MD5($_POST['confirmpassword']):'';
 		
 		if ($password != $confirmpassword) {
-			
 			$errors[] = array('msg'=>'Password Doesn\'t Match');
 		}
 
 		if (sizeof($errors) == 0) {
-			$sql = $user->changepassword($password, $db->conn);
+			$errors = $user->changepassword($password, $db->conn, $errors);
 			
-			if ($db->conn->query($sql) === true) {
-				// $db->conn->query($sql);
-				echo "<script> alert('Updated Successfully')</script>";
-				echo "<script> window.location.href='index.php'</script>";
-            } else {
-                $errors[] = array('input'=>'form', 'msg'=>$conn->error);
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
 		}
     }
 
@@ -95,7 +86,7 @@
 			<h2 style="text-align: center;">Update Information</h2>
 			<form action="changepassword.php" method="POST">
 				<div class="form-group " style="padding: 5px 0px;">
-					<label for='password'>Password:</label>
+					<label for='password'>New Password:</label>
 					<input type="password" class='form-control' name="password" required>
 				</div>
 				<div class="form-group " style="padding: 5px 0px;">

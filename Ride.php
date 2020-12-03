@@ -271,5 +271,11 @@
 
             return $result;
         }
+
+        public function fetchRides($conn) {
+            $sql = "SELECT sum(total_fare) AS total, ride_date FROM `ride` where status = '2' GROUP BY DATE(`ride_date`)";
+            $result = $conn->query($sql);
+            return $result;
+        }
     }
 ?>

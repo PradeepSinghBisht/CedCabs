@@ -13,6 +13,13 @@
     } else {
         header('Location: ../index.php');
     }
+$rows = $ride->fetchRides($db->conn);
+$rideDates = [];
+$rideEarning = [];
+foreach($rows as $row) {
+    $rideDates[] = $row['ride_date'];
+    $rideEarning[] = $row['total'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +50,7 @@
                 </li>
             
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" row-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Rides
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
@@ -54,7 +61,7 @@
                 </li> 
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" row-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Users
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
@@ -64,7 +71,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" row-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Location
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
@@ -73,7 +80,7 @@
                 </li>
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" row-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account
                     </a>
                     <div class="dropdown-menu" id="dr" aria-labelledby="navbarDropdown">
@@ -134,7 +141,7 @@
                                         <p class="card-text"><h1 class="text-center"><?php $rows = $ride->earned($db->conn); $total = 0; foreach($rows as $row) {$total += $row['total_fare'];} echo $total;?></h1></p>
                                     </div>
                                     <div class="card-header"><a style="color:white" href="allrides.php">View Details</a></div>
-                                </div>
+                                </div><!-- Type a message -->
                                 <div class="col-md-1"></div>
                                 <div class="card text-white bg-primary mb-3 col-md-3" style="max-width: 18rem;">
                                     <div class="card-body">
@@ -149,7 +156,9 @@
                                 <div id="piechart-users" class="col-md-5 col-lg-5"></div>
                                 <div id="piechart-rides" class="col-md-5 col-lg-5"></div> 
                             </div>
-
+                            <canvas id="myChart"></canvas>
+                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
                             <script type="text/javascript">
                                 // Load google charts
                                 google.charts.load('current', {'packages':['corechart']});
@@ -157,7 +166,7 @@
 
                                 // Draw the chart and set the chart values
                                 function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
+                                var row = google.visualization.arrayToDataTable([
                                 ['Users', 'Number of Users'],
                                 ['Approved Users', <?php $rows = $user->approveduser($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
                                 ['Pending Users', <?php $rows = $user->pendinguser($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
@@ -168,7 +177,7 @@
 
                                 // Display the chart inside the <div> element with id="piechart"
                                 var chart = new google.visualization.PieChart(document.getElementById('piechart-users'));
-                                chart.draw(data, options);
+                                chart.draw(row, options);
                                 }    
                             </script>       
 
@@ -179,7 +188,7 @@
 
                                 // Draw the chart and set the chart values
                                 function drawChart() {
-                                var data = google.visualization.arrayToDataTable([
+                                var row = google.visualization.arrayToDataTable([
                                 ['Rides', 'Number of Rides'],
                                 ['Completed Rides', <?php $rows = $ride->allcompletedride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
                                 ['Cancelled Rides', <?php $rows = $ride->allcancelledride($db->conn); $count = 0; foreach($rows as $row) {$count++;} echo $count;?> ],
@@ -191,10 +200,34 @@
 
                                 // Display the chart inside the <div> element with id="piechart"
                                 var chart = new google.visualization.PieChart(document.getElementById('piechart-rides'));
-                                chart.draw(data, options);
+                                chart.draw(row, options);
                                 }
                             </script>
 
+                            <script type="text/javascript">
+                                var rideDates = <?php echo json_encode($rideDates); ?>;
+                                var rideEarning = <?php echo json_encode($rideEarning); ?>;
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var chart = new Chart(ctx, {
+                                    // The type of chart we want to create
+                                    type: 'bar',
+
+                                    // The row for our dataset
+                                    data: {
+                                        labels: rideDates,
+                                        datasets: [{
+                                            label: 'DateWise Earning',
+                                            backgroundColor: 'greenyellow',
+                                            borderColor: 'greenyellow',
+                                            data: rideEarning
+                                        }]
+                                    },
+
+                                    // Configuration options go here
+                                    options: {}
+                                });
+                                
+                            </script>     
                         </div>
                     </div>
                 </div>
