@@ -207,7 +207,7 @@
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>
                                     <td>'.$row['customer_user_id'].'</td>
-                                    <td><a href="pendingrides.php?id='.$row['ride_id'].'&cancel=cancel" class="btn btn-danger">Cancel</a></td>
+                                    <td><a href="pendingrides.php?id='.$row['ride_id'].'&cancel=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
                                     </tr>';
                             
                         }

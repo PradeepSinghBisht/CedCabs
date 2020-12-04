@@ -154,7 +154,7 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="allrides.php?id='.$row['ride_id'].'" class="btn btn-danger">Delete</a></td>
+                                                    <td><a href="allrides.php?id='.$row['ride_id'].'" class="btn btn-danger btn-sm">Delete</a></td>
                                                 </tr>';
                                         }
                                     ?>

@@ -146,7 +146,7 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="invoice.php?rid='.$row['ride_id'].'&uid='.$row['customer_user_id'].'" class="btn btn-primary">View</a></td>
+                                                    <td><a href="invoice.php?rid='.$row['ride_id'].'&uid='.$row['customer_user_id'].'" class="btn btn-primary btn-sm">View</a></td>
                                                 </tr>';
                                         }
                                     ?>

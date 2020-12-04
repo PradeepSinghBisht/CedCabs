@@ -112,15 +112,15 @@
                             </div>
                             <form action="changepassword.php" method="POST">
                                 <div class="form-group " style="padding: 5px 0px;">
-                                    <label for='password'>Password:</label>
-                                    <input type="password" class='form-control' name="password">
+                                    <label for='password'>New Password:</label>
+                                    <input type="password" class='form-control' name="password" required> 
                                 </div>
                                 <div class="form-group " style="padding: 5px 0px;">
                                     <label for='confirmpassword'>Confirm Password:</label>
-                                    <input type="password" class='form-control' name="confirmpassword">
+                                    <input type="password" class='form-control' name="confirmpassword" required>
                                 </div>
                                 <div class="form-group " style="padding: 10px 0px;">
-                                    <input type="submit" class="btn btn-success form-control"  name="update" value="Update" style="padding: 5px 30px;">
+                                    <input type="submit" class="btn btn-success btn-sm form-control"  name="update" value="Update" style="padding: 5px 30px;">
                                 </div>
                             </form>
                         </div>

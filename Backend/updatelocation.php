@@ -136,7 +136,7 @@
                                                         <option value="0">Unavailable</option>
                                                     </select>
                                                 </div>
-                                                <button type="submit" name="submit" class="btn btn-primary">Update Location</button>
+                                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Update Location</button>
                                             </form> ';
                                     }
                                 }

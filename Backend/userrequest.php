@@ -131,7 +131,7 @@
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['dateofsignup'].'</td>
                                                     <td>'.$row['mobile'].'</td>
-                                                    <td><a href="userrequest.php?id='.$row['user_id'].'&action=Blocked" class="btn btn-info">Approve</a></td>
+                                                    <td><a href="userrequest.php?id='.$row['user_id'].'&action=Blocked" class="btn btn-info btn-sm">Approve</a></td>
                                                 </tr>';
                                         }
                                     ?>

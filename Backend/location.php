@@ -119,8 +119,8 @@
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['distance'].' Km</td>
                                                     <td>'.$isavailable.'</td>
-                                                    <td><a href="updatelocation.php?id='.$row['id'].'&available='.$isavailable.'" class="btn btn-primary">Edit</a>
-                                                    <a href="location.php?id='.$row['id'].'&action=delete" class="btn btn-danger">Delete</a></td>
+                                                    <td><a href="updatelocation.php?id='.$row['id'].'&available='.$isavailable.'" class="btn btn-primary btn-sm">Edit</a>
+                                                    <a href="location.php?id='.$row['id'].'&action=delete" class="btn btn-danger btn-sm">Delete</a></td>
                                                 </tr>';
                                         }
                                     ?>

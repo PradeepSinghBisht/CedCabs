@@ -153,8 +153,8 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm" class="btn btn-success">Confirm</a>
-                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel" class="btn btn-danger">Cancel</a></td>
+                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm" class="btn btn-success btn-sm">Confirm</a>
+                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
                                                 </tr>';
                                         }
                                     ?>

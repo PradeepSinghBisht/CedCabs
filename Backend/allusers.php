@@ -141,7 +141,7 @@
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['mobile'].'</td>
                                                     <td>'.$block.'</td>
-                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete" class="btn btn-danger">Delete</a></td>
+                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete" class="btn btn-danger btn-sm">Delete</a></td>
                                                 </tr>'; 
                                         }
                                     ?>

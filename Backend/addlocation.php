@@ -125,7 +125,7 @@
                                         <option value="0">Unavailable</option>
                                     </select>
                                 </div>
-                                <button type="submit" name="submit" class="btn btn-primary">Add Location</button>
+                                <button type="submit" name="submit" class="btn btn-primary btn-sm">Add Location</button>
                             </form>       
                         </div>
                     </div>
