@@ -54,7 +54,7 @@
             return $sql;
         }
 
-        public function changepassword($password, $conn, $errors) {
+        public function changepassworduser($password, $conn, $errors) {
 
             $sql = "SELECT * FROM user WHERE `user_id`='".$_SESSION['userdata']['user_id']."'";
             $result = $conn->query($sql);
@@ -82,6 +82,35 @@
             }          
             return $errors;
                 
+        }
+
+        public function changepasswordadmin($errors, $password,  $conn) {
+
+            $sql = "SELECT * FROM user WHERE `user_id`='".$_SESSION['userdata']['user_id']."'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($password == $row['password']) {
+                       $errors[] = array('input'=>'password',
+                                   'msg'=>'New Password Required.');
+                    }
+                }
+            }
+
+            if (sizeof($errors) == 0) {
+                $sql = "UPDATE user SET `password` = '".$password."'
+                WHERE `user_id` = '".$_SESSION['userdata']['user_id']."'";
+                
+                if ($conn->query($sql) === true) {
+                    echo "<script> alert('Updated Successfully')</script>";
+                    echo "<script> window.location.href = 'admindashboard.php'</script>";
+                } else {
+                    $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            }          
+            return $errors;
         }
 
         public function allusers($conn) {

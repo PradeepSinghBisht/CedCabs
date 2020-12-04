@@ -62,10 +62,34 @@
             return $result;
         }
 
-        public function updatelocation($conn, $id, $name, $distance, $available) {
-            $sql = "UPDATE location SET `name`='".$name."', `distance`='".$distance."', `is_available`='".$available."' WHERE `id`='".$id."'";
+        public function updatelocation($conn, $errors, $id, $name, $distance, $available) {
 
-            return $sql;
+            $sql = "SELECT * FROM location WHERE `name`='".$name."'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    if ($id != $row['id'] and $name == $row['name']) {
+                       $errors[] = array('input'=>'name',
+                                   'msg'=>'Location Already Exists.');
+                    }
+                }
+            }
+
+            if (sizeof($errors) == 0) {
+                $sql = "UPDATE location SET `name`='".$name."', `distance`='".$distance."', `is_available`='".$available."' WHERE `id`='".$id."'";
+                
+                if ($conn->query($sql) === true) {
+                    echo '<script> alert("Location Updated Successfully")</script>';
+                    echo '<script> window.location.href = "location.php" </script>';
+                    
+    
+                } else {
+                    $errors[] = array('input'=>'form', 'msg'=>$conn->error);
+                }
+            }
+
+            return $errors;
         }
     }
 ?>

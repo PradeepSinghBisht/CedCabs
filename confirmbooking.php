@@ -12,6 +12,11 @@
         header('Location: index.php');
     }
 
+    if (time() - $_SESSION['timer'] > 180) {  
+        unset($_SESSION['landingdata']);
+        header('location:index.php');
+    }
+
     if (!isset($_SESSION['landingdata'])) {
         header('Location: index.php');
     }

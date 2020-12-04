@@ -33,6 +33,12 @@
         $select = $ride->filterbyweek($db->conn, $week);
     }
 
+    if (isset($_GET['applycab'])) {
+        $cabtype = $_GET['cabtype'];
+       
+        $select = $ride->filterbycabtype($db->conn, $cabtype);
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,24 +108,45 @@
         <div class="container">
             <h2>All Rides Details</h2>
             <div class="row">
-                <div class="col-md-2 col-lg-1"></div>
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-1 col-lg-1 px-0 text-center">
+                    <p class="">
+                        <h6 class="text-center">Clear Filter</h6>
+                        <a href="previousrides.php" class="btn btn-primary btn-sm ">Clear</a>
+                    </p>
+                </div>
+                <div class="col-md-5 col-lg-6 pr-0">
                     <form action="previousrides.php" method="GET">
                         <p>
-                            <h6>DateWise Filter</h6>
+                            <h6 class="text-center">DateWise Filter</h6>
                             From :- <input name="date1" type="date" value="<?php echo $date1; ?>" required>  
                             To :- <input name="date2" type="date" value="<?php echo $date2; ?>" required>
-                            <input type="submit" name="apply" value="Apply" class="btn btn-primary">
+                            <input type="submit" name="apply" value="Apply" class="btn btn-primary btn-sm">
                         </p>
                     </form>
                 </div>
                 
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-5 col-lg-3">
                     <form action="previousrides.php" method="GET">
                         <p>
-                            <h6>WeekWise Filter</h6>
+                            <h6 class="text-center">WeekWise Filter</h6>
                             <input name="week" type="week" value="<?php echo $week; ?>" required>  
-                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
+                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary btn-sm">
+                        </p>
+                    </form>
+                </div>
+
+                <div class="col-md-6 col-lg-2">
+                    <form action="previousrides.php" method="GET">
+                        <p>
+                            <h6 class="text-center">CabType Filter</h6>
+                            <select name="cabtype">
+                                <option value="">Select Option</option>
+                                <option value="CedMicro">CedMicro</option>
+                                <option value="CedMini">CedMini</option>
+                                <option value="CedRoyal">CedRoyal</option>
+                                <option value="CedSUV">CedSUV</option>
+                            </select>
+                            <input type="submit" name="applycab" value="Apply" class="btn btn-primary btn-sm">
                         </p>
                     </form>
                 </div>
@@ -155,7 +182,7 @@
                             } else if ($row['status'] == '1') {
                                 $status = 'Pending';
                             } else if ($row['status'] == '2') {
-                                $status = 'Confirmed';
+                                $status = 'Completed';
                             }
 
                             if ($row['luggage'] == '') {

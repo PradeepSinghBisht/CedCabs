@@ -11,6 +11,10 @@
             header('Location: Backend/admindashboard.php');
         }
     }
+
+    if (isset($_SESSION['landingdata'])) {
+        header('Location: confirmbooking.php');
+    }
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +78,7 @@
                             } else {
                                 echo '<a class="nav-item nav-link mx-3" href="#">Our Services</a>
                                       <a class="nav-item nav-link mx-3" href="#">About Us</a>
-                                      <a class="nav-item nav-link ml-3" href="#">Contact Us</a>
+                                      <a class="nav-item nav-link ml-3" href="signup.php">Sign Up</a>
                                       <a class="nav-item nav-link ml-3" href="login.php">Login</a>';
                             }
                         ?>

@@ -13,6 +13,12 @@
         header('Location: index.php');
     }
 
+    if (isset($_GET['cancel'])) {
+        $id = $_GET['id'];
+        $action = $_GET['cancel'];
+        $ride->updateriderequest($db->conn, $id, $action);
+    }
+
     if (isset($_GET['action'])) {
         $action = $_GET['action'];
         $order = $_GET['order'];
@@ -31,6 +37,12 @@
         $week = $_GET['week'];
        
         $select = $ride->filterbyweekpending($db->conn, $week);
+    }
+
+    if (isset($_GET['applycab'])) {
+        $cabtype = $_GET['cabtype'];
+       
+        $select = $ride->filterbycabtypepending($db->conn, $cabtype);
     }
 
 ?>
@@ -101,24 +113,45 @@
         <div class="container">
             <h2>Pending Rides Details</h2> 
             <div class="row">
-                <div class="col-md-2 col-lg-1"></div>
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-1 col-lg-1 px-0 text-center">
+                    <p class="">
+                        <h6 class="text-center">Clear Filter</h6>
+                        <a href="pendingrides.php" class="btn btn-primary btn-sm ">Clear</a>
+                    </p>
+                </div>
+                <div class="col-md-6 col-lg-6 pr-0 text-center">
                     <form action="pendingrides.php" method="GET">
                         <p>
                             <h6>DateWise Filter</h6>
                             From :- <input name="date1" type="date" value="<?php echo $date1; ?>" required>  
                             To :- <input name="date2" type="date" value="<?php echo $date2; ?>" required>
-                            <input type="submit" name="apply" value="Apply" class="btn btn-primary">
+                            <input type="submit" name="apply" value="Apply" class="btn btn-primary btn-sm">
                         </p>
                     </form>
                 </div>
                 
-                <div class="col-md-6 col-lg-4">
+                <div class="col-md-6 col-lg-3 text-center">
                     <form action="pendingrides.php" method="GET">
                         <p>
                             <h6>WeekWise Filter</h6>
                             <input name="week" type="week" value="<?php echo $week; ?>" required>  
-                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary">
+                            <input type="submit" name="applyweek" value="Apply" class="btn btn-primary btn-sm">
+                        </p>
+                    </form>
+                </div>
+
+                <div class="col-md-6 col-lg-2 text-center">
+                    <form action="pendingrides.php" method="GET">
+                        <p>
+                            <h6>CabType Filter</h6>
+                            <select name="cabtype">
+                                <option value="">Select Option</option>
+                                <option value="CedMicro">CedMicro</option>
+                                <option value="CedMini">CedMini</option>
+                                <option value="CedRoyal">CedRoyal</option>
+                                <option value="CedSUV">CedSUV</option>
+                            </select>
+                            <input type="submit" name="applycab" value="Apply" class="btn btn-primary btn-sm">
                         </p>
                     </form>
                 </div>
@@ -136,7 +169,8 @@
                     <th>Fare<a href="pendingrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                         <a href="pendingrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>Status</th>
-                    <th>Customer_Id</th>
+                    <th>User_Id</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody id= "hello">
@@ -154,7 +188,7 @@
                             } else if ($row['status'] == '1') {
                                 $status = 'Pending';
                             } else if ($row['status'] == '2') {
-                                $status = 'Confirmed';
+                                $status = 'Completed';
                             }
 
                             if ($row['luggage'] == '') {
@@ -173,6 +207,7 @@
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>
                                     <td>'.$row['customer_user_id'].'</td>
+                                    <td><a href="pendingrides.php?id='.$row['ride_id'].'&cancel=cancel" class="btn btn-danger">Cancel</a></td>
                                     </tr>';
                             
                         }

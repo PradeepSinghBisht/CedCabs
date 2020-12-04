@@ -277,5 +277,34 @@
             $result = $conn->query($sql);
             return $result;
         }
+
+        public function filterbycabtype($conn, $cabtype) {
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `cab_type`='".$cabtype."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function filterbycabtypepending($conn, $cabtype) {
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='1' AND `cab_type`='".$cabtype."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function filterbycabtypecompleted($conn, $cabtype) {
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='2' AND `cab_type`='".$cabtype."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function filterbycabtypecancelled($conn, $cabtype) {
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND `status`='0' AND `cab_type`='".$cabtype."'";
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+        
     }
 ?>
