@@ -17,6 +17,7 @@
         $id = $_GET['id'];
         $action = $_GET['cancel'];
         $ride->updateriderequest($db->conn, $id, $action);
+        echo "<script>alert(Your Ride has been Cancelled)</script>";
     }
 
     if (isset($_GET['action'])) {
@@ -144,12 +145,12 @@
                     <form action="pendingrides.php" method="GET">
                         <p>
                             <h6>CabType Filter</h6>
-                            <select name="cabtype">
+                            <select name="cabtype" required>
                                 <option value="">Select Option</option>
-                                <option value="CedMicro">CedMicro</option>
-                                <option value="CedMini">CedMini</option>
-                                <option value="CedRoyal">CedRoyal</option>
-                                <option value="CedSUV">CedSUV</option>
+                                <option value="CedMicro" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedMicro') ){ echo "selected"; }?>>CedMicro</option>
+                                <option value="CedMini" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedMini') ){ echo "selected"; }?> >CedMini</option>
+                                <option value="CedRoyal" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedRoyal') ){ echo "selected"; }?>>CedRoyal</option>
+                                <option value="CedSUV" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedSUV') ){ echo "selected"; }?>>CedSUV</option>
                             </select>
                             <input type="submit" name="applycab" value="Apply" class="btn btn-primary btn-sm">
                         </p>
@@ -163,7 +164,8 @@
                         <a href="pendingrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>From</th>
                     <th>To</th>
-                    <th>Distance</th>
+                    <th>Distance <a href="pendingrides.php?action=total_distance&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                        <a href="pendingrides.php?action=total_distance&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>Cab Type</th>
                     <th>Luggage</th>
                     <th>Fare<a href="pendingrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
@@ -207,7 +209,7 @@
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>
                                     <td>'.$row['customer_user_id'].'</td>
-                                    <td><a href="pendingrides.php?id='.$row['ride_id'].'&cancel=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
+                                    <td><a onClick="javascript: return confirm(\'Are You Sure to Cancel?\');" href="pendingrides.php?id='.$row['ride_id'].'&cancel=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
                                     </tr>';
                             
                         }

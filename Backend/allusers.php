@@ -112,10 +112,11 @@
                                     <th>Username</th>
                                     <th>Name<a href="allusers.php?action=name&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="allusers.php?action=name&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                                    <th>DateOfSignUp<a href="allusers.php?action=dateofsignup&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allusers.php?action=dateofsignup&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Mobile<a href="allusers.php?action=mobile&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="allusers.php?action=mobile&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Is_Block</th>
-                                    <th>Action</th>
                                     
                                 </tr>
                                 </thead>
@@ -139,9 +140,10 @@
                                                     <td>'.$row['user_id'].'</td>
                                                     <td>'.$row['user_name'].'</td>
                                                     <td>'.$row['name'].'</td>
+                                                    <td>'.$row['dateofsignup'].'</td>
                                                     <td>'.$row['mobile'].'</td>
                                                     <td>'.$block.'</td>
-                                                    <td><a href="allusers.php?id='.$row['user_id'].'&action=delete" class="btn btn-danger btn-sm">Delete</a></td>
+                                                    
                                                 </tr>'; 
                                         }
                                     ?>

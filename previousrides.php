@@ -139,12 +139,12 @@
                     <form action="previousrides.php" method="GET">
                         <p>
                             <h6 class="text-center">CabType Filter</h6>
-                            <select name="cabtype">
+                            <select name="cabtype" required>
                                 <option value="">Select Option</option>
-                                <option value="CedMicro">CedMicro</option>
-                                <option value="CedMini">CedMini</option>
-                                <option value="CedRoyal">CedRoyal</option>
-                                <option value="CedSUV">CedSUV</option>
+                                <option value="CedMicro" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedMicro') ){ echo "selected"; }?>>CedMicro</option>
+                                <option value="CedMini" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedMini') ){ echo "selected"; }?>>CedMini</option>
+                                <option value="CedRoyal" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedRoyal') ){ echo "selected"; }?>>CedRoyal</option>
+                                <option value="CedSUV" <?php if(isset($_GET['cabtype']) && ($_GET['cabtype'] == 'CedSUV') ){ echo "selected"; }?>>CedSUV</option>
                             </select>
                             <input type="submit" name="applycab" value="Apply" class="btn btn-primary btn-sm">
                         </p>
@@ -159,7 +159,8 @@
                         <a href="previousrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>From</th>
                     <th>To</th>
-                    <th>Distance</th>
+                    <th>Distance <a href="previousrides.php?action=total_distance&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                        <a href="previousrides.php?action=total_distance&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>Cab Type</th>
                     <th>Luggage</th>
                     <th>Fare<a href="previousrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>

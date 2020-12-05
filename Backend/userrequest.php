@@ -109,7 +109,8 @@
                                     <th>Username</th>
                                     <th>Name<a href="userrequest.php?action=name&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="userrequest.php?action=name&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
-                                    <th>DateOfSignup</th>
+                                    <th>DateOfSignup <a href="userrequest.php?action=dateofsignup&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="userrequest.php?action=dateofsignup&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Mobile<a href="userrequest.php?action=mobile&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="userrequest.php?action=mobile&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Action</th>

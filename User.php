@@ -74,7 +74,9 @@
         
                 if ($conn->query($sql) === true) {
                     echo "<script> alert('Updated Successfully')</script>";
-                    echo "<script> window.location.href='index.php'</script>";
+                    echo "<script> alert('Your Password has been Changed Please Re-Login')</script>";
+                    unset($_SESSION['userdata']);
+                    echo "<script> window.location.href='login.php'</script>";
                 } else {
                     $errors[] = array('input'=>'form', 'msg'=>$conn->error);
                     echo "Error: " . $sql . "<br>" . $conn->error;
@@ -104,7 +106,8 @@
                 
                 if ($conn->query($sql) === true) {
                     echo "<script> alert('Updated Successfully')</script>";
-                    echo "<script> window.location.href = 'admindashboard.php'</script>";
+                    unset($_SESSION['userdata']);
+                    echo "<script> window.location.href='../login.php'</script>";
                 } else {
                     $errors[] = array('input'=>'form', 'msg'=>$conn->error);
                     echo "Error: " . $sql . "<br>" . $conn->error;

@@ -55,6 +55,15 @@ select{
 #form button:hover{
     background-color: rgb(151, 228, 35);
 }
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+input[type=number] {
+-moz-appearance: textfield;
+}
 #form button{
     color: black;
     background-color:  greenyellow;

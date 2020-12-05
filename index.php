@@ -9,11 +9,9 @@
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '1') {
             header('Location: Backend/admindashboard.php');
+        } else if (isset($_SESSION['landingdata'])) {
+            header('Location: confirmbooking.php');
         }
-    }
-
-    if (isset($_SESSION['landingdata'])) {
-        header('Location: confirmbooking.php');
     }
 ?>
 
@@ -139,7 +137,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" id="luggage" placeholder="Luggage in KG">
+                            <input type="number" class="form-control" id="luggage" placeholder="Luggage in KG">
                         </div>
                         <p>
                             <button type="button" id="fare" class="btn btn-primary">Calculate Fare</button>

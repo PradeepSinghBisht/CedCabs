@@ -23,7 +23,7 @@
 		$_SESSION['userdata']['name'] = $name;
 		$_SESSION['userdata']['mobile'] = $mobile;
 		echo "<script> alert('Updated Successfully')</script>";
-		echo "<script> window.location.href='index.php'</script>";
+		echo "<script> window.location.href='userdashboard.php'</script>";
 	} else {
 		$errors[] = array('input'=>'form', 'msg'=>$conn->error);
 		echo "Error: " . $sql . "<br>" . $conn->error;

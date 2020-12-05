@@ -109,14 +109,14 @@
                                     <a href="allrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th>Distance</th>
+                                    <th>Distance <a href="allrides.php?action=total_distance&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="allrides.php?action=total_distance&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Cab Type</th>
                                     <th>Luggage</th>
                                     <th>Fare<a href="allrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="allrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Status</th>
                                     <th>User_Id</th>
-                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
@@ -154,7 +154,7 @@
                                                     <td>Rs.'.$row['total_fare'].'</td>
                                                     <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="allrides.php?id='.$row['ride_id'].'" class="btn btn-danger btn-sm">Delete</a></td>
+                                                    
                                                 </tr>';
                                         }
                                     ?>

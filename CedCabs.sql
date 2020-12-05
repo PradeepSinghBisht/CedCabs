@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 04, 2020 at 02:27 PM
+-- Generation Time: Dec 05, 2020 at 03:29 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.3.21
 
@@ -43,11 +43,10 @@ INSERT INTO `location` (`id`, `name`, `distance`, `is_available`) VALUES
 (2, 'Indira Nagar', '10', 1),
 (3, 'BBD', '30', 1),
 (4, 'Barabanki', '60', 1),
-(5, 'Faizabad', '100', 1),
+(5, 'Faizabad', '100', 0),
 (6, 'Basti', '150', 1),
 (7, 'Gorakhpur', '210', 1),
-(13, 'Prayagraj', '300', 1),
-(19, 'Hapur', '120', 0);
+(13, 'Prayagraj', '300', 1);
 
 -- --------------------------------------------------------
 
@@ -57,7 +56,7 @@ INSERT INTO `location` (`id`, `name`, `distance`, `is_available`) VALUES
 
 CREATE TABLE `ride` (
   `ride_id` int(10) NOT NULL,
-  `ride_date` date NOT NULL,
+  `ride_date` datetime NOT NULL,
   `from` varchar(50) NOT NULL,
   `to` varchar(50) NOT NULL,
   `total_distance` varchar(50) NOT NULL,
@@ -73,22 +72,26 @@ CREATE TABLE `ride` (
 --
 
 INSERT INTO `ride` (`ride_id`, `ride_date`, `from`, `to`, `total_distance`, `cab_type`, `luggage`, `total_fare`, `status`, `customer_user_id`) VALUES
-(54, '2020-11-30', 'BBD', 'Basti', '120', 'CedRoyal', '22', '1987', 2, '12'),
-(59, '2020-11-30', 'Indira Nagar', 'BBD', '20', 'CedMicro', '', '305', 0, '14'),
-(61, '2020-11-27', 'Barabanki', 'Basti', '90', 'CedRoyal', '123', '1621', 1, '14'),
-(68, '2020-11-26', 'Indira Nagar', 'Prayagraj', '290', 'CedSUV', '', '3980', 2, '14'),
-(73, '2020-11-25', 'Basti', 'BBD', '120', 'CedSUV', '122', '2357', 2, '12'),
-(77, '2020-12-01', 'Barabanki', 'Faizabad', '40', 'CedMini', '12', '785', 2, '17'),
-(78, '2020-12-01', 'Indira Nagar', 'Faizabad', '90', 'CedMicro', '', '1091', 0, '12'),
-(81, '2020-11-28', 'BBD', 'Basti', '120', 'CedRoyal', '111', '1987', 1, '12'),
-(82, '2020-11-28', 'Basti', 'Faizabad', '50', 'CedMini', '1', '865', 2, '19'),
-(86, '2020-11-27', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 2, '14'),
-(112, '2020-11-29', 'Indira Nagar', 'Gorakhpur', '200', 'CedRoyal', '25', '2895', 2, '29'),
-(113, '2020-12-02', 'Indira Nagar', 'Faizabad', '90', 'CedSUV', '15', '1761', 0, '29'),
-(114, '2020-11-29', 'Gorakhpur', 'BBD', '180', 'CedMicro', '', '1975', 1, '31'),
-(115, '2020-12-03', 'Faizabad', 'Prayagraj', '200', 'CedSUV', '5', '3045', 2, '29'),
-(119, '2020-12-04', 'Indira Nagar', 'Faizabad', '90', 'CedRoyal', '111', '1621', 2, '14'),
-(120, '2020-12-04', 'Charbagh', 'Barabanki', '60', 'CedMicro', '', '785', 0, '12');
+(68, '2020-11-26 00:00:00', 'Indira Nagar', 'Prayagraj', '290', 'CedSUV', '', '3980', 2, '14'),
+(73, '2020-11-25 00:00:00', 'Basti', 'BBD', '120', 'CedSUV', '122', '2357', 0, '12'),
+(77, '2020-12-01 00:00:00', 'Barabanki', 'Faizabad', '40', 'CedMini', '12', '785', 2, '17'),
+(78, '2020-12-01 00:00:00', 'Indira Nagar', 'Faizabad', '90', 'CedMicro', '', '1091', 0, '12'),
+(81, '2020-11-28 00:00:00', 'BBD', 'Basti', '120', 'CedRoyal', '111', '1987', 2, '12'),
+(82, '2020-11-28 00:00:00', 'Basti', 'Faizabad', '50', 'CedMini', '1', '865', 2, '17'),
+(86, '2020-11-27 00:00:00', 'Charbagh', 'Prayagraj', '300', 'CedSUV', '111', '4495', 2, '29'),
+(112, '2020-11-29 00:00:00', 'Indira Nagar', 'Gorakhpur', '200', 'CedRoyal', '25', '2895', 2, '12'),
+(113, '2020-12-02 00:00:00', 'Indira Nagar', 'Faizabad', '90', 'CedSUV', '15', '1761', 0, '29'),
+(114, '2020-11-29 00:00:00', 'Gorakhpur', 'BBD', '180', 'CedMicro', '', '1975', 0, '31'),
+(115, '2020-12-03 00:00:00', 'Faizabad', 'Prayagraj', '200', 'CedSUV', '5', '3045', 2, '29'),
+(119, '2020-12-04 00:00:00', 'Indira Nagar', 'Faizabad', '90', 'CedRoyal', '111', '1621', 2, '14'),
+(120, '2020-12-04 00:00:00', 'Charbagh', 'Barabanki', '60', 'CedMicro', '', '785', 0, '12'),
+(121, '2020-12-04 00:00:00', 'Indira Nagar', 'Basti', '140', 'CedSUV', '', '2221', 2, '31'),
+(122, '2020-12-05 00:00:00', 'Indira Nagar', 'Prayagraj', '290', 'CedMicro', '', '2910', 1, '14'),
+(123, '2020-12-05 00:00:00', 'Indira Nagar', 'Charbagh', '10', 'CedMicro', '', '185', 0, '14'),
+(124, '2020-12-05 00:00:00', 'Barabanki', 'BBD', '30', 'CedMini', '44', '755', 1, '14'),
+(125, '2020-12-05 00:00:00', 'BBD', 'Gorakhpur', '180', 'CedRoyal', '12', '2585', 1, '29'),
+(126, '2020-12-05 00:00:00', 'Charbagh', 'Prayagraj', '300', 'CedMini', '9999', '3595', 0, '14'),
+(127, '2020-12-05 00:00:00', 'Charbagh', 'Prayagraj', '300', 'CedMini', '9999', '3595', 1, '14');
 
 -- --------------------------------------------------------
 
@@ -112,12 +115,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_name`, `name`, `dateofsignup`, `mobile`, `isblock`, `password`, `is_admin`) VALUES
-(12, 'sam', 'Sameer Khan', '2020-11-30 20:02:31', '8989989882', 1, '332532dcfaa1cbf61e2a266bd723612c', 0),
-(13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '1b80c66fa2d7186a462020c33d639557', 1),
-(14, 'thepsb', 'Pradeep Singh Bisht', '2020-12-02 10:57:56', '8960406682', 1, '202cb962ac59075b964b07152d234b70', 0),
+(12, 'sam', 'Sameer Khan', '2020-12-05 17:31:35', '1234567890', 0, '332532dcfaa1cbf61e2a266bd723612c', 0),
+(13, 'admin', 'admin', '2020-11-25 15:58:33', '8960406682', 1, '827ccb0eea8a706c4c34a16891f84e7b', 1),
+(14, 'thepsb', 'Pradeep Singh Bisht', '2020-12-02 10:57:56', '8960406682', 1, '81dc9bdb52d04dc20036dbd8313ed055', 0),
 (17, 'avi', 'avinash', '2020-11-30 12:12:10', '8933877097', 0, '202cb962ac59075b964b07152d234b70', 0),
-(29, 'sak', 'Sakeena', '2020-12-03 08:46:24', '1234567890', 1, 'd09b9d3cb4f7cbef107bef0425ca8eaf', 0),
-(31, 'raj', 'Rajiv', '2020-12-03 09:03:03', '1234567890', 0, '65a1223dae83b8092c4edba0823a793c', 0);
+(29, 'sak', 'Sakeena', '2020-12-05 17:32:20', '9999999999', 1, 'd09b9d3cb4f7cbef107bef0425ca8eaf', 0),
+(31, 'raj', 'Rajiv', '2020-12-05 17:32:38', '8960406689', 1, '202cb962ac59075b964b07152d234b70', 0);
 
 --
 -- Indexes for dumped tables
@@ -157,13 +160,13 @@ ALTER TABLE `location`
 -- AUTO_INCREMENT for table `ride`
 --
 ALTER TABLE `ride`
-  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `ride_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

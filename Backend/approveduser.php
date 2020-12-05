@@ -109,7 +109,8 @@
                                     <th>Username</th>
                                     <th>Name<a href="approveduser.php?action=name&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="approveduser.php?action=name&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
-                                    <th>DateOfSignup</th>
+                                    <th>DateOfSignup <a href="approveduser.php?action=dateofsignup&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="approveduser.php?action=dateofsignup&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Mobile<a href="approveduser.php?action=mobile&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="approveduser.php?action=mobile&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Action</th>
@@ -131,7 +132,7 @@
                                                     <td>'.$row['name'].'</td>
                                                     <td>'.$row['dateofsignup'].'</td>
                                                     <td>'.$row['mobile'].'</td>
-                                                    <td><a href="approveduser.php?id='.$row['user_id'].'&action=Unblocked" class="btn btn-danger btn-sm">Block</a></td>
+                                                    <td><a onClick="javascript: return confirm(\'Are You Sure to block ?\');" href="approveduser.php?id='.$row['user_id'].'&action=Unblocked" class="btn btn-danger btn-sm">Block</a></td>
                                                 </tr>';
                                         }
                                     ?>

@@ -104,7 +104,8 @@
                                     <a href="cancelledrides.php?action=ride_date&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th>Distance</th>
+                                    <th>Distance <a href="cancelledrides.php?action=total_distance&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="cancelledrides.php?action=total_distance&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Cab Type</th>
                                     <th>Luggage</th>
                                     <th>Fare<a href="cancelledrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>

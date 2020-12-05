@@ -19,19 +19,25 @@ $(document).ready(function() {
         var type = $('#cabtype').val();
         if (type == 'CedMicro') {
             $('#luggage').val('');
+            $('#luggage').attr('placeholder', "No Luggage Allowed");
             $('#luggage').prop('disabled',true);
         } else {
+            $('#luggage').attr('placeholder', "Luggage in KG");
             $('#luggage').prop('disabled',false);
         }
     });
-
-    $("#luggage").keyup(function(){
-        $('#booknow').css('display','none');
-        $('#fare').html('Calculate Fare');
-        var weight = $("#luggage").val();
-        if(isNaN(weight) == true) {
-            alert("Integer Value Needed");
-            $('#luggage').val('');
+    $('#luggage').keyup(function () {
+        $("#fare").html("Calculate Fare");
+        $("#booknow").css("display", "none");
+        this.value = this.value.replace(/[^0-9\.]/g, '');
+        });
+        
+        var original = '';
+        $('#luggage').on('input', function () {
+        if ($(this).val().replace(/[^.]/g, "").length > 1) {
+        $(this).val(original);
+        } else {
+        original = $(this).val();
         }
     });
 

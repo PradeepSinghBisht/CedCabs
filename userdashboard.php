@@ -120,7 +120,7 @@
                                 <div class="col-lg-3 col-md-6">
                                     <div class="card text-white bg-secondary mb-5" style="max-width: 18rem;">
                                         <div class="card-body">
-                                            <h3 class="card-title">Total Earned</h3>
+                                            <h3 class="card-title">Total Spent</h3>
                                             <p class="card-text"><h1 class="text-center"><?php $rows = $ride->spent($db->conn); $total = 0; foreach($rows as $row) {$total += $row['total_fare'];} echo $total;?></h1></p>
                                         </div>
                                         <div class="card-header"><a style="color:white" href="previousrides.php">View Details</a></div>

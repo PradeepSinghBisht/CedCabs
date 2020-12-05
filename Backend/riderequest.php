@@ -1,5 +1,7 @@
 <?php
-    require "../Ride.php";
+    require_once "../Ride.php";
+    require_once "../User.php";
+    $user = new User();
     $db = new Dbconnection();
     $ride = new Ride();
     session_start();
@@ -110,12 +112,13 @@
                                     <a href="riderequest.php?action=ride_date&order=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th>Distance</th>
+                                    <th>Distance <a href="riderequest.php?action=total_distance&order=desc"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="riderequest.php?action=total_distance&order=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Cab Type</th>
                                     <th>Luggage</th>
                                     <th>Fare<a href="riderequest.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                                     <a href="riderequest.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
-                                    <th>Status</th>
+                                    <!-- <th>Name</th> -->
                                     <th>Id</th>
                                     <th>Action</th>
                                 </tr>   
@@ -143,6 +146,12 @@
                                                 $luggage = $row['luggage'];
                                             }
 
+                                            $name = "";
+                                            $rs = $user->invoice($db->conn, $row['customer_user_id']);
+                                            foreach ($rs as $r) {
+                                                $name = $r['name'];
+                                            }
+
                                             echo '<tr>
                                                     <td>'.$row['ride_date'].'</td>
                                                     <td>'.$row['from'].'</td>
@@ -151,10 +160,9 @@
                                                     <td>'.$row['cab_type'].'</td>
                                                     <td>'.$luggage.' Kg</td>
                                                     <td>Rs.'.$row['total_fare'].'</td>
-                                                    <td>'.$status.'</td>
                                                     <td>'.$row['customer_user_id'].'</td>
-                                                    <td><a href="riderequest.php?id='.$row['ride_id'].'&action=confirm" class="btn btn-success btn-sm">Confirm</a>
-                                                    <a href="riderequest.php?id='.$row['ride_id'].'&action=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
+                                                    <td><a onClick="javascript: return confirm(\'Are You Sure to confirm?\');" href="riderequest.php?id='.$row['ride_id'].'&action=confirm" class="btn btn-success btn-sm">Confirm</a>
+                                                    <a onClick="javascript: return confirm(\'Are You Sure to Cancel ?\');" href="riderequest.php?id='.$row['ride_id'].'&action=cancel" class="btn btn-danger btn-sm">Cancel</a></td>
                                                 </tr>';
                                         }
                                     ?>

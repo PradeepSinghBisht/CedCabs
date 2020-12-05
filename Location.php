@@ -91,5 +91,29 @@
 
             return $errors;
         }
+
+        public function sortinglocation($conn, $action, $order ) {
+            
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `location` ORDER BY (`$action`) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `location` ORDER BY (`$action`) DESC";
+            }
+            $result = $conn->query($sql);
+
+            return $result;
+        }
+
+        public function sortinglocationdistance($conn, $action, $order ) {
+            
+            if ($order == 'asc') {
+                $sql = "SELECT * FROM `location` ORDER BY cast(`$action` as unsigned) ASC";
+            } else if ($order == 'desc') {
+                $sql = "SELECT * FROM `location` ORDER BY cast(`$action` as unsigned) DESC";
+            }
+            $result = $conn->query($sql);
+
+            return $result;
+        }
     }
 ?>

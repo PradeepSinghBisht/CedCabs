@@ -3,6 +3,7 @@
     $db = new Dbconnection();
     $loc = new Location();
     session_start();
+    $select = '';
 
     if (isset($_SESSION['userdata'])) {
         if ($_SESSION['userdata']['is_admin'] == '0') {
@@ -16,6 +17,21 @@
         $id = $_GET['id'];
         $action = $_GET['action'];
         $loc->deletelocation($db->conn, $id, $action);
+    }
+
+    if (isset($_GET['order'])) {
+        
+        $action = $_GET['action'];
+        $order = $_GET['order'];
+        
+        $select = $loc->sortinglocation($db->conn, $action, $order);
+    }
+
+    if (isset($_GET['orders'])) {
+        $action = $_GET['action'];
+        $order = $_GET['orders'];
+        
+        $select = $loc->sortinglocationdistance($db->conn, $action, $order);
     }
 ?>
 <!DOCTYPE html>
@@ -99,15 +115,22 @@
                             <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Distance</th>
-                                    <th>Is_Available</th>
+                                    <th>Name <a href="location.php?action=name&order=desc"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="location.php?action=name&order=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                                    <th>Distance <a href="location.php?action=distance&orders=desc"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="location.php?action=distance&orders=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
+                                    <th>Is_Available <a href="location.php?action=is_available&order=desc"><i class="fa fa-caret-down" aria-hidden="true"></i></a>
+                                    <a href="location.php?action=is_available&order=asc"><i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody id= "hello">
                                     <?php
-                                        $rows = $loc->alllocation($db->conn);
+                                        if ($select != '') {
+                                            $rows = $select;
+                                        } else {
+                                            $rows = $loc->alllocation($db->conn);
+                                        }
 
                                         foreach ($rows as $row) {
                                             if ($row['is_available'] == '1') {
@@ -120,7 +143,7 @@
                                                     <td>'.$row['distance'].' Km</td>
                                                     <td>'.$isavailable.'</td>
                                                     <td><a href="updatelocation.php?id='.$row['id'].'&available='.$isavailable.'" class="btn btn-primary btn-sm">Edit</a>
-                                                    <a href="location.php?id='.$row['id'].'&action=delete" class="btn btn-danger btn-sm">Delete</a></td>
+                                                    <a onClick="javascript: return confirm(\'Are You Sure to delete?\');" href="location.php?id='.$row['id'].'&action=delete" class="btn btn-danger btn-sm">Delete</a></td>
                                                 </tr>';
                                         }
                                     ?>

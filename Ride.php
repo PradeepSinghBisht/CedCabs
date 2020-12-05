@@ -50,14 +50,14 @@
         }
 
         public function spent($conn) {
-            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND (`status`='2' OR `status`='1')";
+            $sql = "SELECT * FROM ride WHERE `customer_user_id`='".$_SESSION['userdata']['user_id']."' AND (`status`='2')";
             $result = $conn->query($sql);
             
             return $result;
         }
 
         public function earned($conn) {
-            $sql = "SELECT * FROM ride WHERE `status`='2' OR `status`='1'";
+            $sql = "SELECT * FROM ride WHERE `status`='2'";
             $result = $conn->query($sql);
             
             return $result;
@@ -94,9 +94,11 @@
             if ($action == 'confirm'){
                 $sql = "UPDATE ride SET `status`='2' WHERE `ride_id`='$id'";
                 $result = $conn->query($sql);
+                
             } else if ($action == 'cancel') {
                 $sql = "UPDATE ride SET `status`='0' WHERE `ride_id`='$id'";
                 $result = $conn->query($sql);
+                
             }
         }
 
@@ -113,7 +115,7 @@
         }
 
         public function sortingpendingrides($conn, $action, $order) {
-
+           
             if ($order == 'asc') {
                 $sql = "SELECT * FROM `ride` WHERE `status`='1' ORDER BY cast(`$action` as unsigned) ASC";
             } else if ($order == 'desc') {
