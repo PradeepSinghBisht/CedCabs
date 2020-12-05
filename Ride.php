@@ -94,11 +94,12 @@
             if ($action == 'confirm'){
                 $sql = "UPDATE ride SET `status`='2' WHERE `ride_id`='$id'";
                 $result = $conn->query($sql);
+                echo "<script>alert('Ride Confirmed Successfully')</script>";
                 
             } else if ($action == 'cancel') {
                 $sql = "UPDATE ride SET `status`='0' WHERE `ride_id`='$id'";
                 $result = $conn->query($sql);
-                
+                echo "<script>alert('Ride Cancelled  Successfully')</script>";
             }
         }
 

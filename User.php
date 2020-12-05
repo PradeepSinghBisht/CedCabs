@@ -106,6 +106,7 @@
                 
                 if ($conn->query($sql) === true) {
                     echo "<script> alert('Updated Successfully')</script>";
+                    echo "<script> alert('Your Password has been Changed Please Re-Login')</script>";
                     unset($_SESSION['userdata']);
                     echo "<script> window.location.href='../login.php'</script>";
                 } else {

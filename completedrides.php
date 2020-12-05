@@ -1,7 +1,9 @@
 <?php
-    require "Ride.php";
+    require_once "Ride.php";
+    require_once "User.php";
     $db = new Dbconnection();
     $ride = new Ride();
+    $user = new User();
     session_start();
     $select = '';
 
@@ -166,7 +168,7 @@
                     <th>Fare<a href="completedrides.php?action=total_fare&order=desc"> <i class="fa fa-caret-down" aria-hidden="true"></i></a>
                         <a href="completedrides.php?action=total_fare&order=asc"> <i class="fa fa-caret-up" aria-hidden="true"></i></a></th>
                     <th>Status</th>
-                    <th>Customer_Id</th>
+                    <th>Name</th>
                 </tr>
                 </thead>
                 <tbody id= "hello">
@@ -193,6 +195,11 @@
                                 $luggage = $row['luggage'];
                             }
 
+                            $rs = $user->invoice($db->conn, $row['customer_user_id']);
+                            foreach ($rs as $r) {
+                                $name = $r['name'];
+                            }
+
                             echo '<tr>
                                     <td>'.$row['ride_date'].'</td>
                                     <td>'.$row['from'].'</td>
@@ -202,7 +209,7 @@
                                     <td>'.$luggage.' Kg</td>
                                     <td>Rs.'.$row['total_fare'].'</td>
                                     <td>'.$status.'</td>
-                                    <td>'.$row['customer_user_id'].'</td>
+                                    <td>'.$r['name'].'</td>
                                     </tr>';
                         }
                         

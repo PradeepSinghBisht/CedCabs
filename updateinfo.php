@@ -22,7 +22,8 @@
 	if ($db->conn->query($sql) === true) {
 		$_SESSION['userdata']['name'] = $name;
 		$_SESSION['userdata']['mobile'] = $mobile;
-		echo "<script> alert('Updated Successfully')</script>";
+        echo "<script> alert('Updated Successfully')</script>";
+        echo "<script> alert('Account Updated')</script>";
 		echo "<script> window.location.href='userdashboard.php'</script>";
 	} else {
 		$errors[] = array('input'=>'form', 'msg'=>$conn->error);
@@ -157,7 +158,7 @@
 					<input type="submit" class="btn btn-success form-control"  name="update" value="Update" style="padding: 5px 30px;">
 				</div>
 			</form>
-			<a class="btn btn-primary form-control" href="index.php">Back</a>
+			<a class="btn btn-primary form-control" href="userdashboard.php">Back</a>
 	</div>
 </div>
 </div>

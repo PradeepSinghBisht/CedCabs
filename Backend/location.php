@@ -17,6 +17,7 @@
         $id = $_GET['id'];
         $action = $_GET['action'];
         $loc->deletelocation($db->conn, $id, $action);
+        echo "<script>alert('Location Deleted')</script>";
     }
 
     if (isset($_GET['order'])) {

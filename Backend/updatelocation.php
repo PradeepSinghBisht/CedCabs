@@ -126,7 +126,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="distance">Distance</label>
-                                                    <input type="text" class="form-control" id="distance" name="distance" placeholder="Distance" value="'.$row['distance'].'" pattern="[0-9]{1,}[.]{0,1}[0-9]{0,}"required>
+                                                    <input type="text" class="form-control" id="distance" name="distance" placeholder="Distance" value="'.$row['distance'].'" pattern="[0-9]{1,}+[.]{0,1}+[0-9]{0,}"required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="available">Is Available</label>

@@ -24,6 +24,7 @@
         $id = $_GET['id'];
         $action = $_GET['action'];
         $user->updateuserrequest($db->conn, $id, $action);
+        echo "<script>alert('User Blocked Successfully')</script>";
     }
 ?>
 <!DOCTYPE html>
